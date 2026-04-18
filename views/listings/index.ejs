@@ -1,5 +1,23 @@
 <% layout("../layouts/boilerplate.ejs") %>
-        <a href="/new">Become A seller</a><br>
-        <a href="/signup">Sign Up</a><br>
-        <a href="/signin">Sign In</a><br>
-        <a href="/logout">Log Out</a>
+    <a href="/new">Become A seller</a><br>
+    <a href="/signup">Sign Up</a><br>
+    <a href="/signin">Sign In</a><br>
+    <a href="/logout">Log Out</a>
+
+    <hr>
+
+    <h1>All Listings</h1>
+    <% allListings.forEach(listing => { %>
+        <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
+                <div style="border: 1px solid #CCC; padding: 10px; margin-bottom: 15px;">
+                    <h2><%= listing.title %></h2>
+                    <p>Owned By: <%= listing.owner.username %></p>
+                    <img src="<%= listing.images[0].url %>" alt="image" width="300">
+                    <p><strong>Price: </strong> ₹ <%= listing.price %></p>
+                    <p><strong>Location:</strong> <%= listing.location.city %>, <%= listing.location.country %></p>
+                </div>
+            </div>
+        </a>
+    <% }) %>
+            

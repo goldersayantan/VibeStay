@@ -1,48 +1,48 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <form method="post" action="/index">
+    <form method="post" action="/index" enctype="multipart/form-data">
         <label for="title">
             Enter the property title: <input placeholder="Enter property title" type="text" name="title" id="title" required>
         </label>
         <br>
         <label for="description">
-            Enter property description: <textarea placeholder="Enter the property description" id="description" required></textarea>
+            Enter property description: <textarea placeholder="Enter the property description" name="description" id="description" required></textarea>
         </label>
         <br>
         <label for="property-photo">
-            <input type="file" accept=".jpg, .png, .svg" id="property-photo" required>
+            <input type="file" multiple accept=".jpg, .png, .svg" name="images" id="property-photo" required>
         </label>
         <br>
         <label>
             Enter property type:
-            <label for="hotel-btn"><input type="radio" name="property-type" value="Hotel" id="hotel-btn" required>Hotel</label>
-            <label for="apartment-btn"><input type="radio" name="property-type" value="Apartment" id="apartment-btn">Apartment</label>
-            <label for="villa-btn"><input type="radio" name="property-type" value="Villa" id="villa-btn">Villa</label>
-            <label for="homestay-btn"><input type="radio" name="property-type" value="Homestay" id="homestay-btn">Homestay</label>
-            <label for="hostel-btn"><input type="radio" name="property-type" value="Hostel" id="hostel-btn">Hostel</label>
-            <label for="resort-btn"><input type="radio" name="property-type" value="Resort" id="resort-btn">Resort</label>
-            <label for="guest-house-btn"><input type="radio" name="property-type" value="Guest House" id="guest-house-btn">Guest House</label>
+            <label for="hotel-btn"><input type="radio" name="propertyType" value="Hotel" id="hotel-btn" required>Hotel</label>
+            <label for="apartment-btn"><input type="radio" name="propertyType" value="Apartment" id="apartment-btn">Apartment</label>
+            <label for="villa-btn"><input type="radio" name="propertyType" value="Villa" id="villa-btn">Villa</label>
+            <label for="homestay-btn"><input type="radio" name="propertyType" value="Homestay" id="homestay-btn">Homestay</label>
+            <label for="hostel-btn"><input type="radio" name="propertyType" value="Hostel" id="hostel-btn">Hostel</label>
+            <label for="resort-btn"><input type="radio" name="propertyType" value="Resort" id="resort-btn">Resort</label>
+            <label for="guest-house-btn"><input type="radio" name="propertyType" value="Guest House" id="guest-house-btn">Guest House</label>
         </label>
         <br>
         <label for="room-type">
             Room type available:
             
-            <label><input type="checkbox" name="room-type" value="single-room">Single Room (1 person, 1 single bed)</label>
-            <label><input type="checkbox" name="room-type" value="double-room">Double Room (2 person, 1 double bed)</label>
-            <label><input type="checkbox" name="room-type" value="twin-room">Twin Room (2 person, 2 single bed)</label>
-            <label><input type="checkbox" name="room-type" value="triple-room">Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
-            <label><input type="checkbox" name="room-type" value="quad-room">Quad Room (4 person)</label>
-            <label><input type="checkbox" name="room-type" value="queen-room">Queen Room</label>
-            <label><input type="checkbox" name="room-type" value="king-room">King Room</label>
-            <label><input type="checkbox" name="room-type" value="studio-room">Studio Room</label>
-            <label><input type="checkbox" name="room-type" value="suite-room">Suite</label>
-            <label><input type="checkbox" name="room-type" value="deluxe-room">Deluxe Room</label>
-            <label><input type="checkbox" name="room-type" value="family-room">Family Room</label>
-            <label><input type="checkbox" name="room-type" value="hostel-room">Dormitory / Hostel Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="single-room">Single Room (1 person, 1 single bed)</label>
+            <label><input type="checkbox" name="roomTypes[]" value="double-room">Double Room (2 person, 1 double bed)</label>
+            <label><input type="checkbox" name="roomTypes[]" value="twin-room">Twin Room (2 person, 2 single bed)</label>
+            <label><input type="checkbox" name="roomTypes[]" value="triple-room">Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
+            <label><input type="checkbox" name="roomTypes[]" value="quad-room">Quad Room (4 person)</label>
+            <label><input type="checkbox" name="roomTypes[]" value="queen-room">Queen Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="king-room">King Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="studio-room">Studio Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="suite-room">Suite</label>
+            <label><input type="checkbox" name="roomTypes[]" value="deluxe-room">Deluxe Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="family-room">Family Room</label>
+            <label><input type="checkbox" name="roomTypes[]" value="hostel-room">Dormitory / Hostel Room</label>
         </label>
         <br>
         <label>
             Enter country:
-            <select>
+            <select name="country" required>
                             <option value="" disabled selected>-- Select a country --</option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Albania">Albania</option>
@@ -246,32 +246,32 @@
         <br>
         <label for="city">
             Enter city:
-            <input type="text" id="city" placeholder="Enter city" required>
+            <input type="text" id="city" name="city" placeholder="Enter city" required>
         </label>
         <br>
         <label for="address">
             Enter address:
-            <input type="text" id="address" placeholder="Enter address" required>
+            <input type="text" id="address" name="address" placeholder="Enter address" required>
         </label>
         <br>
         <label for="pincode">
             Enter ZIP/ Postal Code:
-            <input type="number" id="pincode" placeholder="Enter pincode" required>
+            <input type="number" id="pincode" name="pincode" placeholder="Enter pincode" required>
         </label>
         <br>
         <label for="landmark">
-            Enter Nearby landmarks:
-            <input type="text" id="landmark" placeholder="Enter nearby landmark" required>
+            Enter Nearby landmarks: 
+            <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" required>
         </label>
         <br>
         <label>
             Price per night:
-            <input type="number" id="price" placeholder="Enter price per night" min="0" required>/ Night
+            <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" required>/ Night
         </label>
         <br>
         <label>
             Enter email address:
-            <input type="email" id="email" placeholder="Enter your email address" required>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
         </label>
         <button type="submit">List the property</button>
     </form>

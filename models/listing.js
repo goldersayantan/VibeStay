@@ -1,0 +1,70 @@
+const mongoose = require("mongoose");
+const listingSchema = new mongoose.Schema({
+    owner:  {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    title:  {
+        type: String,
+        required: true,
+    },
+    description:    {
+        type: String,
+        required: true
+    },
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
+    propertyType:   {
+        type: String,
+        enum: ["Hotel", "Apartment", "Villa", "Homestay", "Hostel", "Resort", "Guest House"],
+        required: true
+    },
+    roomTypes:  [
+        {
+            type: String,
+            enum:   ["single-room", "double-room", "twin-room", "triple-room", "quad-room", "queen-room", "king-room", "studio-room", "suite-room", "deluxe-room", "family-room", "hostel-room"],
+            required: true
+        }
+    ],
+    location:   {
+        country:    {
+            type: String,
+            required: true
+        },
+        city:   {
+            type: String,
+            required: true
+        },
+        address:    {
+            type: String,
+            required: true
+        },
+        pincode:    {
+            type: Number,
+            required: true
+        },
+        landmark:   {
+            type: String,
+            required: true
+        }
+    },
+    price:  {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    email:  {
+        type: String,
+        required: true
+    },
+    createdAt:  {
+        type: Date,
+        default: Date.now
+    }
+});
+
+module.exports = mongoose.model("Listing", listingSchema);
