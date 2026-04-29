@@ -20,24 +20,14 @@ const postNewListing = async (req, res) => {
             req.flash("error", "At least 1 image is required");
             return res.redirect("/listings/new");
         }
-
-        //-----------------------------------
-        // Room type validation
-        //-----------------------------------
         let roomTypes = req.body.roomTypes;
-
         if (!roomTypes) {
             req.flash("error", "Please select at least one room type");
             return res.redirect("/listings/new");
         }
-
         if (!Array.isArray(roomTypes)) {
             roomTypes = [roomTypes];
         }
-
-        //-----------------------------------
-        // Upload images to Cloudinary
-        //-----------------------------------
         const uploadToCloudinary = (fileBuffer) => {
             return new Promise((resolve, reject) => {
                 cloudinary.uploader.upload_stream(
@@ -49,19 +39,13 @@ const postNewListing = async (req, res) => {
                 ).end(fileBuffer);
             });
         };
-
         const uploadedImages = await Promise.all(
             req.files.map((file) => uploadToCloudinary(file.buffer))
         );
-
         const imageData = uploadedImages.map((img) => ({
             url: img.secure_url,
             filename: img.public_id
         }));
-
-        //-----------------------------------
-        // Create listing
-        //-----------------------------------
         const newListing = new Listing({
             owner: req.user._id,
             title: req.body.title,
@@ -79,12 +63,9 @@ const postNewListing = async (req, res) => {
             email: req.body.email,
             images: imageData
         });
-
         await newListing.save();
-
         req.flash("success", "Listing created successfully.");
         res.redirect("/listings");
-
     } catch (err) {
         console.log(err);
         req.flash("error", "Error in creating listing.");

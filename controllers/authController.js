@@ -33,31 +33,37 @@ const getSignUp = (req, res) => {
     res.render("user/signup");
 };
 
-const postSignUp = async(req, res) => {
-    const {username, email, password, "confirm-password": confirmPassword} = req.body;
-    if(password !== confirmPassword)    {
-        req.flash("error", "Password do not match");
-        return res.redirect("/signup");
+const postSignUp = async (req, res) => {
+    try {
+        const { username, email, password, "confirm-password": confirmPassword } = req.body;
+        if (password !== confirmPassword) {
+            req.flash("error", "Passwords do not match");
+            return res.redirect("/signup");
+        }
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            req.flash("error", "User already exists");
+            return res.redirect("/signup");
+        }
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const hashedOtp = await bcrypt.hash(otp, 10);
+        await OTP.deleteMany({ email });
+        await OTP.create({
+            email,
+            otp: hashedOtp,
+            userData: { username, email, password }
+        });
+        await sendEmail(
+            email,
+            "OTP Verification",
+            `<h2>Your OTP is: ${otp}</h2><p>Valid for 5 minutes</p>`
+        );
+        res.render("user/verify-otp", { email });
+    } catch (err) {
+        console.log(err);
+        req.flash("error", "Something went wrong");
+        res.redirect("/signup");
     }
-    const existingUser = await User.findOne({email});
-    if(existingUser)    {
-        req.flash("error", "User already exists");
-        return res.redirect("/signup");
-    }
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const hashedOtp = await bcrypt.hash(otp, 10);
-    await OTP.deleteMany({ email });
-    await OTP.create({
-        email,
-        otp: hashedOtp,
-        userData: {username, email, password}
-    });
-    await sendEmail(
-        email,
-        "OTP Verification",
-        `<h2>Your OTP is: ${otp}</h2><p>Valid for 5 minutes</p>`
-    );
-    res.render("user/verify-otp", { email });
 };
 
 module.exports = {
