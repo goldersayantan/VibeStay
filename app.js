@@ -3,20 +3,11 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
 const path = require("path");
 const passport = require("./config/passport");
 const session = require("express-session");
-const User = require("./models/user");
 const ejsMate = require("ejs-mate");
-const { isLoggedIn } = require("./middleware/isLoggedIn");
 const flash = require("connect-flash");
-const bcrypt = require("bcrypt");
-const sendEmail = require("./config/mailer");
-const OTP = require("./models/otp");
-const upload= require("./config/multer");
-const Listing = require("./models/listing");
-const cloudinary = require("./config/cloudConfig");
 const methodOverride = require("method-override");
 const connectDB = require("./config/db");
 let port = 8080;
@@ -70,6 +61,10 @@ app.use(authRoutes);
 
 const passwordRoutes = require("./routes/passwordRoutes");
 app.use(passwordRoutes);
+
+app.get("/listings/:id/edit", (req, res) => {
+    res.render("/listings/edit");
+});
 
 app.use((err, req, res, next) => {
     if (err.code === "LIMIT_FILE_SIZE") {

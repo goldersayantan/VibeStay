@@ -18,7 +18,7 @@
     <hr>
     <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
         <a href="/listings/<%= listing._id %>/edit">
-            <button>Edit</button>
+            <a href="/listings/<%= listing._id %>/edit">Edit</a>
         </a>
         <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display: inline;">
             <button>Delete</button>
