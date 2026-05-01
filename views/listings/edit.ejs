@@ -292,6 +292,20 @@
             Enter email address:
             <input type="email" id="email" name="email" placeholder="Enter your email address" value="<%= listing.email %>" required>
         </label>
+        <br>
+        <label>
+            Wifi Available: 
+            <input type="radio" name="wifi" value="wifi-available" <%= listing.wifi === "wifi-available" ? "checked" : "" %> required> Available
+            <input type="radio" name="wifi" value="wifi-not-available" <%= listing.wifi === "wifi-not-available" ? "checked" : "" %>> Not Available
+        </label>
+        <br>
+        <label>
+            Parking Available:
+            <input type="radio" name="parking" value="parking-available" <%= listing.parking === "parking-available" ? "checked" : ""%> required> Available
+            <input type="radio" name="parking" value="parking-not-available" <%= listing.parking === "parking-not-available" ? "checked" : ""%> > Not Available
+        </label>
+        <br>
+        <br>
         <button type="submit">Update the property</button>
     </form>
     <script>

@@ -61,6 +61,8 @@ const postNewListing = async (req, res) => {
             },
             price: req.body.price,
             email: req.body.email,
+            wifi: req.body.wifi,
+            parking: req.body.parking,
             images: imageData
         });
         await newListing.save();
@@ -201,6 +203,8 @@ const updateListing = async (req, res) => {
         };
         listing.price = req.body.price;
         listing.email = req.body.email;
+        listing.wifi = req.body.wifi;
+        listing.parking = req.body.parking;
 
         await listing.save();
         req.flash("success", "Listing updated successfully");

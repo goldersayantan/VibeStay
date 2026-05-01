@@ -61,6 +61,16 @@ const listingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    wifi:   {
+        type: String,
+        enum: ["wifi-available", "wifi-not-available"],
+        required: true
+    },
+    parking:    {
+        type: String,
+        enum: ["parking-available", "parking-not-available"],
+        required: true
+    },
     createdAt:  {
         type: Date,
         default: Date.now
