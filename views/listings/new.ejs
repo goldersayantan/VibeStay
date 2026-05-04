@@ -1,49 +1,54 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <form method="post" action="/listings" enctype="multipart/form-data">
-        <label for="title">
-            Enter the property title: <input placeholder="Enter property title" type="text" name="title" id="title" required>
-        </label>
-        <br>
-        <label for="description">
-            Enter property description: <textarea placeholder="Enter the property description" name="description" id="description" required></textarea>
-        </label>
-        <br>
-        <label for="property-photo">
-            <input type="file" multiple accept=".jpg, .png, .svg" name="images" id="property-photo" required>
-        </label>
-        <br>
-        <label>
-            Enter property type:
-            <label for="hotel-btn"><input type="radio" name="propertyType" value="Hotel" id="hotel-btn" required>Hotel</label>
-            <label for="apartment-btn"><input type="radio" name="propertyType" value="Apartment" id="apartment-btn">Apartment</label>
-            <label for="villa-btn"><input type="radio" name="propertyType" value="Villa" id="villa-btn">Villa</label>
-            <label for="homestay-btn"><input type="radio" name="propertyType" value="Homestay" id="homestay-btn">Homestay</label>
-            <label for="hostel-btn"><input type="radio" name="propertyType" value="Hostel" id="hostel-btn">Hostel</label>
-            <label for="resort-btn"><input type="radio" name="propertyType" value="Resort" id="resort-btn">Resort</label>
-            <label for="guest-house-btn"><input type="radio" name="propertyType" value="Guest House" id="guest-house-btn">Guest House</label>
-        </label>
-        <br>
-        <label for="room-type">
-            Room type available:
-            
-            <label><input type="checkbox" name="roomTypes[]" value="single-room">Single Room (1 person, 1 single bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="double-room">Double Room (2 person, 1 double bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="twin-room">Twin Room (2 person, 2 single bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="triple-room">Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="quad-room">Quad Room (4 person)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="queen-room">Queen Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="king-room">King Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="studio-room">Studio Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="suite-room">Suite</label>
-            <label><input type="checkbox" name="roomTypes[]" value="deluxe-room">Deluxe Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="family-room">Family Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="hostel-room">Dormitory / Hostel Room</label>
-        </label>
-        <br>
-        <label>
-            Enter country:
-            <select name="country" required>
-                            <option value="" disabled selected>-- Select a country --</option>
+<link rel="stylesheet" href="/stylesheets/listings/new.css">
+<div class="form-container">
+    <div class="form-card">
+        <h2 class="form-title">List Your Property</h2>
+        <form method="POST" action="/listings" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Property Title</label>
+                <input type="text" name="title" placeholder="Enter property title" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea type="description" name="description" placeholder="Enter Description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Upload Images</label>
+                <input type="file" multiple accept=".jpg, .png, .svg" name="images" required> 
+            </div>
+            <div class="form-group">
+                <label>Enter property type:</label>
+                <div class="inline-options">
+                    <label><input type="radio" name="propertyType" value="Hotel" id="hotel-btn" required>Hotel</label>
+                    <label><input type="radio" name="propertyType" value="Apartment" id="apartment-btn">Apartment</label>
+                    <label><input type="radio" name="propertyType" value="Villa" id="villa-btn">Villa</label>
+                    <label><input type="radio" name="propertyType" value="Homestay" id="homestay-btn">Homestay</label>
+                    <label><input type="radio" name="propertyType" value="Hostel" id="hostel-btn">Hostel</label>
+                    <label><input type="radio" name="propertyType" value="Resort" id="resort-btn">Resort</label>
+                    <label><input type="radio" name="propertyType" value="Guest House" id="guest-house-btn">Guest House</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Room Types</label>
+                <div class="inline-options">
+                    <label><input type="checkbox" name="roomTypes[]" value="single-room">Single Room (1 person, 1 single bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="double-room">Double Room (2 person, 1 double bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="twin-room">Twin Room (2 person, 2 single bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="triple-room">Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="quad-room">Quad Room (4 person)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="queen-room">Queen Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="king-room">King Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="studio-room">Studio Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="suite-room">Suite</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="deluxe-room">Deluxe Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="family-room">Family Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="hostel-room">Dormitory / Hostel Room</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <select name="country" required>
+                    <option value="" disabled selected>-- Select a country --</option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Albania">Albania</option>
                             <option value="Algeria">Algeria</option>
@@ -241,50 +246,47 @@
                             <option value="Yemen">Yemen</option>
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
-            </select>
-        </label>
-        <br>
-        <label for="city">
-            Enter city:
-            <input type="text" id="city" name="city" placeholder="Enter city" required>
-        </label>
-        <br>
-        <label for="address">
-            Enter address:
-            <input type="text" id="address" name="address" placeholder="Enter address" required>
-        </label>
-        <br>
-        <label for="pincode">
-            Enter ZIP/ Postal Code:
-            <input type="number" id="pincode" name="pincode" placeholder="Enter pincode" required>
-        </label>
-        <br>
-        <label for="landmark">
-            Enter Nearby landmarks: 
-            <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" required>
-        </label>
-        <br>
-        <label>
-            Price per night:
-            <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" required>/ Night
-        </label>
-        <br>
-        <label>
-            Enter email address:
-            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-        </label>
-        <br>
-        <label>
-            Wifi Available: 
-            <input type="radio" name="wifi" value="wifi-available" required> Available
-            <input type="radio" name="wifi" value="wifi-not-available"> Not Available
-        </label>
-        <br>
-        <label>
-            Parking Available:
-            <input type="radio" name="parking" value="parking-available" required> Available
-            <input type="radio" name="parking" value="parking-not-available"> Not Available
-        </label>
-        <br><br>
-        <button type="submit">List the property</button>
-    </form>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Enter city:</label>
+                <input type="text" id="city" name="city" placeholder="Enter city" required>
+            </div>
+            <div class="form-group">
+                <label>Enter address:</label>
+                <input type="text" id="address" name="address" placeholder="Enter address" required>
+            </div>
+            <div class="form-group">
+                <label>Enter ZIP/ Postal Code:</label>
+                <input type="number" id="pincode" name="pincode" placeholder="Enter pincode" required>
+            </div>
+            <div class="form-group">
+                <label>Enter Nearby landmarks:</label> 
+                <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" required>
+            </div>
+            <div class="form-group">
+                <label>Price per night:</label>
+                <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" required>/ Night
+            </div>
+            <div class="form-group">
+                <label>Enter email address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label>Wifi Availability</label>
+                <div class="inline-options">
+                    <label><input type="radio" name="wifi" value="wifi-available" required> Available </label>
+                    <label><input type="radio" name="wifi" value="wifi-not-available"> Not Available </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Parking Available</label>
+                <div class="inline-options">
+                    <label><input type="radio" name="parking" value="parking-available" required> Available</label>
+                    <label><input type="radio" name="parking" value="parking-not-available"> Not Available</label>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">List the property</button>
+        </form>
+    </div>
+</div>

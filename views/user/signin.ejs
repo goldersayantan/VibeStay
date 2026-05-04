@@ -1,19 +1,26 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <form action="/signin" method="POST">
-        <label>
-            Enter the usernamer or password:
-            <input type="text" name="username" placeholder="Username or Email" required>
-        </label>
-        <label>
-            Enter the password:
-            <input type="password" name="password" placeholder="Password" required>
-        </label>
-        <button type="submit">Sign In</button><br><br>
-        <br>
-        <br>
-        <a href="/auth/google" class="google-btn">
-            Continue with Google
-        </a><br>
-        <a href="/forgot-password">Forgot password?</a>
-    </form>
- 
+<link rel="stylesheet" href="/stylesheets/user/signin.css">
+<div class="signIn-container">
+    <div class="signIn-card">
+        <h2>Sign In</h2>
+        <form action="/signin" method="POST">
+            <label>
+                Username or Email
+                <input type="text" name="username" placeholder="Enter username or email" required>
+            </label>
+            <label>
+                Password
+                <input type="password" name="password" placeholder="Enter password" required>
+            </label>
+            <button type="submit" class="signIn-btn">Sign In</button>
+            <div class="divider">or</div>
+            <a href="/auth/google" class="google-btn">
+                Continue with Google
+            </a>
+            <a href="/forgot-password" class="forgot-link"> 
+                Forgot Password?
+            </a>
+        </form>
+    </div>
+</div>
+<script src="/scripts/user/signin.js"></script>

@@ -1,4 +1,40 @@
 <% layout("../layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/stylesheets/user/signup.css">
+<div class="signUp-container">
+    <div class="signUp-card">
+        <h2>Sign Up</h2>
+        <form action="/signUp" method="POST">
+            <label>
+                Enter Username
+                <input type="text" id="username" name="username" required>
+            </label>
+            <label>
+                Enter Email
+                <input type="email" id="email" name="email" required>
+            </label>
+            <label>
+                Enter Password
+                <input type="password" id="password" name="password" required>
+            </label>
+            <label>
+                Confirm Password
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </label>
+            <button type="submit" class="signUp-btn">Send OTP</button>
+            <div class="divider">or</div>
+            <a href="/auth/google" class="google-btn">
+                Continue with Google
+            </a>
+            <a href="/signin" class="signIn">
+                Already have an account? <span>Sign In</span>
+            </a>
+        </form>
+    </div>
+</div>
+<script src="/scripts/user/signup.js"></script>
+
+
+<!-- 
     <form method="post" action="/signup">
         <label for="username">
                 Enter Username:
@@ -26,4 +62,4 @@
         Continue with Google
     </a><br>
     <a href="/signin">Already have an account? SignIn</a>
-    
+     -->

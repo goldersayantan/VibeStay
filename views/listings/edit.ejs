@@ -1,68 +1,64 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <form method="post" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">
-        <label for="title">
-            Enter the property title: <input placeholder="Enter property title" type="text" name="title" id="title" value="<%= listing.title %>" required>
-        </label>
-        <br>
-        <label for="description">
-            Enter property description: <textarea placeholder="Enter the property description" name="description" id="description" required><%= listing.description %></textarea>
-        </label>
-        <br>
-
-        <h3>Current Images</h3>
-        <% if(listing.images.length > 0) { %>
-            <% listing.images.forEach((img) => { %>
-                <div>
-                    <img src="<%= img.url %>" width="200">
+<link rel="stylesheet" href="/stylesheets/listings/edit.css">
+<div class="form-container">
+    <div class="form-card">
+        <h2 class="form-title">Edit Your Property</h2>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Property Title</label>
+                <input placeholder="Enter property title" type="text" name="title" value="<%= listing.title %>" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Enter the property description" name="description" id="description" required><%= listing.description %></textarea>
+            </div>
+            <h3 class="section-title">Current Images</h3>
+            <div class="image-preview">
+                <% listing.images.forEach((img) => { %>
+                    <div class="image-box">
+                    <img src="<%= img.url %>">
                     <label>
-                        Delete this image
-                        <input 
-                            type="checkbox"
-                            name="deleteImages"
-                            value="<%= img.filename %>"
-                        >
+                        <input type="checkbox" name="deleteImages" value="<%= img.filename %>">
+                        Delete
                     </label>
+                    </div>
+                <% }) %>
+            </div>
+            <div class="form-group">
+                <label>Upload Images</label>
+                <input type="file" multiple accept=".jpg, .png, .svg" name="images" id="property-photo">
+            </div>
+            <div class="form-group">
+                <label>Enter Property Type</label>
+                <label><input type="radio" name="propertyType" value="Hotel" id="hotel-btn" <%= listing.propertyType === "Hotel" ? "checked" : "" %> required>Hotel</label>
+                <label><input type="radio" name="propertyType" value="Apartment" id="apartment-btn" <%= listing.propertyType === "Apartment" ? "checked" : "" %>>Apartment</label>
+                <label><input type="radio" name="propertyType" value="Villa" id="villa-btn" <%= listing.propertyType === "Villa" ? "checked" : "" %>>Villa</label>
+                <label><input type="radio" name="propertyType" value="Homestay" id="homestay-btn" <%= listing.propertyType === "Homestay" ? "checked" : "" %>>Homestay</label>
+                <label><input type="radio" name="propertyType" value="Hostel" id="hostel-btn" <%= listing.propertyType === "Hostel" ? "checked" : "" %>>Hostel</label>
+                <label><input type="radio" name="propertyType" value="Resort" id="resort-btn" <%= listing.propertyType === "Resort" ? "checked" : "" %>>Resort</label>
+                <label><input type="radio" name="propertyType" value="Guest House" id="guest-house-btn" <%= listing.propertyType === "Guest House" ? "checked" : "" %>>Guest House</label>
+            </div>
+            <div class="form-group">
+                <label>Room Types</label>
+                <div class="inline-options">
+                    <label><input type="checkbox" name="roomTypes[]" value="single-room" <%= listing.roomTypes.includes("single-room") ? "checked" : "" %> >Single Room (1 person, 1 single bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="double-room" <%= listing.roomTypes.includes("double-room") ? "checked" : "" %> >Double Room (2 person, 1 double bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="twin-room" <%= listing.roomTypes.includes("twin-room") ? "checked" : "" %> >Twin Room (2 person, 2 single bed)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="triple-room" <%= listing.roomTypes.includes("triple-room") ? "checked" : "" %> >Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="quad-room" <%= listing.roomTypes.includes("quad-room") ? "checked" : "" %> >Quad Room (4 person)</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="queen-room" <%= listing.roomTypes.includes("queen-room") ? "checked" : "" %> >Queen Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="king-room" <%= listing.roomTypes.includes("king-room") ? "checked" : "" %> >King Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="studio-room" <%= listing.roomTypes.includes("studio-room") ? "checked" : "" %> >Studio Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="suite-room" <%= listing.roomTypes.includes("suite-room") ? "checked" : "" %> >Suite</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="deluxe-room" <%= listing.roomTypes.includes("deluxe-room") ? "checked" : "" %> >Deluxe Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="family-room" <%= listing.roomTypes.includes("family-room") ? "checked" : "" %> >Family Room</label>
+                    <label><input type="checkbox" name="roomTypes[]" value="hostel-room" <%= listing.roomTypes.includes("hostel-room") ? "checked" : "" %> >Dormitory / Hostel Room</label>
                 </div>
-                <br>
-            <% }) %>
-        <% } %>
-        
-        <label for="property-photo">
-            <input type="file" multiple accept=".jpg, .png, .svg" name="images" id="property-photo" required>
-        </label>
-        <br>
-        <label>
-            Enter property type:
-            <label for="hotel-btn"><input type="radio" name="propertyType" value="Hotel" id="hotel-btn" <%= listing.propertyType === "Hotel" ? "checked" : "" %> required>Hotel</label>
-            <label for="apartment-btn"><input type="radio" name="propertyType" value="Apartment" id="apartment-btn" <%= listing.propertyType === "Apartment" ? "checked" : "" %>>Apartment</label>
-            <label for="villa-btn"><input type="radio" name="propertyType" value="Villa" id="villa-btn" <%= listing.propertyType === "Villa" ? "checked" : "" %>>Villa</label>
-            <label for="homestay-btn"><input type="radio" name="propertyType" value="Homestay" id="homestay-btn" <%= listing.propertyType === "Homestay" ? "checked" : "" %>>Homestay</label>
-            <label for="hostel-btn"><input type="radio" name="propertyType" value="Hostel" id="hostel-btn" <%= listing.propertyType === "Hostel" ? "checked" : "" %>>Hostel</label>
-            <label for="resort-btn"><input type="radio" name="propertyType" value="Resort" id="resort-btn" <%= listing.propertyType === "Resort" ? "checked" : "" %>>Resort</label>
-            <label for="guest-house-btn"><input type="radio" name="propertyType" value="Guest House" id="guest-house-btn" <%= listing.propertyType === "Guest House" ? "checked" : "" %>>Guest House</label>
-        </label>
-        <br>
-        <label for="room-type">
-            Room type available:
-            
-            <label><input type="checkbox" name="roomTypes[]" value="single-room" <%= listing.roomTypes.includes("single-room") ? "checked" : "" %> >Single Room (1 person, 1 single bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="double-room" <%= listing.roomTypes.includes("double-room") ? "checked" : "" %> >Double Room (2 person, 1 double bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="twin-room" <%= listing.roomTypes.includes("twin-room") ? "checked" : "" %> >Twin Room (2 person, 2 single bed)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="triple-room" <%= listing.roomTypes.includes("triple-room") ? "checked" : "" %> >Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="quad-room" <%= listing.roomTypes.includes("quad-room") ? "checked" : "" %> >Quad Room (4 person)</label>
-            <label><input type="checkbox" name="roomTypes[]" value="queen-room" <%= listing.roomTypes.includes("queen-room") ? "checked" : "" %> >Queen Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="king-room" <%= listing.roomTypes.includes("king-room") ? "checked" : "" %> >King Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="studio-room" <%= listing.roomTypes.includes("studio-room") ? "checked" : "" %> >Studio Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="suite-room" <%= listing.roomTypes.includes("suite-room") ? "checked" : "" %> >Suite</label>
-            <label><input type="checkbox" name="roomTypes[]" value="deluxe-room" <%= listing.roomTypes.includes("deluxe-room") ? "checked" : "" %> >Deluxe Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="family-room" <%= listing.roomTypes.includes("family-room") ? "checked" : "" %> >Family Room</label>
-            <label><input type="checkbox" name="roomTypes[]" value="hostel-room" <%= listing.roomTypes.includes("hostel-room") ? "checked" : "" %> >Dormitory / Hostel Room</label>
-        </label>
-        <br>
-        <label>
-            Enter country:
-            <select name="country"  required>
-                            <option value="<%= listing.location.country %>" selected><%= listing.location.country %></option>
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <select name="country" required>
+                    <option value="<%= listing.location.country %>" selected><%= listing.location.country %></option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Albania">Albania</option>
                             <option value="Algeria">Algeria</option>
@@ -260,73 +256,52 @@
                             <option value="Yemen">Yemen</option>
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
-            </select>
-        </label>
-        <br>
-        <label for="city">
-            Enter city:
-            <input type="text" id="city" name="city" placeholder="Enter city" value="<%= listing.location.city %>" required>
-        </label>
-        <br>
-        <label for="address">
-            Enter address:
-            <input type="text" id="address" name="address" placeholder="Enter address" value="<%= listing.location.address %>" required>
-        </label>
-        <br>
-        <label for="pincode">
-            Enter ZIP/ Postal Code:
-            <input type="number" id="pincode" name="pincode" placeholder="Enter pincode" value="<%= listing.location.pincode %>" required>
-        </label>
-        <br>
-        <label for="landmark">
-            Enter Nearby landmarks: 
-            <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" value="<%= listing.location.landmark %>" required>
-        </label>
-        <br>
-        <label>
-            Price per night:
-            <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" value="<%= listing.price %>" required>/ Night
-        </label>
-        <br>
-        <label>
-            Enter email address:
-            <input type="email" id="email" name="email" placeholder="Enter your email address" value="<%= listing.email %>" required>
-        </label>
-        <br>
-        <label>
-            Wifi Available: 
-            <input type="radio" name="wifi" value="wifi-available" <%= listing.wifi === "wifi-available" ? "checked" : "" %> required> Available
-            <input type="radio" name="wifi" value="wifi-not-available" <%= listing.wifi === "wifi-not-available" ? "checked" : "" %>> Not Available
-        </label>
-        <br>
-        <label>
-            Parking Available:
-            <input type="radio" name="parking" value="parking-available" <%= listing.parking === "parking-available" ? "checked" : ""%> required> Available
-            <input type="radio" name="parking" value="parking-not-available" <%= listing.parking === "parking-not-available" ? "checked" : ""%> > Not Available
-        </label>
-        <br>
-        <br>
-        <button type="submit">Update the property</button>
-    </form>
-    <script>
-        const form = document.querySelector("form");
+                </select>    
+            </div>
+            <div class="form-group">
+                <label>Enter city:</label>
+                <input type="text" id="city" name="city" placeholder="Enter city" value="<%= listing.location.city %>" required>
+            </div>
+            <div class="form-group">
+                <label>Enter Address:</label>
+                <input type="text" id="address" name="address" placeholder="Enter address" value="<%= listing.location.address %>" required>
+            </div>
+            <div class="form-group">
+                <label>Enter ZIP/ Postal Code:</label>
+                <input type="number" id="pincode" name="pincode" placeholder="Enter pincode" value="<%= listing.location.pincode %>" required>
+            </div>
+            <div class="form-group">
+                <label>Enter Nearby landmarks:</label> 
+                <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" value="<%= listing.location.landmark %>" required>
+            </div>
+            <div class="form-group">
+                <label>Price per night:</label>
+                 <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" value="<%= listing.price %>" required>/ Night
+            </div>
+            <div class="form-group">
+                <label>Enter email address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" value="<%= listing.email %>" required>
+            </div>
+            <div class="form-group">
+                <label>Wifi Availability</label>
+                <div>
+                    <label><input type="radio" name="wifi" value="wifi-available" <%= listing.wifi === "wifi-available" ? "checked" : "" %> required> Available</label>
+                    <label><input type="radio" name="wifi" value="wifi-not-available" <%= listing.wifi === "wifi-not-available" ? "checked" : "" %>> Not Available</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Parking Available</label>
+                <div class="inline-options">
+                    <label><input type="radio" name="parking" value="parking-available" <%= listing.parking === "parking-available" ? "checked" : ""%> required> Available</label>
+                    <label><input type="radio" name="parking" value="parking-not-available" <%= listing.parking === "parking-not-available" ? "checked" : ""%> > Not Available</label>
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Update the property</button>
+        </form>
+    </div>
+</div>
+<script src=""></script>
 
-        form.addEventListener("submit", function (e) {
-            const roomCheckboxes = document.querySelectorAll(
-                'input[name="roomTypes[]"]'
-            );
 
-            let isChecked = false;
 
-            roomCheckboxes.forEach((checkbox) => {
-                if (checkbox.checked) {
-                    isChecked = true;
-                }
-            });
 
-            if (!isChecked) {
-                e.preventDefault();
-                alert("Please select at least one room type.");
-            }
-        });
-    </script>

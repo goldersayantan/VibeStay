@@ -136,12 +136,13 @@ const updateListing = async (req, res) => {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
+
         if (!listing.owner.equals(req.user._id)) {
             req.flash("error", "Unauthorized");
             return res.redirect("/listings");
         }
-        let roomTypes = req.body.roomTypes;
 
+        let roomTypes = req.body.roomTypes;
         if (!roomTypes) {
             req.flash("error", "Please select at least one room type");
             return res.redirect(`/listings/${id}/edit`);
@@ -149,20 +150,41 @@ const updateListing = async (req, res) => {
         if (!Array.isArray(roomTypes)) {
             roomTypes = [roomTypes];
         }
-        if (req.body.deleteImages) {
-            let deleteImages = req.body.deleteImages;
-            if (!Array.isArray(deleteImages)) {
-                deleteImages = [deleteImages];
-            }
-            for (let filename of deleteImages) {
-                await cloudinary.uploader.destroy(filename);
-            }
+
+        let deleteImages = req.body.deleteImages || [];
+        if (!Array.isArray(deleteImages)) {
+            deleteImages = [deleteImages];
+        }
+
+        if (deleteImages.length > 0) {
+            await Promise.all(
+                deleteImages.map((filename) =>
+                    cloudinary.uploader.destroy(filename)
+                )
+            );
 
             listing.images = listing.images.filter(
                 (img) => !deleteImages.includes(img.filename)
             );
         }
+
+        const existingCount = listing.images.length;
+        const newUploadCount = req.files ? req.files.length : 0;
+
+        const totalImages = existingCount + newUploadCount;
+
+        if (totalImages === 0) {
+            req.flash("error", "Please upload at least one image");
+            return res.redirect(`/listings/${id}/edit`);
+        }
+
+        if (totalImages > 5) {
+            req.flash("error", "Maximum 5 images allowed");
+            return res.redirect(`/listings/${id}/edit`);
+        }
+
         let newImages = [];
+
         if (req.files && req.files.length > 0) {
             const uploadToCloudinary = (fileBuffer) => {
                 return new Promise((resolve, reject) => {
@@ -175,25 +197,24 @@ const updateListing = async (req, res) => {
                     ).end(fileBuffer);
                 });
             };
+
             const uploadedImages = await Promise.all(
                 req.files.map((file) => uploadToCloudinary(file.buffer))
             );
+
             newImages = uploadedImages.map((img) => ({
                 url: img.secure_url,
                 filename: img.public_id
             }));
         }
-        const totalImages = listing.images.length + newImages.length;
 
-        if (totalImages > 5) {
-            req.flash("error", "Maximum 5 images allowed");
-            return res.redirect(`/listings/${id}/edit`);
-        }
         listing.images.push(...newImages);
+
         listing.title = req.body.title;
         listing.description = req.body.description;
         listing.propertyType = req.body.propertyType;
         listing.roomTypes = roomTypes;
+
         listing.location = {
             country: req.body.country,
             city: req.body.city,
@@ -201,20 +222,24 @@ const updateListing = async (req, res) => {
             pincode: req.body.pincode,
             landmark: req.body.landmark
         };
+
         listing.price = req.body.price;
         listing.email = req.body.email;
         listing.wifi = req.body.wifi;
         listing.parking = req.body.parking;
 
         await listing.save();
+
         req.flash("success", "Listing updated successfully");
         res.redirect(`/listings/${id}`);
+
     } catch (err) {
-        console.log(err);
+        console.error(err);
         req.flash("error", "Error updating listing");
         res.redirect("/listings");
     }
 };
+
 module.exports = {getAllListings, getNewListing, postNewListing, getEditListing, showListing, deleteListing, updateListing};
 
 

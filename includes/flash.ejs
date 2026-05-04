@@ -1,12 +1,71 @@
+<style>
+    .flash-message {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 500;
+        width: max-content;
+        z-index: 9999;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .flash-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+    }
+
+    .flash-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease-out;
+    }
+</style>
 
 <% if (success && success.length > 0) { %>
-    <div style="color: green;">
+    <div class="flash-message flash-success" id="flash-success">
         <%= success %>
     </div>
 <% } %>
 
 <% if (error && error.length > 0) { %>
-    <div style="color: red;">
+    <div class="flash-message flash-error" id="flash-error">
         <%= error %>
     </div>
 <% } %>
+
+<script>
+    setTimeout(() => {
+        const success = document.getElementById("flash-success");
+        const error = document.getElementById("flash-error");
+
+        if (success) {
+            success.classList.add("fade-out");
+            setTimeout(() => success.remove(), 500);
+        }
+
+        if (error) {
+            error.classList.add("fade-out");
+            setTimeout(() => error.remove(), 500);
+        }
+    }, 3000);
+</script>

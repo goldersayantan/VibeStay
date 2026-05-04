@@ -1,27 +1,36 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <h1><%= listing.title %></h1>
-    <p><strong>Hosted By:</strong> <%= listing.owner.username %></p>
-    <hr>
-    <% listing.images.forEach(img => { %>
-        <img src="<%= img.url %>" width="300" style="margin: 10px;">
-    <% }) %>
-    <hr>
-    <p><strong>Price: </strong>₹ <%= listing.price %></p>
-    <p><strong>Description: <strong> <%= listing.description %> </strong></p>
-    <p><strong>Property Type: </strong> <%= listing.propertyType %></p>
-    <p>
-        <strong>Location: </strong> 
-        <%= listing.location.address %>,
-        <%= listing.location.city %>,
-        <%= listing.location.country %>
-    </p>
-    <hr>
-    <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
-        <a href="/listings/<%= listing._id %>/edit">
-            <a href="/listings/<%= listing._id %>/edit">Edit</a>
-        </a>
-        <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display: inline;">
-            <button>Delete</button>
-        </form>
-    <% } %>
+<link rel="stylesheet" href="/stylesheets/listings/show.css">
+
+<div class="show-container">
+    <h1 class="show-title"><%= listing.title %></h1>
+    <p class="host"><stromg>Hosted by:</stromg> <%= listing.owner.username %> </p>
     
+    <div class="image-gallery">
+        <% listing.images.forEach(img => { %>
+            <img src="<%= img.url %>" alt="image">
+        <% }) %>
+    </div>
+    
+    <div class="details">
+        <p class="price">₹ <%= listing.price %></p>
+        <p><strong>Description:</strong> <%= listing.description %></p>
+        <p><strong>Property Type:</strong> <%= listing.propertyType %></p>
+        <p>
+            <strong>Location:</strong>
+            <%= listing.location.address %>,
+            <%= listing.location.city %>,
+            <%= listing.location.country %>
+        </p>
+    </div>
+    <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
+        <div class="actions">
+            <a href="/listings/<%= listing._id %>/edit" class="edit-btn">Edit</a>
+
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display:inline;">
+                <button class="delete-btn">Delete</button>
+            </form>
+        </div>
+    <% } %>
+</div>
+
+<script src="/scripts/listings/show.js"></script>

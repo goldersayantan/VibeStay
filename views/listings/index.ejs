@@ -1,23 +1,34 @@
 <% layout("../layouts/boilerplate.ejs") %>
-    <a href="listings/new">Become A seller</a><br>
-    <a href="/signup">Sign Up</a><br>
-    <a href="/signin">Sign In</a><br>
+<link rel="stylesheet" href="/stylesheets/listings/index.css">
+
+<div class="navbar">
+    <a href="/listings/new">Become A Seller</a>
+    <a href="/signup">Sign Up</a>
+    <a href="/signin">Sign In</a>
     <a href="/logout">Log Out</a>
+</div>
 
-    <hr>
+<div class="container">
+    <h1 class="page-title">All Listings</h1>
 
-    <h1>All Listings</h1>
-    <% allListings.forEach(listing => { %>
-        <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
-            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
-                <div style="border: 1px solid #CCC; padding: 10px; margin-bottom: 15px;">
-                    <h2><%= listing.title %></h2>
-                    <p>Owned By: <%= listing.owner.username %></p>
-                    <img src="<%= listing.images[0].url %>" alt="image" width="300">
-                    <p><strong>Price: </strong> ₹ <%= listing.price %></p>
-                    <p><strong>Location:</strong> <%= listing.location.city %>, <%= listing.location.country %></p>
+    <div class="listings">
+        <% allListings.forEach(listing => { %>
+            <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+                
+                <div class="listing-card">
+                    <img src="<%= listing.images[0].url %>" alt="image">
+
+                    <div class="card-body">
+                        <h2><%= listing.title %></h2>
+                        <p>Owned by: <%= listing.owner.username %></p>
+                        <p><strong>₹ <%= listing.price %></strong></p>
+                        <p><%= listing.location.city %>, <%= listing.location.country %></p>
+                    </div>
                 </div>
-            </div>
-        </a>
-    <% }) %>
-            
+
+            </a>
+        <% }) %>
+    </div>
+</div>
+
+<script src="/scripts/listings/index.js"></script>

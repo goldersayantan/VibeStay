@@ -1,0 +1,90 @@
+.signIn-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+}
+
+.signIn-card {
+  background: white;
+  padding: 30px 25px;
+  width: 350px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.signIn-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signIn-card label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.signIn-card input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.signIn-card input:focus {
+  border-color: #ff5a5f;
+}
+
+.signIn-btn {
+  width: 100%;
+  padding: 10px;
+  background: #ff5a5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.signIn-btn:hover {
+  background: #e04848;
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  font-size: 14px;
+  color: #777;
+}
+
+.google-btn {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.google-btn:hover {
+  background: #f1f1f1;
+}
+
+.forgot-link {
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}

@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vibestay - Find Your Perfect Vibe</title>
-    </head>
-    <body>
-        <%- include("../includes/flash.ejs") %>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibestay - Find Your Perfect Vibe</title>
+    <link rel="stylesheet" href="/stylesheets/boilerplate.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    body {
+        background-color: #f7f7f7;
+        color: #222;
+    }
+    main {
+        min-height: 100vh;
+    }
+    a {
+        color: inherit;
+    }
+</style>
+<body>
+    <%- include("../includes/flash.ejs") %>
+
+    <main>
         <%- body %>
-    </body>
+    </main>
+
+</body>
 </html>
