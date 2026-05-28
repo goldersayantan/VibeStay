@@ -6,25 +6,6 @@
   font-family: sans-serif;
 }
 
-/* Navbar */
-.navbar {
-  display: flex;
-  gap: 25px;
-  padding: 15px 40px;
-  background: white;
-  border-bottom: 1px solid #eee;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-}
-
-.navbar a:hover {
-  color: #ff5a5f;
-}
-
 /* Container */
 .container {
   max-width: 1200px;

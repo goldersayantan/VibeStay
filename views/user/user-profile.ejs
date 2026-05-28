@@ -1,0 +1,44 @@
+<% layout("../layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/stylesheets/user/user-profile.css">
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-left">
+            <img src="default-avatar.png" alt="Profile Image" class="profile-img">
+        </div>
+        <div class="profile-right">
+            <h2><%= user.username %></h2>
+            <p class="email"><%= user.email %></p>
+            <p class="joined">
+                Joined on:
+                <%= new Date(user.createdAt).toDateString() %>
+            </p>
+            <p class="listing-link">
+                <strong><%= listings.length %></strong> Listings Created
+            </p>
+            <div class="profile-actions">
+                <a href="/profile/<%= user._id %>/edit" class="btn edit-btn">Edit Profile</a>
+                <a href="/logout" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="recent-listings">
+        <h3>Your Recent Listings</h3>
+        <% if (listings.length === 0) { %>
+            <p>No listings created yet.</p>
+        <% } else { %>
+            <div class="listing-grid">
+                <% listings.forEach(listing => { %>
+                    <div class="listing-card">
+                        <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
+                        <h4><%= listing.title %></h4>
+                        <p>₹<%= listing.price %>/night</p>
+                        <a href="/listings/<%= listing._id %>">
+                            View
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</div>

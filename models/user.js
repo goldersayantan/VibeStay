@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     googleId:   {
         type: String,
         default: null
+    },
+    createdAt:  {
+        type: Date,
+        ddefault: Date.now
     }
 });
 

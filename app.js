@@ -48,6 +48,9 @@ app.engine("ejs", ejsMate);
 // Setup for CSS and JS
 app.use(express.static(path.join(__dirname, "public")));
 
+// Setup for assets
+app.use(express.static(path.join(__dirname, "assets")));
+
 app.get("/", (req, res) => {
     res.render("listings/landingPage.ejs");
 });
@@ -62,9 +65,6 @@ app.use(authRoutes);
 const passwordRoutes = require("./routes/passwordRoutes");
 app.use(passwordRoutes);
 
-app.get("/listings/:id/edit", (req, res) => {
-    res.render("/listings/edit");
-});
 
 app.use((err, req, res, next) => {
     if (err.code === "LIMIT_FILE_SIZE") {

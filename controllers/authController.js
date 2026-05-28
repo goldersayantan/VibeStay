@@ -5,6 +5,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const OTP = require("../models/otp");
 const sendEmail = require("../config/mailer.js");
+const Listing = require("../models/listing")
 
 const getSignIn = (req, res) => {
     res.render("user/signin");
@@ -66,9 +67,27 @@ const postSignUp = async (req, res) => {
     }
 };
 
+const getProfile = async(req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+        const listings = await Listing.find({
+            owner: user._id
+        });
+        res.render("user/user-profile", {
+            user,
+            listings
+        });
+    } catch (err) {
+        console.log(err);
+        req.flash("error", "Something went wrong");
+        res.redirect("/listings");
+    }
+};
+
 module.exports = {
     getSignIn,
     postSignIn,
     getSignUp,
-    postSignUp
+    postSignUp,
+    getProfile
 }

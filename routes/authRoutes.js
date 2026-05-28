@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("../config/passport");
 const authController = require("../controllers/authController.js");
+const { isLoggedIn } = require("../middleware/isLoggedIn.js");
 
 router.get("/signin", authController.getSignIn);
 router.post("/signin", authController.postSignIn);
@@ -22,4 +23,6 @@ router.get("/auth/google/callback",
         res.redirect("/listings");
     }
 );
+router.get("/profile", isLoggedIn, authController.getProfile);
+
 module.exports = router
