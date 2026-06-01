@@ -3,7 +3,8 @@
 <div class="profile-container">
     <div class="profile-card">
         <div class="profile-left">
-            <img src="default-avatar.png" alt="Profile Image" class="profile-img">
+            <!-- <img src="default-avatar.png" alt="Profile Image" class="profile-img"> -->
+             <img src="<%= user.profileImage?.url || 'default-avatar.png' %>" alt="Profile Image" class="profile-img">
         </div>
         <div class="profile-right">
             <h2><%= user.username %></h2>
@@ -16,7 +17,7 @@
                 <strong><%= listings.length %></strong> Listings Created
             </p>
             <div class="profile-actions">
-                <a href="/profile/<%= user._id %>/edit" class="btn edit-btn">Edit Profile</a>
+                <a href="/profile/edit" class="btn edit-btn">Edit Profile</a>
                 <a href="/logout" class="btn logout-btn">Logout</a>
             </div>
         </div>

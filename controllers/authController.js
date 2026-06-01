@@ -84,10 +84,28 @@ const getProfile = async(req, res) => {
     }
 };
 
+const getEditProfile = async(req, res) => {
+    const user = await User.findById(req.user._id);
+    res.render("user/edit-profile", {user});
+};
+
+const updateProfile = async(req, res) => {
+    const {username, aboutme, gender, dob, country, city, pincode} = req.body;
+    await User.findByIdAndUpdate(
+        req.user._id,
+        {username, aboutme, gender, dob, location: {country, city, pincode}},
+        {new: true}
+    );
+    req.flash("success", "Profile Updated Successfully");
+    res.redirect("/profile");
+};
+
 module.exports = {
     getSignIn,
     postSignIn,
     getSignUp,
     postSignUp,
-    getProfile
+    getProfile,
+    getEditProfile,
+    updateProfile
 }

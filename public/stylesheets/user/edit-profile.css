@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.edit-profile-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.edit-profile-container h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.edit-profile-container form {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.edit-profile-container label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.edit-profile-container input[type="text"],
+.edit-profile-container input[type="email"],
+.edit-profile-container input[type="number"],
+.edit-profile-container input[type="date"],
+.edit-profile-container textarea,
+.edit-profile-container select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+.edit-profile-container input:focus,
+.edit-profile-container textarea:focus,
+.edit-profile-container select:focus {
+  border-color: #ff5a5f;
+}
+
+.edit-profile-container textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.edit-profile-container input[readonly] {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.edit-profile-container input[type="radio"] {
+  width: auto;
+  margin-right: 6px;
+  accent-color: #ff5a5f;
+}
+
+.edit-profile-container label:has(input[type="radio"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.edit-profile-container button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #ff5a5f;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.edit-profile-container button:hover {
+  background: #e04848;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+@media (max-width: 768px) {
+  .edit-profile-container {
+    padding: 10px;
+  }
+
+  .edit-profile-container form {
+    padding: 20px;
+  }
+
+  .edit-profile-container h2 {
+    font-size: 24px;
+  }
+
+  .edit-profile-container label:has(input[type="radio"]) {
+    display: flex;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+}

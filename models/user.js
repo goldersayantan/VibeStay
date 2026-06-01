@@ -14,6 +14,33 @@ const userSchema = new mongoose.Schema({
     createdAt:  {
         type: Date,
         ddefault: Date.now
+    },
+    aboutme:    {
+        type: String,
+        default: ""
+    },
+    gender: {
+        type: String,
+        enum: ["Male", "Female", "Non-Binary", "Prefer-Not-To-Say"],
+        default: null
+    },
+    dob:    {
+        type: Date,
+        default: null
+    },
+    location:   {
+        country:    {
+            type: String,
+            default: ""
+        },
+        city:   {
+            type: String,
+            default: "" 
+        },
+        pincode:    {
+            type: Number,
+            default: ""
+        }
     }
 });
 
