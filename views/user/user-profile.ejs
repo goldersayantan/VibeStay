@@ -33,7 +33,7 @@
                     <div class="listing-card">
                         <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
                         <h4><%= listing.title %></h4>
-                        <p>₹<%= listing.price %>/night</p>
+                        <p>Starting from: ₹<%= listing.startingPrice %>/night</p>
                         <a href="/listings/<%= listing._id %>">
                             View
                         </a>

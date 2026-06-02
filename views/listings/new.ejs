@@ -29,20 +29,80 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Room Types</label>
-                <div class="inline-options">
-                    <label><input type="checkbox" name="roomTypes[]" value="single-room">Single Room (1 person, 1 single bed)</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="double-room">Double Room (2 person, 1 double bed)</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="twin-room">Twin Room (2 person, 2 single bed)</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="triple-room">Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="quad-room">Quad Room (4 person)</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="queen-room">Queen Room</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="king-room">King Room</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="studio-room">Studio Room</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="suite-room">Suite</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="deluxe-room">Deluxe Room</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="family-room">Family Room</label>
-                    <label><input type="checkbox" name="roomTypes[]" value="hostel-room">Dormitory / Hostel Room</label>
+                <label>Room Details</label>
+                <div class="room-types-container">
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[0][roomType]" value="single-room">
+                        <label>Single Room (1 person, 1 single bed)</label>
+                        <input type="number" name="roomTypes[0][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[0][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[1][roomType]" value="double-room">
+                        <label>Double Room (2 person, 1 double bed)</label>
+                        <input type="number" name="roomTypes[1][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[1][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[2][roomType]" value="twin-room">
+                        <label>Twin Room (2 person, 2 single bed)</label>
+                        <input type="number" name="roomTypes[2][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[2][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[3][roomType]" value="triple-room">
+                        <label>Triple Room (3 person, 3 single bed or 1 double + 1 single)</label>
+                        <input type="number" name="roomTypes[3][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[3][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[4][roomType]" value="quad-room">
+                        <label>Quad Room (4 person)</label>
+                        <input type="number" name="roomTypes[4][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[4][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[5][roomType]" value="queen-room">
+                        <label>Queen Room</label>
+                        <input type="number" name="roomTypes[5][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[5][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[6][roomType]" value="king-room">
+                        <label>King Room</label>
+                        <input type="number" name="roomTypes[6][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[6][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[7][roomType]" value="studio-room">
+                        <label>Studio Room</label>
+                        <input type="number" name="roomTypes[7][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[7][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[8][roomType]" value="suite-room">
+                        <label>Suite Room</label>
+                        <input type="number" name="roomTypes[8][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[8][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[9][roomType]" value="deluxe-room">
+                        <label>Deluxe Room</label>
+                        <input type="number" name="roomTypes[9][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[9][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[10][roomType]" value="family-room">
+                        <label>Family Room</label>
+                        <input type="number" name="roomTypes[10][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[10][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
+                    <div class="room-row">
+                        <input type="hidden" name="roomTypes[11][roomType]" value="hostel-room">
+                        <label>Dormitory / Hostel Room</label>
+                        <input type="number" name="roomTypes[11][totalRooms]" min="0" placeholder="Available Rooms">
+                        <input type="number" name="roomTypes[11][pricePerNight]" min="0" placeholder="Price / Night">
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -263,10 +323,6 @@
             <div class="form-group">
                 <label>Enter Nearby landmarks:</label> 
                 <input type="text" id="landmark" name="landmark" placeholder="Enter nearby landmark" required>
-            </div>
-            <div class="form-group">
-                <label>Price per night:</label>
-                <input type="number" id="price" name="price" placeholder="Enter price per night" min="0" required>/ Night
             </div>
             <div class="form-group">
                 <label>Enter email address:</label>

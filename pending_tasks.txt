@@ -9,3 +9,4 @@ Notifications
 Payments
 AI Recommendations
 SEO
+AVoid Temporary Email

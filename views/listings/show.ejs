@@ -12,10 +12,26 @@
     </div>
     
     <div class="details">
-        <p class="price">₹ <%= listing.price %></p>
         <p><strong>Description:</strong> <%= listing.description %></p>
         <p><strong>Property Type:</strong> <%= listing.propertyType %></p>
-        <p><strong>Room Available:</strong> <%= listing.roomTypes %></p>
+        <h3>Available Room Types</h3>
+
+        <div class="room-types-list">
+            <% listing.roomTypes.forEach(room => { %>
+                <div class="room-type-card">
+                    <p>
+                        <strong>Room Type:</strong>
+                        <%= room.roomType
+                            .split("-")
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(" ")
+                        %>
+                    </p>
+                    <p><strong>Available Rooms:</strong> <%= room.availableRooms %></p>
+                    <p><strong>Price per Night:</strong> ₹ <%= room.pricePerNight %></p>
+                </div>
+            <% }) %>
+        </div>
         <p>
             <strong>Location:</strong>
             <%= listing.location.address %>,

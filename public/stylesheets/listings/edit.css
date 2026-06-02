@@ -125,3 +125,64 @@ textarea {
 .submit-btn:hover {
   background: #e04848;
 }
+
+.room-types-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.room-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+
+    padding: 15px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    background-color: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.room-row:hover {
+    border-color: #ff5a5f;
+    background-color: #fff;
+}
+
+.room-row label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    text-transform: capitalize;
+}
+
+.room-row input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.room-row input[type="number"]:focus {
+    border-color: #ff5a5f;
+}
+
+.room-row input[type="number"]::placeholder {
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .room-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .room-row label {
+        margin-bottom: 4px;
+    }
+}

@@ -6,7 +6,20 @@ const cloudinary = require("../config/cloudConfig");
 const upload = require("../config/multer");
 
 const getAllListings = async (req, res) => {
-    const allListings = await Listing.find({}).populate("owner");
+    const listings = await Listing.find({})
+        .populate("owner")
+        .lean();
+
+    const allListings = listings.map(listing => ({
+        ...listing,
+        startingPrice:
+            listing.roomTypes?.length > 0
+                ? Math.min(
+                    ...listing.roomTypes.map(room => room.pricePerNight)
+                )
+                : 0
+    }));
+
     res.render("listings/index", { allListings });
 };
 
@@ -21,13 +34,23 @@ const postNewListing = async (req, res) => {
             return res.redirect("/listings/new");
         }
         let roomTypes = req.body.roomTypes;
-        if (!roomTypes) {
-            req.flash("error", "Please select at least one room type");
+        if (!roomTypes || !Array.isArray(roomTypes)) {
+            req.flash("error", "Please provide room details");
             return res.redirect("/listings/new");
         }
-        if (!Array.isArray(roomTypes)) {
-            roomTypes = [roomTypes];
+        roomTypes = roomTypes
+            .filter(room => Number(room.totalRooms) > 0)
+            .map(room => ({
+                roomType: room.roomType,
+                totalRooms: Number(room.totalRooms),
+                availableRooms: Number(room.totalRooms),
+                pricePerNight: Number(room.pricePerNight)
+            }));
+        if(roomTypes.length === 0)  {
+            req.flash("error", "Please add at least one room type");
+            return res.redirect("/listings/new");
         }
+
         const uploadToCloudinary = (fileBuffer) => {
             return new Promise((resolve, reject) => {
                 cloudinary.uploader.upload_stream(
@@ -59,7 +82,6 @@ const postNewListing = async (req, res) => {
                 pincode: req.body.pincode,
                 landmark: req.body.landmark
             },
-            price: req.body.price,
             email: req.body.email,
             wifi: req.body.wifi,
             parking: req.body.parking,
@@ -96,6 +118,7 @@ const showListing = async(req, res) => {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
+
         res.render("listings/show", {listing});
     } catch(err)    {
         req.flash("error", "Something went wrong");
@@ -142,13 +165,45 @@ const updateListing = async (req, res) => {
             return res.redirect("/listings");
         }
 
+        // let roomTypes = req.body.roomTypes;
+        // if (!roomTypes) {
+        //     req.flash("error", "Please select at least one room type");
+        //     return res.redirect(`/listings/${id}/edit`);
+        // }
+        // if (!Array.isArray(roomTypes)) {
+        //     roomTypes = [roomTypes];
+        // }
+
         let roomTypes = req.body.roomTypes;
-        if (!roomTypes) {
-            req.flash("error", "Please select at least one room type");
+
+        if (!roomTypes || !Array.isArray(roomTypes)) {
+            req.flash("error", "Please provide room details");
             return res.redirect(`/listings/${id}/edit`);
         }
-        if (!Array.isArray(roomTypes)) {
-            roomTypes = [roomTypes];
+
+        roomTypes = roomTypes
+            .filter(room => Number(room.totalRooms) > 0)
+            .map(room => {
+                const existingRoom = listing.roomTypes.find(
+                    r => r.roomType === room.roomType
+                );
+
+                return {
+                    roomType: room.roomType,
+                    totalRooms: Number(room.totalRooms),
+
+                    // preserve availability if room already exists
+                    availableRooms: existingRoom
+                        ? existingRoom.availableRooms
+                        : Number(room.totalRooms),
+
+                    pricePerNight: Number(room.pricePerNight)
+                };
+            });
+
+        if (roomTypes.length === 0) {
+            req.flash("error", "Please add at least one room type");
+            return res.redirect(`/listings/${id}/edit`);
         }
 
         let deleteImages = req.body.deleteImages || [];
@@ -223,7 +278,6 @@ const updateListing = async (req, res) => {
             landmark: req.body.landmark
         };
 
-        listing.price = req.body.price;
         listing.email = req.body.email;
         listing.wifi = req.body.wifi;
         listing.parking = req.body.parking;

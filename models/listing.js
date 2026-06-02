@@ -25,9 +25,25 @@ const listingSchema = new mongoose.Schema({
     },
     roomTypes:  [
         {
-            type: String,
-            enum:   ["single-room", "double-room", "twin-room", "triple-room", "quad-room", "queen-room", "king-room", "studio-room", "suite-room", "deluxe-room", "family-room", "hostel-room"],
-            required: true
+            roomType:   {
+                type: String,
+                enum:   ["single-room", "double-room", "twin-room", "triple-room", "quad-room", "queen-room", "king-room", "studio-room", "suite-room", "deluxe-room", "family-room", "hostel-room"],
+                required: true
+            },
+            totalRooms: {
+                type: Number,
+                required: true,
+                min: 0
+            },
+            availableRooms: {
+                type: Number,
+                required: true
+            },
+            pricePerNight:  {
+                type: Number,
+                required: true,
+                min: 0
+            }
         }
     ],
     location:   {
@@ -51,11 +67,6 @@ const listingSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    },
-    price:  {
-        type: Number,
-        required: true,
-        min: 0
     },
     email:  {
         type: String,

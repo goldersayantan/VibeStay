@@ -67,16 +67,28 @@ const postSignUp = async (req, res) => {
     }
 };
 
-const getProfile = async(req, res) => {
+const getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
+
         const listings = await Listing.find({
             owner: user._id
         });
+
+        listings.forEach(listing => {
+            listing.startingPrice =
+                listing.roomTypes?.length > 0
+                    ? Math.min(
+                        ...listing.roomTypes.map(room => room.pricePerNight)
+                    )
+                    : 0;
+        });
+
         res.render("user/user-profile", {
             user,
             listings
         });
+
     } catch (err) {
         console.log(err);
         req.flash("error", "Something went wrong");

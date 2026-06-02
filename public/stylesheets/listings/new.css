@@ -96,3 +96,33 @@ textarea {
 .submit-btn:hover {
   background: #e04848;
 }
+
+.room-types-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.room-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+
+  padding: 15px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.room-row label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.room-row input[type="number"] {
+  width: 100%;
+}

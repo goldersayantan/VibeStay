@@ -68,3 +68,21 @@
   background-color: #e74c3c;
   color: white;
 }
+
+.room-types-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.room-type-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.room-type-card p {
+    margin: 5px 0;
+}
