@@ -15,12 +15,15 @@
         <p class="price">₹ <%= listing.price %></p>
         <p><strong>Description:</strong> <%= listing.description %></p>
         <p><strong>Property Type:</strong> <%= listing.propertyType %></p>
+        <p><strong>Room Available:</strong> <%= listing.roomTypes %></p>
         <p>
             <strong>Location:</strong>
             <%= listing.location.address %>,
             <%= listing.location.city %>,
             <%= listing.location.country %>
         </p>
+        <p><strong>Wifi Availability:</strong> <%= listing.wifi %></p>
+        <p><strong>Parking Availability:</strong> <%= listing.parking %></p>
     </div>
     <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
         <div class="actions">
