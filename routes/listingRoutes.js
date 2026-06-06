@@ -11,5 +11,6 @@ router.get("/listings/:id/edit", isLoggedIn, listingController.getEditListing);
 router.get("/listings/:id", listingController.showListing);
 router.delete("/listings/:id", isLoggedIn, listingController.deleteListing);
 router.put("/listings/:id", isLoggedIn, upload.array("images", 5), listingController.updateListing);
+router.get("/listings/:id/check-availability", listingController.chechAvailability);
 
 module.exports = router

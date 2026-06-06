@@ -27,7 +27,7 @@
                             .join(" ")
                         %>
                     </p>
-                    <p><strong>Available Rooms:</strong> <%= room.availableRooms %></p>
+                    <p><strong>Total Rooms:</strong> <%= room.totalRooms %></p>
                     <p><strong>Price per Night:</strong> ₹ <%= room.pricePerNight %></p>
                 </div>
             <% }) %>
@@ -50,6 +50,18 @@
             </form>
         </div>
     <% } %>
+</div>
+
+<div class="availability-section">
+    <h3>Check Availability</h3>
+    <form id="availabilityForm">
+        <label>Check In</label>
+        <input type="date" name="checkIn" id="checkIn" required>
+        <label>Check Out</label>
+        <input type="date" name="checkOut" id="checkOut" required>
+        <button type="submit">Check Availability</button>
+    </form>
+    <div id="availabilityResults"></div>
 </div>
 
 <script src="/scripts/listings/show.js"></script>

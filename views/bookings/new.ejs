@@ -1,0 +1,49 @@
+<% layout("../layouts/boilerplate.ejs") %>
+<link rel="stylesheet" href="/stylesheets/bookings/new.css">
+<div class="booking-container">
+    <h1 class="booking-title">Booking Request</h1>
+    <h2 class="hotel-name"><%= listing.title %></h2>
+    <div class="booking-dates">
+        <p>
+            <strong>Check In:</strong>
+            <%= checkIn %>
+        </p>
+        <p>
+            <strong>Check Out</strong>
+            <%= checkOut %>
+        </p>
+    </div>
+    
+    <form action="/bookings" method="post">
+        <input type="hidden" name="listingId" value="<%= listing._id %>">
+        <input type="hidden" name="checkIn" value="<%= checkIn %>">
+        <input type="hidden" name="checkOut" value="<%= checkOut %>">
+        <div class="rooms-grid">
+            <% availableRooms.forEach(room => { %>
+                <div class="room-selection">
+                    <h3><%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %></h3>
+                    <p>
+                        Available:
+                        <%= room.availableRooms %>
+                    </p>
+                    <p>
+                        ₹<%= room.pricePerNight %> / Night
+                    </p>
+                    <label>Quantity</label>
+                    <input type="number" name="rooms[<%= room.roomId %>]" min="0" max="<%= room.availableRooms %>" value="0" class="roomQty" data-price="<%= room.pricePerNight %>">
+                </div>
+            <% }) %>
+        </div>
+        
+        <div class="price-box">
+            <h3>
+                Total Price:
+                ₹<span id="totalPrice">0</span>
+            </h3>
+        </div>
+        <button type="submit" class="submit-btn">Submit Booking Request</button>
+    </form>
+</div>
+
+
+<script src="/scripts/bookings/new.js"></script>

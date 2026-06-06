@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 const {isLoggedIn} = require("../middleware/isLoggedIn");
 const cloudinary = require("../config/cloudConfig");
 const upload = require("../config/multer");
@@ -165,15 +166,6 @@ const updateListing = async (req, res) => {
             return res.redirect("/listings");
         }
 
-        // let roomTypes = req.body.roomTypes;
-        // if (!roomTypes) {
-        //     req.flash("error", "Please select at least one room type");
-        //     return res.redirect(`/listings/${id}/edit`);
-        // }
-        // if (!Array.isArray(roomTypes)) {
-        //     roomTypes = [roomTypes];
-        // }
-
         let roomTypes = req.body.roomTypes;
 
         if (!roomTypes || !Array.isArray(roomTypes)) {
@@ -294,7 +286,37 @@ const updateListing = async (req, res) => {
     }
 };
 
-module.exports = {getAllListings, getNewListing, postNewListing, getEditListing, showListing, deleteListing, updateListing};
+const chechAvailability = async(req, res) => {
+    const {id} = req.params;
+    const {checkIn, checkOut} = req.query;
+    const listing = await Listing.findById(id);
+    const roomAvailability = [];
+    for(const room of listing.roomTypes)    {
+        const bookings = await Booking.find({
+            listing: id,
+            roomTypeId: room._id,
+            status: "confirmed",
+            checkIn:    {
+                $lt: new Date(checkOut)
+            },
+            checkOut:   {
+                $gt: new Date(checkIn)
+            }
+        });
+        const occupiedRooms = bookings.reduce(
+            (sum, booking) => sum + booking.roomsBooked, 0
+        );
+        roomAvailability.push({
+            roomId: room._id,
+            roomType: room.roomType,
+            availableRooms: room.totalRooms - occupiedRooms,
+            pricePerNight: room.pricePerNight
+        });
+    }
+    res.json(roomAvailability);
+};
+
+module.exports = {getAllListings, getNewListing, postNewListing, getEditListing, showListing, deleteListing, updateListing, chechAvailability};
 
 
 

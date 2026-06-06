@@ -35,10 +35,6 @@ const listingSchema = new mongoose.Schema({
                 required: true,
                 min: 0
             },
-            availableRooms: {
-                type: Number,
-                required: true
-            },
             pricePerNight:  {
                 type: Number,
                 required: true,
