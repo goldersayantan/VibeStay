@@ -3,6 +3,7 @@ const router = express.Router();
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
 const {isLoggedIn} = require("../middleware/isLoggedIn");
+const getAvailableRooms = require("../utils/checkRoomAvailability");
 
 const getBookingForm = async(req, res) => {
     const {listingId, checkIn, checkOut} = req.query;
@@ -11,7 +12,7 @@ const getBookingForm = async(req, res) => {
     for(const room of listing.roomTypes) {
         const bookings = await Booking.find({
             listing: listingId,
-            status: "confirmed",
+            status: "approved",
             roomTypeId: room._id,
             checkIn: {$lt: new Date(checkOut)},
             checkOut: {$gt: new Date(checkIn)}
@@ -68,13 +69,67 @@ const approveBooking = async(req, res) => {
             req.flash("error", "Booking Not found");
             return res.redirect("/profile");
         }
+        for(const room of booking.rooms)    {
+            const available = await getAvailableRooms(
+                booking.listing,
+                room.roomTypeId,
+                booking.checkIn,
+                booking.checkOut
+            );
+            if(room.quantity > available)   {
+                booking.status = "rejected";
+                await booking.save();
+                req.flash("error", "Booking rejected because rooms are no longer available.");
+                return res.redirect("/profile");
+            }
+        }
         booking.status = "approved";
         await booking.save();
+        await rejectConflictingBookings(booking);
         req.flash("success", "Booking Approved Successfully");
         res.redirect("/profile");
     } catch(err)    {
         console.log(err);
         req.flash("error", "Something went wrong");
+    }
+};
+
+const rejectConflictingBookings = async(approveBooking) => {
+    const pendingBookings = await Booking.find({
+        listing:
+            approveBooking.listing,
+        status: "pending",
+        _id:    {
+            $ne: approveBooking._id
+        },
+        checkIn:    {
+            $lt: approveBooking.checkOut
+        },
+        checkOut:    {
+            $gt: approveBooking.checkIn
+        }
+    });
+
+    for(const booking of pendingBookings) {
+        let valid = true;
+        for(const room of booking.rooms) {
+            const available =
+                await getAvailableRooms(
+                    booking.listing,
+                    room.roomTypeId,
+                    booking.checkIn,
+                    booking.checkOut
+                );
+            if(room.quantity > available) {
+                valid = false;
+                break;
+            }
+        }
+        if(!valid) {
+            booking.status =
+                "rejected";
+            await booking.save();
+        }
     }
 };
 
