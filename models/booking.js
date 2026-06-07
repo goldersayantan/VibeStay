@@ -8,15 +8,32 @@ const bookingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    host:   {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
     roomTypeId: {
         type: mongoose.Schema.Types.ObjectId
     },
-    roomsBooked: Number,
+    rooms:  [
+        {
+            roomTypeId: mongoose.Schema.Types.ObjectId,
+            roomType: String,
+            quantity: Number,
+            pricePerNight: Number
+        }
+    ],
     checkIn: Date,
     checkOut: Date,
+    totalPrice: Number,
     status: {
         type: String,
-        default: "confirmed"
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    },
+    createdAt:  {
+        type: Date,
+        default: Date.now
     }
 });
 

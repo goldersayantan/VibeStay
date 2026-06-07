@@ -5,7 +5,8 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const OTP = require("../models/otp");
 const sendEmail = require("../config/mailer.js");
-const Listing = require("../models/listing")
+const Listing = require("../models/listing");
+const Booking = require("../models/booking.js");
 
 const getSignIn = (req, res) => {
     res.render("user/signin");
@@ -70,11 +71,19 @@ const postSignUp = async (req, res) => {
 const getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
-
         const listings = await Listing.find({
             owner: user._id
         });
 
+        const myBookings = await Booking.find({
+            user: user._id
+        }).populate("listing").sort({createdAt: -1});
+
+        const bookingRequests = await Booking.find({
+            host: user._id,
+            status: "pending"
+        }).populate("user").populate("listing");
+        
         listings.forEach(listing => {
             listing.startingPrice =
                 listing.roomTypes?.length > 0
@@ -86,7 +95,9 @@ const getProfile = async (req, res) => {
 
         res.render("user/user-profile", {
             user,
-            listings
+            listings,
+            bookingRequests,
+            myBookings
         });
 
     } catch (err) {

@@ -294,8 +294,7 @@ const chechAvailability = async(req, res) => {
     for(const room of listing.roomTypes)    {
         const bookings = await Booking.find({
             listing: id,
-            roomTypeId: room._id,
-            status: "confirmed",
+            status: "approved",
             checkIn:    {
                 $lt: new Date(checkOut)
             },
@@ -303,9 +302,15 @@ const chechAvailability = async(req, res) => {
                 $gt: new Date(checkIn)
             }
         });
-        const occupiedRooms = bookings.reduce(
-            (sum, booking) => sum + booking.roomsBooked, 0
-        );
+        let occupiedRooms = 0;
+        bookings.forEach(booking => {
+            const bookedRoom = booking.rooms.find(
+                r => r.roomTypeId.toString() === room._id.toString()
+            );
+            if(bookedRoom)  {
+                occupiedRooms += bookedRoom.quantity;
+            }
+        });
         roomAvailability.push({
             roomId: room._id,
             roomType: room.roomType,

@@ -3,7 +3,6 @@
 <div class="profile-container">
     <div class="profile-card">
         <div class="profile-left">
-            <!-- <img src="default-avatar.png" alt="Profile Image" class="profile-img"> -->
              <img src="<%= user.profileImage?.url || 'default-avatar.png' %>" alt="Profile Image" class="profile-img">
         </div>
         <div class="profile-right">
@@ -21,6 +20,109 @@
                 <a href="/logout" class="btn logout-btn">Logout</a>
             </div>
         </div>
+    </div>
+
+    <div class="my-bookings">
+        <h3>My Bookings</h3>
+        <% if(myBookings.length === 0)  { %>
+            <p>No bookings yet.</p>
+        <% }else    { %>
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Rooms</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% myBookings.forEach(booking => { %>
+                        <tr>
+                            <td>
+                                <%= booking.listing.title %>
+                            </td>
+                            <td>
+                                <%= new Date(booking.checkIn).toDateString() %>
+                            </td>
+                            <td>
+                                <%= new Date(booking.checkOut).toDateString() %>
+                            </td>
+                            <td>
+                                <% booking.rooms.forEach(room => { %>
+                                    <div>
+                                        <%= room.quantity %> x
+                                        <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+                                    </div>
+                                <% }) %>
+                            </td>
+                            <td>
+                                ₹<%= booking.totalPrice %>
+                            </td>
+                            <td>
+                                <% if(booking.status === "pending") { %>
+                                    <span class="status-pending">Pending</span>
+                                <% }else if(booking.status == "approved")   { %>
+                                    <span class="status-approved">Approved</span>
+                                <% }else    { %>
+                                    <span class="status-rejected">Rejected</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+
+    <div class="booking-requests">
+        <h3>Booking Requests</h3>
+        <% if(bookingRequests.length === 0) {%>
+            <p>No Pending Booking Requests.</p>
+        <% }else    { %>
+            <table class="booking-table">
+                <thead>
+                    <tr>
+                        <th>Guests</th>
+                        <th>Property</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Total Price</th>
+                        <th>Rooms</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookingRequests.forEach(booking => { %>
+                        <tr>
+                            <td><%= booking.user.username %></td>
+                            <td><%= booking.listing.title %></td>
+                            <td><%= new Date(booking.checkIn).toDateString() %></td>
+                            <td><%= new Date(booking.checkOut).toDateString() %></td>
+                            <td>₹<%= booking.totalPrice %></td>
+                            <td>
+                                <% booking.rooms.forEach(room => { %>
+                                    <div>
+                                        <%= room.quantity %>
+                                        <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+                                    </div>
+                                <% }) %>
+                            </td>
+                            <td>
+                                <form action="/bookings/<%= booking._id %>/approve" method="POST" style="display:inline;">
+                                    <button type="submit" class="approve-btn">Approve</button>
+                                </form>
+                                <form action="/bookings/<%= booking._id %>/reject" method="POST" style="display:inline;">
+                                    <button type="submit" class="reject-btn">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
     </div>
 
     <div class="recent-listings">
