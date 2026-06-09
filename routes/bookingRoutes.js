@@ -7,5 +7,5 @@ router.get("/bookings/new", isLoggedIn, bookingController.getBookingForm);
 router.post("/bookings", isLoggedIn, bookingController.createBooking);
 router.post("/bookings/:id/approve", isLoggedIn, bookingController.approveBooking);
 router.post("/bookings/:id/reject", isLoggedIn, bookingController.rejectBooking);
-
+router.post("/bookings/:id/cancel", isLoggedIn, bookingController.cancelBooking);
 module.exports = router;

@@ -93,11 +93,20 @@ const getProfile = async (req, res) => {
                     : 0;
         });
 
+        const approvedBookings = await Booking.find({
+            host: user._id,
+            status: "approved",
+            checkOut:   {
+                $gte: new Date()
+            }
+        }).populate("user").populate("listing");
+
         res.render("user/user-profile", {
             user,
             listings,
             bookingRequests,
-            myBookings
+            myBookings,
+            approvedBookings
         });
 
     } catch (err) {

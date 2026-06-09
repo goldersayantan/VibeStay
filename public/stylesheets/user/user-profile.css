@@ -55,6 +55,11 @@
     font-weight: 600;
 }
 
+.status-cancelled {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
 .status-rejected {
     color: #e74c3c;
     font-weight: 600;

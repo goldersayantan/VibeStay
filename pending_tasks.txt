@@ -10,3 +10,4 @@ Payments
 AI Recommendations
 SEO
 AVoid Temporary Email
+Showing Email on HOST dashboard

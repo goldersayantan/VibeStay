@@ -151,4 +151,35 @@ const rejectBooking = async(req, res) => {
     }
 };
 
-module.exports = {getBookingForm, createBooking, approveBooking, rejectBooking};
+const cancelBooking = async(req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+        if(!booking)    {
+            req.flash("error", "Booking not found.");
+            return res.redirect("/profile");
+        }
+        if(booking.user.toString() !== req.user._id.toString()) {
+            req.flash("error", "Unauthorized");
+            return res.redirect("/profile");
+        }
+        const oneDayBefore = new Date(booking.checkIn);
+        oneDayBefore.setDate(oneDayBefore.getDate() - 1);
+        if(new Date() >= oneDayBefore)  {
+            req.flash("error", "Booking can only be cancelled at least 1 day before check-in");
+            return res.redirect("/profile");
+        }
+        if(booking.status !== "pending" && booking.status !== "approved")   {
+            req.flash("error", "This booking cannot be cancelled");
+            return res.redirect("/profile");
+        }
+        booking.status = "cancelled";
+        await booking.save();
+        req.flash("success", "Booking cancelled successfully.");
+        res.redirect("/profile");
+    }catch(err) {
+        req.flash("error", "Something went wrong");
+        res.redirect("/profile")
+    }
+}
+
+module.exports = {getBookingForm, createBooking, approveBooking, rejectBooking, cancelBooking};
