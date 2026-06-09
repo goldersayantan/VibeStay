@@ -59,7 +59,21 @@ const createBooking = async(req, res) => {
         status: "pending"
     });
     await booking.save();
-    res.send("Booking Request Saved");
+    const sendEmail = require("../config/mailer");
+    const bookingPendingUser = require("../emails/bookingPendingUser");
+    const bookingPendingHost = require("../emails/bookingPendingHost");
+    await listing.populate("owner");
+    await sendEmail(
+        req.user.email, 
+        "Booking Request Submitted", 
+        bookingPendingUser(booking)
+    );
+    await sendEmail(
+        listing.owner.email,
+        "New booking Request",
+        bookingPendingHost(booking)
+    );
+    res.redirect("/profile");
 };
 
 const approveBooking = async(req, res) => {
@@ -85,6 +99,13 @@ const approveBooking = async(req, res) => {
         }
         booking.status = "approved";
         await booking.save();
+        await booking.populate("user");
+        const bookingApproved = require("../emails/bookingApproved");
+        await sendEmail(
+            booking.user.email,
+            "Booking Approved",
+            bookingApproved(booking)
+        );
         await rejectConflictingBookings(booking);
         req.flash("success", "Booking Approved Successfully");
         res.redirect("/profile");
@@ -142,6 +163,13 @@ const rejectBooking = async(req, res) => {
         }
         booking.status = "rejected";
         await booking.save();
+        await booking.populate("user");
+        const bookingRejected = require("../emails/bookingRejected");
+        await sendEmail(
+            booking.user.email,
+            "Booking Rejected",
+            bookingRejected(booking)
+        );
         req.flash("success", "Booking rejected successfully");
         res.redirect("/profile");
     }catch(err) {   
@@ -174,6 +202,19 @@ const cancelBooking = async(req, res) => {
         }
         booking.status = "cancelled";
         await booking.save();
+        await booking.populate(["user", "host", "listing"]);
+        const bookingCancelledUser = require("../emails/bookingCancelledUser");
+        await sendEmail(
+            booking.user.email,
+            "Booking Cancelled",
+            bookingCancelledUser(booking)
+        );
+        const bookingCancelledHost = require("../emails/bookingCancelledHost");
+        await sendEmail(
+            booking.host.email,
+            "Guest Cancelled Booking",
+            bookingCancelledHost(booking)
+        );
         req.flash("success", "Booking cancelled successfully.");
         res.redirect("/profile");
     }catch(err) {
