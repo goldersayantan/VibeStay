@@ -78,6 +78,12 @@ const listingSchema = new mongoose.Schema({
         enum: ["parking-available", "parking-not-available"],
         required: true
     },
+    reviews:    [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Review"
+        }
+    ],
     createdAt:  {
         type: Date,
         default: Date.now

@@ -114,15 +114,22 @@ const getEditListing = async(req, res) => {
 
 const showListing = async(req, res) => {
     try {
-        const listing = await Listing.findById(req.params.id).populate("owner");
+        const listing = await Listing.findById(req.params.id)
+            .populate("owner")
+            .populate({
+                path: "reviews",
+                populate:   {
+                    path: "user"
+                }
+            });
         if(!listing)    {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
-
         res.render("listings/show", {listing});
     } catch(err)    {
         req.flash("error", "Something went wrong");
+        console.log(err);
         res.redirect("/listings");
     }
 };

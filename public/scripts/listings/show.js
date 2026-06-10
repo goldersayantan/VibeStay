@@ -47,3 +47,32 @@ form.addEventListener("submit", async(e) => {
     }
     document.getElementById("availabilityResults").innerHTML = html;
 });
+
+const stars = document.querySelectorAll(".star");
+const ratingInput = document.getElementById("rating-value");
+let selectedRating = 0;
+
+function highlightStars(value)  {
+    stars.forEach(star => {
+        if(star.dataset.value <= value) {
+            star.classList.add("active");
+        }else   {
+            star.classList.remove("active");
+        }
+    })
+}
+
+stars.forEach(star => {
+    star.addEventListener("mouseover", () => {
+        const value = star.dataset.value;
+        highlightStars(value);
+    });
+    star.addEventListener("click", () => {
+        selectedRating = star.dataset.value;
+        ratingInput.value = selectedRating;
+        highlightStars(selectedRating);
+    });
+    star.addEventListener("mouseout", () => {
+        highlightStars(selectedRating);
+    });
+});
