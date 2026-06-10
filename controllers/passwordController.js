@@ -3,7 +3,7 @@ const router = express.Router();
 const OTP = require("../models/otp");
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
-const sendEmail = require("../config/mailer");
+const sendEmail = require("../config/sendEmail");
 
 const getVerifyOTP = (req, res)   => {
     res.redirect("/signup");
@@ -73,10 +73,11 @@ const postForgetPassword = async (req, res) => {
             email,
             otp: hashedOtp
         });
+        const otpTemplate = require("../emails/otpTemplate");
         await sendEmail(
             email,
             "Password Reset OTP",
-            `<h2>Your OTP is: ${otp}</h2><p>Valid for 5 minutes</p>`
+            otpTemplate(username, otp)
         );
         req.flash("success", "OTP sent successfully.");
         res.render("user/reset-password", {email});

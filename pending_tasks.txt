@@ -1,5 +1,3 @@
-User Profiles
-Booking System
 Reviews & Ratings
 Wishlist
 Map Integration
@@ -10,4 +8,3 @@ Payments
 AI Recommendations
 SEO
 AVoid Temporary Email
-Showing Email on HOST dashboard

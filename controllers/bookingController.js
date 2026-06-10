@@ -4,6 +4,7 @@ const Listing = require("../models/listing");
 const Booking = require("../models/booking");
 const {isLoggedIn} = require("../middleware/isLoggedIn");
 const getAvailableRooms = require("../utils/checkRoomAvailability");
+const sendEmail = require("../config/sendEmail.js");
 
 const getBookingForm = async(req, res) => {
     const {listingId, checkIn, checkOut} = req.query;
@@ -59,7 +60,7 @@ const createBooking = async(req, res) => {
         status: "pending"
     });
     await booking.save();
-    const sendEmail = require("../config/mailer");
+    
     const bookingPendingUser = require("../emails/bookingPendingUser");
     const bookingPendingHost = require("../emails/bookingPendingHost");
     await listing.populate("owner");

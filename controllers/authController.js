@@ -4,7 +4,7 @@ const passport = require("../config/passport");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const OTP = require("../models/otp");
-const sendEmail = require("../config/mailer.js");
+const sendEmail = require("../config/sendEmail.js");
 const Listing = require("../models/listing");
 const Booking = require("../models/booking.js");
 
@@ -55,10 +55,11 @@ const postSignUp = async (req, res) => {
             otp: hashedOtp,
             userData: { username, email, password }
         });
+        const otpTemplate = require("../emails/otpTemplate.js");
         await sendEmail(
             email,
             "OTP Verification",
-            `<h2>Your OTP is: ${otp}</h2><p>Valid for 5 minutes</p>`
+            otpTemplate(username, otp)
         );
         res.render("user/verify-otp", { email });
     } catch (err) {
