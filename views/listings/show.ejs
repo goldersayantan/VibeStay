@@ -64,26 +64,51 @@
     <div id="availabilityResults"></div>
 </div>
 
-<div class="review-section">
-    <h3>Leave a Review</h3>
-    <form action="/listings/<%= listing._id %>/reviews" method="post">
-        <label class="review-label">Your Rating</label>
-        <div class="star-rating">
-            <input type="hidden" name="rating" id="rating-value" required>
-            <span class="star" data-value="1">&#9733;</span>
-            <span class="star" data-value="2">&#9733;</span>
-            <span class="star" data-value="3">&#9733;</span>
-            <span class="star" data-value="4">&#9733;</span>
-            <span class="star" data-value="5">&#9733;</span>
+<% if(!userReview)  {%>
+    <div class="review-section">
+        <h3>Leave a Review</h3>
+        <p class="review-subtitle">
+            Share your experience with future guests.
+        </p>
+        <form action="/listings/<%= listing._id %>/reviews" method="post">
+            <label class="review-label">Your Rating</label>
+            <div class="star-rating">
+                <input type="hidden" name="rating" id="rating-value" required>
+                <span class="star" data-value="1">&#9733</span>
+                <span class="star" data-value="2">&#9733</span>
+                <span class="star" data-value="3">&#9733</span>
+                <span class="star" data-value="4">&#9733</span>
+                <span class="star" data-value="5">&#9733</span>
+            </div>
+            <label class="review-label">Your Review</label>
+            <textarea name="comment" rows="5" placeholder="Share your experience..." required></textarea>
+            <button type="submit" class="review-btn">Submit Review</button>
+        </form>
+    </div>
+<% }else    { %>
+    <div class="your-review-card">
+        <h3>Your Review</h3>
+        <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=PUT" method="post">
+            <div class="star-rating edit-stars">
+                <input type="hidden" name="rating" id="edit-rating-value" value="<%= userReview.rating %>">
+                <% for(let i = 1; i <= 5; i++)  { %>
+                    <span class="edit-star <%= i <= userReview.rating ? 'active' : '' %>" data-value="<%= i %>">
+                        &#9733
+                    </span>
+                <% } %>
+            </div>
+            <textarea name="comment" rows="5"><%= userReview.comment %></textarea>
+            <button type="submit" class="edit-btn">Save Changes</button>
+        </form>
+        <div class="review-action">
+            <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=DELETE" method="post">
+                <button type="submit" class="delete-btn">Delete Review</button>
+            </form>
         </div>
-        <label class="review-label">Your Review</label>
-        <textarea name="comment" rows="5" placeholder="Share your experience..." required></textarea>
-        <button type="submit" class="review-btn">Submit Review</button>
-    </form>
-</div>
+    </div>
+<% } %>
 
 <div class="reviews-container">
-    <h3>Reviews (<%= listing.reviews.length %>)</h3>
     <% if(listing.reviews.length > 0)   { %>
         <% listing.reviews.forEach(review => { %>
             <div class="review-card">

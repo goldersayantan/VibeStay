@@ -2,6 +2,7 @@ const today = new Date().toISOString().split("T")[0];
 document.getElementById("checkIn").min = today;
 document.getElementById("checkOut").min = today;
 
+// Availability Checking
 const form = document.getElementById("availabilityForm");
 form.addEventListener("submit", async(e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ form.addEventListener("submit", async(e) => {
     document.getElementById("availabilityResults").innerHTML = html;
 });
 
+// New Rating
 const stars = document.querySelectorAll(".star");
 const ratingInput = document.getElementById("rating-value");
 let selectedRating = 0;
@@ -76,3 +78,33 @@ stars.forEach(star => {
         highlightStars(selectedRating);
     });
 });
+
+// Editting Rating
+const editStars = document.querySelectorAll(".edit-star");
+const editRatingInput = document.getElementById("edit-rating-value");
+
+if (editStars.length && editRatingInput) {
+
+    editStars.forEach(star => {
+
+        star.addEventListener("click", () => {
+
+            console.log("clicked", star.dataset.value);
+
+            editRatingInput.value = star.dataset.value;
+
+            editStars.forEach(s => {
+
+                if(Number(s.dataset.value) <= Number(star.dataset.value)) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+
+            });
+
+        });
+
+    });
+
+}

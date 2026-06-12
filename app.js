@@ -68,6 +68,9 @@ app.use(passwordRoutes);
 const bookingRoutes = require("./routes/bookingRoutes");
 app.use(bookingRoutes);
 
+const reviewRoutes = require("./routes/reviewRoutes");
+app.use(reviewRoutes);
+
 
 app.use((err, req, res, next) => {
     if (err.code === "LIMIT_FILE_SIZE") {

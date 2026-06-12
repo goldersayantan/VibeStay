@@ -126,7 +126,13 @@ const showListing = async(req, res) => {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
-        res.render("listings/show", {listing});
+        let userReview = null;
+        if(req.user)    {
+            userReview = listing.reviews.find(
+                review => review.user._id.equals(req.user._id)
+            );
+        }
+        res.render("listings/show", {listing, userReview});
     } catch(err)    {
         req.flash("error", "Something went wrong");
         console.log(err);
