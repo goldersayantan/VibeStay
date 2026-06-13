@@ -41,6 +41,10 @@
     color: #666;
 }
 
+.section-heading    {
+    margin: 10px 0 10px 0;
+}
+
 .my-bookings {
     margin-top: 40px;
 }
@@ -66,12 +70,12 @@
 }
 
 .booking-requests {
-    margin-top: 30px;
-    margin-bottom: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .booking-requests h3 {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .booking-table {

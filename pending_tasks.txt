@@ -1,4 +1,3 @@
-Wishlist
 Map Integration
 Search & Filters
 Payments

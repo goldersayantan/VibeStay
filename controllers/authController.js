@@ -71,7 +71,7 @@ const postSignUp = async (req, res) => {
 
 const getProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user._id).populate("wishlist");
         const listings = await Listing.find({
             owner: user._id
         });
@@ -94,6 +94,15 @@ const getProfile = async (req, res) => {
                     : 0;
         });
 
+        user.wishlist.forEach(listing => {
+            listing.startingPrice = 
+                listing.roomTypes?.length > 0
+                    ? Math.min(
+                        ...listing.roomTypes.map(room => room.pricePerNight)
+                    )
+                    : 0;
+        });
+
         const approvedBookings = await Booking.find({
             host: user._id,
             status: "approved",
@@ -107,7 +116,8 @@ const getProfile = async (req, res) => {
             listings,
             bookingRequests,
             myBookings,
-            approvedBookings
+            approvedBookings,
+            wishlistListings: user.wishlist
         });
 
     } catch (err) {

@@ -23,7 +23,7 @@
     </div>
 
     <div class="my-bookings">
-        <h3>My Bookings</h3>
+        <h3 class="section-heading">My Bookings</h3>
         <% if(myBookings.length === 0)  { %>
             <p>No bookings yet.</p>
         <% }else    { %>
@@ -92,7 +92,7 @@
     </div>
 
     <div class="booking-requests">
-        <h3>Booking Requests</h3>
+        <h3 class="section-heading">Booking Requests</h3>
         <% if(bookingRequests.length === 0) {%>
             <p>No Pending Booking Requests.</p>
         <% }else    { %>
@@ -140,7 +140,7 @@
     </div>
 
     <div class="approved-bookings">
-        <h3>Approved Bookings</h3>
+        <h3 class="section-heading">Approved Bookings</h3>
         <% if(approvedBookings.length === 0)    { %>
             <p>No approved bookings.</p>
         <% }else    { %>
@@ -183,7 +183,7 @@
     </div>
 
     <div class="recent-listings">
-        <h3>Your Recent Listings</h3>
+        <h3 class="section-heading">Your Recent Listings</h3>
         <% if (listings.length === 0) { %>
             <p>No listings created yet.</p>
         <% } else { %>
@@ -201,4 +201,24 @@
             </div>
         <% } %>
     </div>
+
+    <div class="wishlist-section">
+        <h3 class="section-heading">My Wishlist</h3>
+        <% if(wishlistListings.length === 0)    { %>
+            <p>No listings in your wishlist yet.</p>
+        <% }else    { %>
+            <div class="listing-grid">
+                <% wishlistListings.forEach(listing => { %>
+                    <div class="listing-card">
+                        <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
+                        <h4><%= listing.title %></h4>
+                        <p>Starting From: ₹<%= listing.startingPrice %>/ night
+                        </p>
+                        <a href="/listings/<%= listing._id %>">View</a>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
 </div>
