@@ -133,6 +133,43 @@ const updateProfile = async(req, res) => {
     res.redirect("/profile");
 };
 
+const toggleWishlist = async(req, res) => {
+    try {
+        if(!req.user)   {
+            return res.status(401).json({
+                success: false,
+                message: "Please login first."
+            });
+        }
+        const {id} = req.params;
+        const user = await User.findById(req.user._id);
+        const exists = user.wishlist.some(
+            listingId => listingId.toString() === id
+        );
+        if(exists)  {
+            user.wishlist.pull(id);
+            await user.save();
+            return res.json({
+                success: true,
+                wishlisted: false,
+                message: "Listing removed from wishlist."
+            });
+        }
+        user.wishlist.push(id);
+        await user.save();
+        return res.json({
+            success: true,
+            wishlisted: true,
+            message: "Listing added to wishlist ❤️"
+        })
+    }catch(err) {
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong."
+        });
+    }
+};
+
 module.exports = {
     getSignIn,
     postSignIn,
@@ -140,5 +177,6 @@ module.exports = {
     postSignUp,
     getProfile,
     getEditProfile,
-    updateProfile
+    updateProfile,
+    toggleWishlist
 }

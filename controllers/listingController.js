@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
+const User = require("../models/user");
 const {isLoggedIn} = require("../middleware/isLoggedIn");
 const cloudinary = require("../config/cloudConfig");
 const upload = require("../config/multer");
@@ -11,6 +12,11 @@ const getAllListings = async (req, res) => {
         .populate("owner")
         .lean();
 
+    let wishlist = [];
+    if(req.user)    {
+        wishlist = req.user.wishlist?.map(id => id.toString()) || [];
+    }
+        
     const allListings = listings.map(listing => ({
         ...listing,
         startingPrice:
@@ -21,7 +27,7 @@ const getAllListings = async (req, res) => {
                 : 0
     }));
 
-    res.render("listings/index", { allListings });
+    res.render("listings/index", { allListings, wishlist });
 };
 
 const getNewListing = (req, res) => {

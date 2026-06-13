@@ -72,3 +72,68 @@
   color: black;
   font-size: 15px;
 }
+
+.listing-wrapper {
+    position: relative;
+}
+
+.listing-wrapper:hover .listing-card {
+    transform: translateY(-6px);
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    z-index: 1000;
+
+    border: none;
+    background: white;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wishlist-btn i {
+    font-size: 1.2rem;
+}
+
+.wishlist-btn .fa-solid {
+    color: red;
+}
+
+.wishlist-btn .fa-regular {
+  color: #999;
+}
+
+#toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    background-color: #333;
+    color: white;
+
+    padding: 12px 18px;
+    border-radius: 8px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: all 0.3s ease;
+
+    z-index: 9999;
+}
+
+#toast.show {
+    opacity: 1;
+    visibility: visible;
+}

@@ -41,7 +41,13 @@ const userSchema = new mongoose.Schema({
             type: Number,
             default: ""
         }
-    }
+    },
+    wishlist:   [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Listing"
+        }
+    ]
 });
 
 userSchema.plugin(passportLocalMongoose);

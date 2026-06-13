@@ -6,22 +6,26 @@
 
     <div class="listings">
         <% allListings.forEach(listing => { %>
-            <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
-                
-                <div class="listing-card">
-                    <img src="<%= listing.images[0].url %>" alt="image">
-
-                    <div class="card-body">
-                        <h2><%= listing.title %></h2>
-                        <p>Owned by: <%= listing.owner.username %></p>
-                        <p>Starting from ₹ <%= listing.startingPrice %> / night</p>
-                        <p><%= listing.location.city %>, <%= listing.location.country %></p>
+            <div class="listing-wrapper">
+                <% const isWishlisted = wishlist && wishlist.includes(listing._id.toString()); %>
+                <button class="wishlist-btn" data-id="<%= listing._id %>">
+                    <i class="fa-<%= isWishlisted ? 'solid' : 'regular' %> fa-heart"></i>
+                </button>
+                <a href="/listings/<%= listing._id %>" style="text-decoration: none; color: inherit;">
+                    <div class="listing-card">
+                        <img src="<%= listing.images[0].url %>" alt="image">
+                        <div class="card-body">
+                            <h2><%= listing.title %></h2>
+                            <p>Owned by: <%= listing.owner.username %></p>
+                            <p>Starting from ₹ <%= listing.startingPrice %> / night</p>
+                            <p><%= listing.location.city %>, <%= listing.location.country %></p>
+                        </div>
                     </div>
-                </div>
-
-            </a>
+                </a>
+            </div>
         <% }) %>
     </div>
+    <div id="toast"></div>
 </div>
 
 <script src="/scripts/listings/index.js"></script>

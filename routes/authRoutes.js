@@ -26,5 +26,6 @@ router.get("/auth/google/callback",
 router.get("/profile", isLoggedIn, authController.getProfile);
 router.get("/profile/edit", isLoggedIn, authController.getEditProfile);
 router.put("/profile/edit", isLoggedIn, authController.updateProfile);
+router.post("/wishlist/:id", authController.toggleWishlist);
 
 module.exports = router
