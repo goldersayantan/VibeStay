@@ -70,6 +70,26 @@ const postNewListing = async (req, res) => {
             url: img.secure_url,
             filename: img.public_id
         }));
+        const amenityFields = [
+            "wifi",
+            "parking",
+            "spa",
+            "pool",
+            "gym",
+            "airConditioning",
+            "breakfast",
+            "petFriendly",
+            "laundryService",
+            "restaurant",
+            "kitchen",
+            "roomService",
+            "frontDesk"
+        ];
+        const amenities = {};
+        amenityFields.forEach((field) => {
+            amenities[field] = Boolean(req.body.amenities?.[field]);
+        });
+
         const newListing = new Listing({
             owner: req.user._id,
             title: req.body.title,
@@ -84,8 +104,7 @@ const postNewListing = async (req, res) => {
                 landmark: req.body.landmark
             },
             email: req.body.email,
-            wifi: req.body.wifi,
-            parking: req.body.parking,
+            amenities,
             images: imageData
         });
         await newListing.save();
@@ -197,7 +216,7 @@ const updateListing = async (req, res) => {
                     roomType: room.roomType,
                     totalRooms: Number(room.totalRooms),
 
-                    // preserve availability if room already exists
+                    // Preserve availability if room already exists
                     availableRooms: existingRoom
                         ? existingRoom.availableRooms
                         : Number(room.totalRooms),
@@ -268,13 +287,32 @@ const updateListing = async (req, res) => {
             }));
         }
 
-        listing.images.push(...newImages);
+        const amenityFields = [
+            "wifi", 
+            "parking", 
+            "spa", 
+            "pool",
+            "gym",
+            "airConditioning",
+            "breakfast",
+            "petFriendly",
+            "laundryService",
+            "restaurant",
+            "kitchen",
+            "bar",
+            "roomService",
+            "frontDesk"
+        ];
+        const amenities = {};
+        amenityFields.forEach((field) => {
+            amenities[field] = Boolean(req.body.amenities?.[field]);
+        });
 
+        listing.images.push(...newImages);
         listing.title = req.body.title;
         listing.description = req.body.description;
         listing.propertyType = req.body.propertyType;
         listing.roomTypes = roomTypes;
-
         listing.location = {
             country: req.body.country,
             city: req.body.city,
@@ -282,10 +320,8 @@ const updateListing = async (req, res) => {
             pincode: req.body.pincode,
             landmark: req.body.landmark
         };
-
         listing.email = req.body.email;
-        listing.wifi = req.body.wifi;
-        listing.parking = req.body.parking;
+        listing.amenities = amenities;
 
         await listing.save();
 

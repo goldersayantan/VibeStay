@@ -290,19 +290,48 @@
                 <input type="email" id="email" name="email" placeholder="Enter your email address" value="<%= listing.email %>" required>
             </div>
             <div class="form-group">
-                <label>Wifi Availability</label>
-                <div>
-                    <label><input type="radio" name="wifi" value="wifi-available" <%= listing.wifi === "wifi-available" ? "checked" : "" %> required> Available</label>
-                    <label><input type="radio" name="wifi" value="wifi-not-available" <%= listing.wifi === "wifi-not-available" ? "checked" : "" %>> Not Available</label>
-                </div>
+                <label><input type="checkbox" name="amenities[wifi]" <%= listing.amenities.wifi ? "checked" : "" %>>Wifi Available</label>
             </div>
             <div class="form-group">
-                <label>Parking Available</label>
-                <div class="inline-options">
-                    <label><input type="radio" name="parking" value="parking-available" <%= listing.parking === "parking-available" ? "checked" : ""%> required> Available</label>
-                    <label><input type="radio" name="parking" value="parking-not-available" <%= listing.parking === "parking-not-available" ? "checked" : ""%> > Not Available</label>
-                </div>
+                <label><input type="checkbox" name="amenities[parking]" <%= listing.amenities.parking ? "checked" : "" %>>Parking Available</label>
             </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[spa]" <%= listing.amenities.spa ? "checked" : "" %>>Spa Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[pool]" <%= listing.amenities.pool ? "checked" : "" %>>Pool Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[gym]" <%= listing.amenities.gym ? "checked" : "" %>>Gym Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[airConditioning]" <%= listing.amenities.airConditioning ? "checked" : "" %>>Air Conditioning Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[breakfast]" <%= listing.amenities.breakfast ? "checked" : "" %>>Breakfast Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[petFriendly]" <%= listing.amenities.petFriendly ? "checked" : "" %>>Pet Friendly Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[laundryService]" <%= listing.amenities.laundryService ? "checked" : "" %>>Laundry Service Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[restaurant]" <%= listing.amenities.restaurant ? "checked" : "" %>>Restaurant Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[kitchen]" <%= listing.amenities.kitchen ? "checked" : "" %>>Kitchen Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[bar]" <%= listing.amenities.bar ? "checked" : "" %>>Bar Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[roomService]" <%= listing.amenities.roomService ? "checked" : "" %>>Room Service Available</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" name="amenities[frontDesk]" <%= listing.amenities.frontDesk ? "checked" : "" %>>Front Desk Available</label>
+            </div>
+            
             <button type="submit" class="submit-btn">Update the property</button>
         </form>
     </div>

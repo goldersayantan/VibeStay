@@ -68,15 +68,63 @@ const listingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    wifi:   {
-        type: String,
-        enum: ["wifi-available", "wifi-not-available"],
-        required: true
-    },
-    parking:    {
-        type: String,
-        enum: ["parking-available", "parking-not-available"],
-        required: true
+    amenities:  {
+        wifi:   {
+            type: Boolean,
+            default: false
+        },
+        parking:    {
+            type: Boolean,
+            default: false
+        },
+        spa:    {
+            type: Boolean,
+            default: false
+        },
+        pool:   {
+            type: Boolean,
+            default: false
+        },
+        gym:    {
+            type: Boolean,
+            default: false
+        },
+        airConditioning:    {
+            type: Boolean,
+            default: false
+        },
+        breakfast:  {
+            type: Boolean,
+            default: false
+        },
+        petFriendly:    {
+            type: Boolean,
+            default: false
+        },
+        laundryService: {
+            type: Boolean,
+            default: false
+        },
+        restaurant:  {
+            type: Boolean,
+            default: false
+        },
+        kitchen:    {
+            type: Boolean,
+            default: false
+        },
+        bar:    {
+            type: Boolean,
+            default: false
+        },
+        roomService:    {
+            type: Boolean,
+            default: false
+        },
+        frontDesk:  {
+            type: Boolean,
+            default: false
+        }
     },
     reviews:    [
         {
