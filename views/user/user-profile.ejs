@@ -59,7 +59,7 @@
                                 <% }) %>
                             </td>
                             <td>
-                                ₹<%= booking.totalPrice %>
+                                $<%= booking.totalPrice %>
                             </td>
                             <td>
                                 <% if(booking.status === "pending") { %>
@@ -115,7 +115,7 @@
                             <td><%= booking.listing.title %></td>
                             <td><%= new Date(booking.checkIn).toDateString() %></td>
                             <td><%= new Date(booking.checkOut).toDateString() %></td>
-                            <td>₹<%= booking.totalPrice %></td>
+                            <td>$<%= booking.totalPrice %></td>
                             <td>
                                 <% booking.rooms.forEach(room => { %>
                                     <div>
@@ -174,7 +174,7 @@
                                     </div>
                                 <% }) %>
                             </td>
-                            <td>₹<%= booking.totalPrice %></td>
+                            <td>$<%= booking.totalPrice %></td>
                         </tr>
                     <% }) %>
                 </tbody>
@@ -192,7 +192,7 @@
                     <div class="listing-card">
                         <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
                         <h4><%= listing.title %></h4>
-                        <p>Starting from: ₹<%= listing.startingPrice %>/night</p>
+                        <p>Starting from: $<%= listing.startingPrice %>/night</p>
                         <a href="/listings/<%= listing._id %>">
                             View
                         </a>
@@ -212,7 +212,7 @@
                     <div class="listing-card">
                         <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
                         <h4><%= listing.title %></h4>
-                        <p>Starting From: ₹<%= listing.startingPrice %>/ night
+                        <p>Starting From: $<%= listing.startingPrice %>/ night
                         </p>
                         <a href="/listings/<%= listing._id %>">View</a>
                     </div>

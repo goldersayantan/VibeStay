@@ -1,4 +1,3 @@
-Map Integration
 Search & Filters
 Payments
 SEO

@@ -27,7 +27,7 @@
                         <%= room.availableRooms %>
                     </p>
                     <p>
-                        ₹<%= room.pricePerNight %> / Night
+                        $<%= room.pricePerNight %> / Night
                     </p>
                     <label>Quantity</label>
                     <input type="number" name="rooms[<%= room.roomId %>]" min="0" max="<%= room.availableRooms %>" value="0" class="roomQty" data-price="<%= room.pricePerNight %>">
@@ -38,7 +38,7 @@
         <div class="price-box">
             <h3>
                 Total Price:
-                ₹<span id="totalPrice">0</span>
+                $<span id="totalPrice">0</span>
             </h3>
         </div>
         <button type="submit" class="submit-btn">Submit Booking Request</button>
