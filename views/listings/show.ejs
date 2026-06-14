@@ -135,10 +135,15 @@
     <% } %>
 </div>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
-    const listingTitle = "<%= listing.title %>";
-    const listingAddress = "<%= listing.location.address %>" + "<%= listing.location.city %>" + "<%= listing.location.country %>";
+<script type="application/json" id="listing-data">
+    <%- JSON.stringify({
+        coordinates: listing.geometry.coordinates,
+        title: listing.title,
+        address:
+            listing.location.address +
+            listing.location.city +
+            listing.location.country
+    }) %>
 </script>
 <script src="/scripts/listings/map.js"></script>
 <script src="/scripts/listings/show.js"></script>

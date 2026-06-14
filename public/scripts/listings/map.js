@@ -1,6 +1,9 @@
-console.log("map.js loaded");
-console.log("coordinates:", coordinates);
-console.log("L:", L);
+const listingData = JSON.parse(
+    document.getElementById("listing-data").textContent
+);
+const coordinates = listingData.coordinates;
+const listingTitle = listingData.title;
+const listingAddress = listingData.address;
 
 if(coordinates && coordinates.length === 2) {
     const lng = coordinates[0];
