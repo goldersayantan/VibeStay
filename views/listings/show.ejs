@@ -1,4 +1,6 @@
 <% layout("../layouts/boilerplate.ejs") %>
+<!-- For Location -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 <link rel="stylesheet" href="/stylesheets/listings/show.css">
 
 <div class="show-container">
@@ -50,6 +52,10 @@
             </form>
         </div>
     <% } %>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div id="map"></div>
 </div>
 
 <div class="availability-section">
@@ -128,5 +134,11 @@
         <p>No reviews yet. Be the first to review this property!</p>
     <% } %>
 </div>
-
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+    const listingTitle = "<%= listing.title %>";
+    const listingAddress = "<%= listing.location.address %>" + "<%= listing.location.city %>" + "<%= listing.location.country %>";
+</script>
+<script src="/scripts/listings/map.js"></script>
 <script src="/scripts/listings/show.js"></script>

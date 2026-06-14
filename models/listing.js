@@ -62,6 +62,23 @@ const listingSchema = new mongoose.Schema({
         landmark:   {
             type: String,
             required: true
+        },
+    },
+    geometry:   {
+        type:   {
+            type: String,
+            enum: ["Point"],
+            default: "Point"
+        },
+        coordinates:    {
+            type: [Number],
+            required: true,
+            validate:   {
+                validator: function(v)  {
+                    return v.length === 2;
+                },
+                message: "Coordinates must contain longitude and latitude"
+            }
         }
     },
     email:  {
@@ -138,4 +155,5 @@ const listingSchema = new mongoose.Schema({
     }
 });
 
+listingSchema.index({ geometry: "2dsphere" });
 module.exports = mongoose.model("Listing", listingSchema);

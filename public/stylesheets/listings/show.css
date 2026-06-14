@@ -88,6 +88,13 @@
     margin: 5px 0;
 }
 
+#map {
+    width: 1000px;
+    height: 400px;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
 .availability-section {
     max-width: 1000px;
     margin: 30px auto;

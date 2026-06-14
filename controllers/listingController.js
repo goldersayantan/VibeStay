@@ -6,6 +6,7 @@ const User = require("../models/user");
 const {isLoggedIn} = require("../middleware/isLoggedIn");
 const cloudinary = require("../config/cloudConfig");
 const upload = require("../config/multer");
+const axios = require("axios");
 
 const getAllListings = async (req, res) => {
     const listings = await Listing.find({})
@@ -76,6 +77,29 @@ const postNewListing = async (req, res) => {
             url: img.secure_url,
             filename: img.public_id
         }));
+
+        const geoResponse = await axios.get(
+            "https://nominatim.openstreetmap.org/search",
+            {
+                params: {
+                    q: `${req.body.address}, ${req.body.city}, ${req.body.country}`,
+                    format: "json",
+                    limit: 1
+                },
+                headers:    {
+                    "User-Agent": "VibeStay"
+                }
+            }
+        );
+        if(!geoResponse.data || geoResponse.data.length === 0)  {
+            req.flash("error", "Unable to locate the property address.");
+            return res.redirect("/listings/new");
+        }
+        const coordinates = [
+            Number(geoResponse.data[0].lon),
+            Number(geoResponse.data[0].lat)
+        ]
+
         const amenityFields = [
             "wifi",
             "parking",
@@ -108,6 +132,10 @@ const postNewListing = async (req, res) => {
                 address: req.body.address,
                 pincode: req.body.pincode,
                 landmark: req.body.landmark
+            },
+            geometry:   {
+                type: "Point",
+                coordinates
             },
             email: req.body.email,
             amenities,
@@ -291,6 +319,37 @@ const updateListing = async (req, res) => {
                 url: img.secure_url,
                 filename: img.public_id
             }));
+        }
+
+        let locationChanged = 
+            listing.location.country !== req.body.country ||
+            listing.location.city !== req.body.city ||
+            listing.location.address !== req.body.address;
+        if(locationChanged) {
+            const geoResponse = await axios.get(
+                "https://nominatim.openstreetmap.org/search",
+                {
+                    params: {
+                        q: `${req.body.address}, ${req.body.city}, ${req.body.country}`,
+                        format: "json",
+                        limit: 1
+                    },
+                    headers:    {
+                        "User-Agent": "VibeStay"
+                    }
+                }
+            );
+            if(!geoResponse.data || geoResponse.data.length === 0)  {
+                req.flash("error", "Unable to locate the property address.");
+                return res.redirect(`/listings/${id}/edit`);
+            }
+            listing.geometry = {
+                type: "Point",
+                coordinates:    [
+                    Number(geoResponse.data[0].lon),
+                    Number(geoResponse.data[0].lat)
+                ]
+            };
         }
 
         const amenityFields = [
