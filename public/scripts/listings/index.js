@@ -1,3 +1,15 @@
+const searchInput = document.getElementById("searchInput");
+const clearBtn = document.getElementById("clearSearch");
+function toggleClearButton()	{
+	clearBtn.style.display = searchInput.value.trim() ? "block" : "none;"
+}
+toggleClearButton();
+searchInput.addEventListener("input", toggleClearButton);
+clearBtn.addEventListener("click", () => {
+	searchInput.value = "";
+	window.location.href = "/listings";
+});
+
 const toast = document.getElementById("toast");
 function showToast(message)	{
 	toast.textContent = message;

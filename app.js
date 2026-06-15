@@ -51,6 +51,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // Setup for assets
 app.use(express.static(path.join(__dirname, "assets")));
 
+app.use((req, res, next) => {
+    res.locals.search = req.query.search || "";
+    next();
+});
+
 app.get("/", (req, res) => {
     res.render("listings/landingPage.ejs");
 });

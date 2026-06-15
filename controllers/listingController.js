@@ -9,10 +9,23 @@ const upload = require("../config/multer");
 const axios = require("axios");
 
 const getAllListings = async (req, res) => {
-    const listings = await Listing.find({})
+    const { search } = req.query;
+    let query = {};
+    const searchTerm = search?.trim();
+    if(searchTerm)  {
+        query.$or = [
+            {title: {$regex: searchTerm, $options: "i"}},
+            {"location.country": {$regex: searchTerm, $options: "i"}},
+            {"location.city": {$regex: searchTerm, $options: "i"}},
+            {"location.address": {$regex: searchTerm, $options: "i"}},
+            {"location.landmark": {$regex: searchTerm, $options: "i"}}
+        ];
+    }
+    
+    const listings = await Listing.find(query)
         .populate("owner")
         .lean();
-
+    
     let wishlist = [];
     if(req.user)    {
         wishlist = req.user.wishlist?.map(id => id.toString()) || [];
@@ -28,7 +41,7 @@ const getAllListings = async (req, res) => {
                 : 0
     }));
 
-    res.render("listings/index", { allListings, wishlist });
+    res.render("listings/index", { allListings, wishlist, search });
 };
 
 const getNewListing = (req, res) => {

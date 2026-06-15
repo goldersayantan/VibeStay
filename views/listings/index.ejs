@@ -1,9 +1,35 @@
 <% layout("../layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/stylesheets/listings/index.css">
 
-<div class="container">
-    <h1 class="page-title">All Listings</h1>
+<div class="search-container">
+    <form class="search-form" action="/listings" method="GET">
+        <div class="search-input-wrapper">
+            <input type="text" id="searchInput" name="search" placeholder="Search destinations" value="<%= typeof search !== 'undefined' ? search : '' %>">
+            <button type="button" id="clearSearch" class="clear-btn">
+                &times;
+            </button>
+        </div>
+        <button type="submit" class="search-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Search
+        </button>
+    </form>
+</div>
 
+<div class="container">
+    <% if(allListings.length === 0) { %>
+        <div class="no-results">
+            <h3>No listings found</h3>
+            <% if(search) {%>
+                <p>No results found for "<%= search %>"</p>
+            <% } %>
+        </div>
+    <% } %>
+    <% if(allListings.length > 0)   { %>
+        <h1 class="page-title">
+            <%= search ? `Search Results for "${search}"` : "All Listings" %>
+        </h1>
+    <% } %>
     <div class="listings">
         <% allListings.forEach(listing => { %>
             <div class="listing-wrapper">

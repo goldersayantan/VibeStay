@@ -23,7 +23,7 @@ form.addEventListener("submit", async(e) => {
             <div class="room-card">
                 <h4>${roomName}</h4>
                 <p>Available: ${room.availableRooms}</p>
-                <p>₹${room.pricePerNight} / night</p>
+                <p>$${room.pricePerNight} / night</p>
         `;
         if(room.availableRooms > 0) {
             hasAvailableRoom = true;
@@ -84,27 +84,16 @@ const editStars = document.querySelectorAll(".edit-star");
 const editRatingInput = document.getElementById("edit-rating-value");
 
 if (editStars.length && editRatingInput) {
-
     editStars.forEach(star => {
-
         star.addEventListener("click", () => {
-
-            console.log("clicked", star.dataset.value);
-
             editRatingInput.value = star.dataset.value;
-
             editStars.forEach(s => {
-
                 if(Number(s.dataset.value) <= Number(star.dataset.value)) {
                     s.classList.add("active");
                 } else {
                     s.classList.remove("active");
                 }
-
             });
-
         });
-
     });
-
 }
