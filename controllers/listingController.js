@@ -9,7 +9,26 @@ const upload = require("../config/multer");
 const axios = require("axios");
 
 const getAllListings = async (req, res) => {
-    const { search } = req.query;
+    const { 
+        search,
+        propertyType,
+        wifi,
+        parking,
+        spa,
+        pool,
+        gym,
+        airConditioning,
+        breakfast,
+        petFriendly,
+        laundryService,
+        restaurant,
+        kitchen,
+        bar,
+        roomService,
+        frontDesk,
+        minPrice,
+        maxPrice
+    } = req.query;
     let query = {};
     const searchTerm = search?.trim();
     if(searchTerm)  {
@@ -22,6 +41,25 @@ const getAllListings = async (req, res) => {
         ];
     }
     
+    if(propertyType)    {
+        query.propertyType = propertyType;
+    }
+
+    if(wifi === "true") query["amenities.wifi"] = true;
+    if(parking === "true") query["amenities.parking"] = true;
+    if(spa === "true") query["amenities.spa"] = true;
+    if(pool === "true") query["amenities.pool"] = true;
+    if(gym === "true") query["amenities.gym"] = true;
+    if(airConditioning === "true") query["amenities.airConditioning"] = true;
+    if(breakfast === "true") query["amenities.breakfast"] = true;
+    if(petFriendly === "true") query["amenities.petFriendly"] = true;
+    if(laundryService === "true") query["amenities.laundryService"] = true;
+    if(restaurant === "true") query["amenities.restaurant"] = true;
+    if(kitchen === "true") query["amenities.kitchen"] = true;
+    if(bar === "true") query["amenities.bar"] = true;
+    if(roomService === "true") query["amenities.roomService"] = true;
+    if(frontDesk === "true") query["amenities.frontDesk"] = true;
+
     const listings = await Listing.find(query)
         .populate("owner")
         .lean();
@@ -41,7 +79,19 @@ const getAllListings = async (req, res) => {
                 : 0
     }));
 
-    res.render("listings/index", { allListings, wishlist, search });
+    if(minPrice)    {
+        allListings = allListings.filter(
+            listing => listing.startingPrice >= Number(minPrice)
+        );
+    }
+
+    if(maxPrice)    {
+        allListings = allListings.filter(
+            listing => listing.startingPrice <= Number(maxPrice)
+        );
+    }
+
+    res.render("listings/index", { allListings, wishlist, search, filters: req.query });
 };
 
 const getNewListing = (req, res) => {

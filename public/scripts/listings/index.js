@@ -10,6 +10,35 @@ clearBtn.addEventListener("click", () => {
 	window.location.href = "/listings";
 });
 
+const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+if(clearFiltersBtn)	{
+	clearFiltersBtn.addEventListener("click", () => {
+		document.querySelectorAll(
+			'.filter-sidebar input[type="checkbox"]'
+		).forEach(input => {
+			input.checked = false;
+		});
+		document.querySelectorAll(
+			'.filter-sidebar input[type="radio"]'
+		).forEach(input => {
+			input.checked = false;
+		});
+		document.querySelectorAll(
+			'.filter-sidebar input[type="number"]'
+		).forEach(input => {
+			input.checked = false;
+		});
+
+		const params = new URLSearchParams(window.location.search);
+		const search = params.get("search");
+		if(search)	{
+			window.location.href = `/listings?search=${encodeURIComponent(search)}`;
+		}else	{
+			window.location.href = "/listings";
+		}
+	});
+}
+
 const toast = document.getElementById("toast");
 function showToast(message)	{
 	toast.textContent = message;

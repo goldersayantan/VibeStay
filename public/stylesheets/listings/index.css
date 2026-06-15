@@ -68,6 +68,32 @@
   padding: 0 20px;
 }
 
+.content-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.filter-sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    position: sticky;
+    top: 100px;
+}
+
+.filter-sidebar form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.listings-section {
+    flex: 1;
+}
+
 /* Title */
 .page-title {
   font-size: 28px;
