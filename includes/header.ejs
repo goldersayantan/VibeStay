@@ -1,22 +1,78 @@
 <link rel="stylesheet" href="/stylesheets/includes/header.css">
+
 <header class="navbar">
     <div class="nav-container">
-        <h2 class="logo">
-            <a href="/listings"><strong>VibeStay</strong></a>
-        </h2>
+        <a href="/listings" class="brand">
+            <img src="/VibeStayLogo.png" alt="VibeStay Logo" class="brand-logo">
+            <span class="brand-name">VibeStay</span>
+        </a>
+        <div class="nav-right">
+            <a href="/listings/new" class="nav-btn">Become a Host</a>
+            <% if(!currentUser) { %>
+                <a href="/signIn" class="nav-btn">Sign In</a>
+                <a href="/signUp" class="nav-btn">Sign Up</a>
+            <% } %>
+            <% if(currentUser) { %>
+                <a href="/profile" class="profile-avatar">
+                    <% if(currentUser.profileImage) { %>
+                        <img src="<%= currentUser.profileImage %>" alt="Profile">
+                    <% } else { %>
+                        <div class="avatar-placeholder">
+                            <%= currentUser.username.charAt(0).toUpperCase() %>
+                        </div>
+                    <% } %>
+                </a>
+            <% } %>
 
-        <nav>
-            <ul class="nav-links">
-                <li><a href="/listings">All Listings</a></li>
-                <% if(!currentUser) { %>
-                    <li><a href="/signIn">Sign In</a></li>
-                    <li><a href="/signUp">Sign Up</a></li>
-                <% }else    { %>
-                    <li><a href="/listings/new">Add Listing</a></li>
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                <% } %>
-            </ul>
-        </nav>
+            <div class="menu-wrapper">
+                <button class="menu-btn" id="menuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="/about">
+                        <i class="bi bi-info-circle"></i>
+                        About
+                    </a>
+
+                    <a href="/contact">
+                        <i class="bi bi-envelope"></i>
+                        Contact
+                    </a>
+
+                    <% if(currentUser) { %>
+                        <a href="/logout" class="logout-link">
+                            <i class="bi bi-box-arrow-right"></i>
+                            Logout
+                        </a>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
     </div>
 </header>
+
+<nav class="mobile-nav">
+    <a href="/listings">
+        <strong><i class="bi bi-house-door"></i></strong>
+        <strong><span>Explore</span></strong>
+    </a>
+    <a href="/listings/new" class="host-nav">
+        <i class="bi bi-plus-lg"></i>
+    </a>
+    <% if(currentUser)  { %>
+        <a href="/profile">
+            <strong><i class="bi bi-person-circle"></i></strong>
+            <strong><span>Profile</span></strong>
+        </a>
+    <% }else    { %>
+        <a href="/signIn">
+            <strong><i class="bi bi-person-circle"></i></strong>
+            <strong><span>Account</span></strong>
+        </a>
+    <% } %>
+</nav>
+
+<script src="/scripts/includes/header.js"></script>
