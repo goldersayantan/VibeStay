@@ -1,8 +1,73 @@
 <% layout("../layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/stylesheets/listings/landingPage.css">
-    <section class="landing-container">
-        <a href="/listings">
-            <button class="explore-btn">Explore</button>
-        </a>
-    </section>
+
+<section class="landing-container">
+    <div class="hero-content">
+        <img
+            src="/VibeStayLogo.png"
+            alt="VibeStay Logo"
+            class="hero-logo"
+        >
+        <h1>Stays that match your vibe.</h1>
+        <div class="hero-badge">
+            ✨ Discover unique stays across World
+        </div>
+        <p class="hero-description">
+            Discover unique homes, cozy apartments, luxury villas,
+            and unforgettable experiences tailored to your travel style.
+            Whether you're planning a weekend escape or a long vacation,
+            VibeStay helps you find the perfect place to stay.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="/listings">
+                <button class="explore-btn">
+                    Explore Stays
+                </button>
+            </a>
+            <a href="/listings/new">
+                <button class="host-btn">
+                    Become a Host
+                </button>
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div>
+                <h3>100+</h3>
+                <span>Unique Stays</span>
+            </div>
+            <div>
+                <h3>50+</h3>
+                <span>Happy Guests</span>
+            </div>
+            <div>
+                <h3>24/7</h3>
+                <span>Support</span>
+            </div>
+        </div>
+
+        <section class="features-section">
+            <h2>Why Choose VibeStay?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="bi bi-house-heart"></i>
+                    <h3>Unique Stays</h3>
+                    <p>Find homes that fit your travel style.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="bi bi-shield-check"></i>
+                    <h3>Trusted Hosts</h3>
+                    <p>Connect with verified hosts and safe stays.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="bi bi-geo-alt"></i>
+                    <h3>Explore Anywhere</h3>
+                    <p>Discover amazing destinations across India.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+
 <script src="/scripts/listings/landingPage.js"></script>

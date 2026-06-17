@@ -1,12 +1,7 @@
 .footer {
     background: #ffffff;
     border-top: 1px solid #e5e7eb;
-    margin-top: 4rem;
 }
-
-/* =========================
-   DESKTOP FOOTER
-========================= */
 
 .footer-desktop {
     display: block;
@@ -15,18 +10,14 @@
 .footer-grid {
     max-width: 1600px;
     margin: 0 auto;
-
     padding: 3rem 2rem;
-
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
     gap: 3rem;
 }
 
 .footer-section h4 {
     margin-bottom: 1.25rem;
-
     color: #111827;
     font-size: 1rem;
     font-weight: 700;
@@ -39,11 +30,8 @@
 
 .footer-section a {
     text-decoration: none;
-
     color: #6b7280;
-
     margin-bottom: .85rem;
-
     transition: .25s ease;
 }
 
@@ -54,12 +42,9 @@
 
 .footer-bottom {
     border-top: 1px solid #e5e7eb;
-
     max-width: 1600px;
     margin: 0 auto;
-
     padding: 1.25rem 2rem;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,18 +76,13 @@
 .footer-social a {
     width: 40px;
     height: 40px;
-
     border-radius: 50%;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #f3f4f6;
-
     color: #243B85;
     text-decoration: none;
-
     transition: .3s ease;
 }
 
@@ -116,10 +96,6 @@
     font-size: 1rem;
 }
 
-/* =========================
-   MOBILE FOOTER
-========================= */
-
 .footer-mobile {
     display: none;
 }
@@ -130,20 +106,12 @@
     object-fit: contain;
 }
 
-/* =========================
-   TABLET
-========================= */
-
 @media (max-width: 992px) {
 
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
-
-/* =========================
-   MOBILE
-========================= */
 
 @media (max-width: 576px) {
 
