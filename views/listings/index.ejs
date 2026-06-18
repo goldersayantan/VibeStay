@@ -24,78 +24,129 @@
         </h1>
     <% } %>
 
+    <button class="mobile-filter-btn" id="mobileFilterBtn">
+        <i class="bi bi-sliders"></i>
+        Filters
+    </button>
+
     <div class="content-layout">
         <aside class="filter-sidebar">
             <form action="/listings" method="GET">
                 <input type="hidden" name="search" value="<%= search || '' %>">
                 <h3>Property Type</h3>
-                <label>
-                    <input type="radio" name="propertyType" value="Hotel" <%= filters.propertyType === "Hotel" ? "checked" : "" %>>Hotel
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Apartment" <%= filters.propertyType === "Apartment" ? "checked" : "" %>>Apartment
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Villa" <%= filters.propertyType === "Villa" ? "checked" : "" %>>Villa
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Homestay" <%= filters.propertyType === "Homestay" ? "checked" : "" %>>Homestay
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Hostel" <%= filters.propertyType === "Hostel" ? "checked" : "" %>>Hostel
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Resort" <%= filters.propertyType === "Resort" ? "checked" : "" %>>Resort
-                </label>
-                <label>
-                    <input type="radio" name="propertyType" value="Guest House" <%= filters.propertyType === "Guest House" ? "checked" : "" %>>Guest House
-                </label>
-
+                <div class="filter-grid">
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Hotel" <%= filters.propertyType === "Hotel" ? "checked" : "" %>>
+                        <i class="bi bi-building"></i>
+                        <span>Hotel</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Apartment" <%= filters.propertyType === "Apartment" ? "checked" : "" %>>
+                        <i class="bi bi-house-door"></i>
+                        <span>Apartment</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Villa" <%= filters.propertyType === "Villa" ? "checked" : "" %>>
+                        <i class="bi bi-house-heart"></i>
+                        <span>Villa</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Homestay" <%= filters.propertyType === "Homestay" ? "checked" : "" %>>
+                        <i class="bi bi-house"></i>
+                        <span>Homestay</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Hostel" <%= filters.propertyType === "Hostel" ? "checked" : "" %>>
+                        <i class="bi bi-people"></i>
+                        <span>Hostel</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Resort" <%= filters.propertyType === "Resort" ? "checked" : "" %>>
+                        <i class="bi bi-water"></i>
+                        <span>Resort</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="radio" name="propertyType" value="Guest House" <%= filters.propertyType === "Guest House" ? "checked" : "" %>>
+                        <i class="bi bi-house-check"></i>
+                        <span>Guest House</span>
+                    </label>
+                </div>
+                
                 <h3>Amenities</h3>
                 
-                <label>
-                    <input type="checkbox" name="wifi" value="true" <%= filters.wifi === "true" ? "checked" : "" %>>Wifi
-                </label>
-                <label>
-                    <input type="checkbox" name="parking" value="true" <%= filters.parking === "true" ? "checked" : "" %>>Parking
-                </label>
-                <label>
-                    <input type="checkbox" name="spa" value="true" <%= filters.spa === "true" ? "checked" : "" %>>Spa
-                </label>
-                <label>
-                    <input type="checkbox" name="pool" value="true" <%= filters.pool === "true" ? "checked" : "" %>>Pool
-                </label>
-                <label>
-                    <input type="checkbox" name="gym" value="true" <%= filters.gym === "true" ? "checked" : "" %>>Gym
-                </label>
-                <label>
-                    <input type="checkbox" name="airConditioning" value="true" <%= filters.airConditioning === "true" ? "checked" : "" %>>Air Conditioning
-                </label>
-                <label>
-                    <input type="checkbox" name="breakfast" value="true" <%= filters.breakfast === "true" ? "checked" : "" %>>Breakfast
-                </label>
-                <label>
-                    <input type="checkbox" name="petFriendly" value="true" <%= filters.petFriendly === "true" ? "checked" : "" %>>Pet Friendly
-                </label>
-                <label>
-                    <input type="checkbox" name="laundryService" value="true" <%= filters.laundryService === "true" ? "checked" : "" %>>Laundry Service
-                </label>
-                <label>
-                    <input type="checkbox" name="restaurant" value="true" <%= filters.restaurant === "true" ? "checked" : "" %>>Restaurant
-                </label>
-                <label>
-                    <input type="checkbox" name="kitchen" value="true" <%= filters.kitchen === "true" ? "checked" : "" %>>Kitchen
-                </label>
-                <label>
-                    <input type="checkbox" name="bar" value="true" <%= filters.bar === "true" ? "checked" : "" %>>Bar
-                </label>
-                <label>
-                    <input type="checkbox" name="roomService" value="true" <%= filters.roomService === "true" ? "checked" : "" %>>Room Service
-                </label>
-                <label>
-                    <input type="checkbox" name="frontDesk" value="true" <%= filters.frontDesk === "true" ? "checked" : "" %>>FrontDesk
-                </label>
-
+                <div class="filter-grid">
+                    <label class="filter-card">
+                        <input type="checkbox" name="wifi" value="true" <%= filters.wifi === "true" ? "checked" : "" %>>
+                        <i class="bi bi-wifi"></i>
+                        <span>Wifi</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="parking" value="true" <%= filters.parking === "true" ? "checked" : "" %>>
+                        <i class="bi bi-car-front-fill"></i>
+                        <span>Parking</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="spa" value="true" <%= filters.spa === "true" ? "checked" : "" %>>
+                        <i class="bi bi-flower1"></i>
+                        <span>Spa</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="pool" value="true" <%= filters.pool === "true" ? "checked" : "" %>>
+                        <i class="bi bi-water"></i>
+                        <span>Pool</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="gym" value="true" <%= filters.gym === "true" ? "checked" : "" %>>
+                        <i class="bi bi-activity"></i>
+                        <span>Gym</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="airConditioning" value="true" <%= filters.airConditioning === "true" ? "checked" : "" %>>
+                        <i class="bi bi-snow"></i>
+                        <span>Air Conditioning</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="breakfast" value="true" <%= filters.breakfast === "true" ? "checked" : "" %>>
+                        <i class="bi bi-cup-hot"></i>
+                        <span>Breakfast</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="petFriendly" value="true" <%= filters.petFriendly === "true" ? "checked" : "" %>>
+                        <i class="bi bi-heart"></i>
+                        <span>Pet Friendly</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="laundryService" value="true" <%= filters.laundryService === "true" ? "checked" : "" %>>
+                        <i class="bi bi-basket2"></i>
+                        <span>Laundry Service</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="restaurant" value="true" <%= filters.restaurant === "true" ? "checked" : "" %>>
+                        <i class="bi bi-shop"></i>
+                        <span>Restaurant</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="kitchen" value="true" <%= filters.kitchen === "true" ? "checked" : "" %>>
+                        <i class="bi bi-egg-fried"></i>
+                        <span>Kitchen</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="bar" value="true" <%= filters.bar === "true" ? "checked" : "" %>>
+                        <i class="bi bi-cup-straw"></i>
+                        <span>Bar</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="roomService" value="true" <%= filters.roomService === "true" ? "checked" : "" %>>
+                        <i class="bi bi-truck"></i>
+                        <span>Room Service</span>
+                    </label>
+                    <label class="filter-card">
+                        <input type="checkbox" name="frontDesk" value="true" <%= filters.frontDesk === "true" ? "checked" : "" %>>
+                        <i class="bi bi-person-workspace"></i>
+                        <span>Front Desk</span>
+                    </label>
+                </div>
+                
                 <h3>Price</h3>
 
                 <input type="number" name="minPrice" placeholder="Min Price" value="<%= filters.minPrice || '' %>">
@@ -126,9 +177,13 @@
                                 <img src="<%= listing.images[0].url %>" alt="image">
                                 <div class="card-body">
                                     <h2><%= listing.title %></h2>
-                                    <p>Owned by: <%= listing.owner.username %></p>
-                                    <p>Starting from $ <%= listing.startingPrice %> / night</p>
-                                    <p><%= listing.location.city %>, <%= listing.location.country %></p>
+                                    <p class="listing-location">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                        <%= listing.location.city %>, <%= listing.location.country %>
+                                    </p>
+                                    <p class="listing-price">
+                                        Starting from $ <%= listing.startingPrice %><span>/night</span>
+                                    </p>
                                 </div>
                             </div>
                         </a>

@@ -1,3 +1,4 @@
-Search & Filters
 SEO
 AVoid Temporary Email
+
+1. While clicking on explore button, it changes to login and redirecting to another page, but the button is always in "loading.."

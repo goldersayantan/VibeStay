@@ -69,3 +69,11 @@ document.querySelectorAll(".wishlist-btn").forEach(btn => {
 		}
   	});
 });
+
+const mobileFilterBtn = document.getElementById("mobileFilterBtn");
+const filterSidebar = document.querySelector(".filter-sidebar");
+if(mobileFilterBtn && filterSidebar) {
+    mobileFilterBtn.addEventListener("click", () => {
+        filterSidebar.classList.toggle("show");
+    });
+}
