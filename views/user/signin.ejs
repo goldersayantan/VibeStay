@@ -1,26 +1,96 @@
 <% layout("../layouts/boilerplate.ejs") %>
+
 <link rel="stylesheet" href="/stylesheets/user/signin.css">
+
 <div class="signIn-container">
-    <div class="signIn-card">
-        <h2>Sign In</h2>
-        <form action="/signin" method="POST">
-            <label>
-                Username or Email
-                <input type="text" name="username" placeholder="Enter username or email" required>
-            </label>
-            <label>
-                Password
-                <input type="password" name="password" placeholder="Enter password" required>
-            </label>
-            <button type="submit" class="signIn-btn">Sign In</button>
-            <div class="divider">or</div>
-            <a href="/auth/google" class="google-btn">
-                Continue with Google
-            </a>
-            <a href="/forgot-password" class="forgot-link"> 
-                Forgot Password?
-            </a>
-        </form>
+
+    <div class="signin-wrapper">
+
+        <div class="signin-left">
+
+            <img
+                src="/VibeStayLogo.png"
+                alt="VibeStay"
+                class="signin-logo"
+            >
+
+            <h1>Welcome Back.</h1>
+
+            <p>
+                Sign in to manage your bookings,
+                save favorite stays, host properties,
+                and continue exploring destinations that
+                match your vibe.
+            </p>
+
+            <div class="signin-features">
+                <span>✓ Manage Bookings</span>
+                <span>✓ Access Wishlist</span>
+                <span>✓ Host Properties</span>
+            </div>
+
+        </div>
+
+        <div class="signIn-card">
+
+            <h2>Sign In</h2>
+
+            <p class="signin-subtitle">
+                Continue your journey with VibeStay.
+            </p>
+
+            <form action="/signin" method="POST">
+
+                <label>
+                    Username or Email
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter username or email"
+                        required
+                    >
+                </label>
+
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter password"
+                        required
+                    >
+                </label>
+
+                <button
+                    type="submit"
+                    class="signIn-btn"
+                >
+                    Sign In
+                </button>
+
+                <div class="divider">
+                    or
+                </div>
+
+                <a href="/auth/google" class="google-btn">
+                    Continue with Google
+                </a>
+
+                <a href="/forgot-password" class="forgot-link">
+                    Forgot Password?
+                </a>
+
+                <a href="/signup" class="signup-link">
+                    Don't have an account?
+                    <span>Create Account</span>
+                </a>
+
+            </form>
+
+        </div>
+
     </div>
+
 </div>
+
 <script src="/scripts/user/signin.js"></script>

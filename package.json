@@ -13,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.9.0",
     "connect-flash": "^0.1.1",
+    "disposable-email-domains-js": "^1.25.0",
     "dotenv": "^17.3.1",
     "ejs": "^5.0.1",
     "ejs-mate": "^4.0.0",

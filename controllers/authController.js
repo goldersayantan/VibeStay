@@ -47,6 +47,26 @@ const postSignUp = async (req, res) => {
             req.flash("error", "User already exists");
             return res.redirect("/signup");
         }
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            req.flash(
+                "error",
+                "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number and one special character."
+            );
+            return res.redirect("/signup");
+        }
+
+        const {isDisposableEmail} = require("disposable-email-domains-js");
+        if (isDisposableEmail(email)) {
+            req.flash(
+                "error",
+                "Temporary email addresses are not allowed."
+            );
+            return res.redirect("/signup");
+        }
+
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const hashedOtp = await bcrypt.hash(otp, 10);
         await OTP.deleteMany({ email });
