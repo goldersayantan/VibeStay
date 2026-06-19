@@ -100,7 +100,7 @@
                     <h2>Room Details</h2>
                 </div>
                 <div class="form-group">
-                    <div class="room-types-container">
+                    <!-- <div class="room-types-container">
                         <div class="room-row">
                             <input type="hidden" name="roomTypes[0][roomType]" value="single-room">
                             <label>Single Room (1 person, 1 single bed)</label>
@@ -172,6 +172,307 @@
                             <label>Dormitory / Hostel Room</label>
                             <input type="number" name="roomTypes[11][totalRooms]" min="0" placeholder="Available Rooms">
                             <input type="number" name="roomTypes[11][pricePerNight]" min="0" placeholder="Price / Night">
+                        </div>
+                    </div> -->
+                    <div class="room-grid">
+                        <!-- Single Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[0][roomType]" value="single-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Single Room</h3>
+                                    <p>1 Person • 1 Single Bed</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[0][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[0][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Double Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[1][roomType]" value="double-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Double Room</h3>
+                                    <p>2 Persons • 1 Double Bed</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[1][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[1][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Twin Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[2][roomType]" value="twin-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Twin Room</h3>
+                                    <p>2 Persons • 2 Single Beds</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[2][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[2][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Triple Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[3][roomType]" value="triple-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Triple Room</h3>
+                                    <p>3 Persons • 3 Single Beds or 1 Double + 1 Single Bed</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[3][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[3][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quad Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[4][roomType]" value="quad-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Quad Room</h3>
+                                    <p>4 Persons • Multiple Bed Configuration</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[4][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[4][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Queen Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[5][roomType]" value="queen-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Queen Room</h3>
+                                    <p>2 Persons • 1 Queen Bed</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[5][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[5][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- King Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[6][roomType]" value="king-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>King Room</h3>
+                                    <p>2 Persons • 1 King Bed</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[6][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[6][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Studio Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[7][roomType]" value="studio-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Studio Room</h3>
+                                    <p>2-3 Persons • Open Layout with Living Area</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[7][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[7][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Suite Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[8][roomType]" value="suite-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Suite Room</h3>
+                                    <p>2-4 Persons • Separate Living & Sleeping Areas</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[8][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[8][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deluxe Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[9][roomType]" value="deluxe-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Deluxe Room</h3>
+                                    <p>2-3 Persons • Premium Room with Extra Amenities</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[9][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[9][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Family Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[10][roomType]" value="family-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Family Room</h3>
+                                    <p>4-6 Persons • Designed for Families</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[10][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[10][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dormitory / Hostel Room -->
+                        <div class="room-card">
+                            <input type="hidden" name="roomTypes[10][roomType]" value="hostel-room">
+
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>Dormitory / Hostel Room</h3>
+                                    <p>4-12 Persons • Shared Sleeping Space</p>
+                                </div>
+                            </div>
+
+                            <div class="room-inputs">
+                                <div class="room-field">
+                                    <label>Available Rooms</label>
+                                    <input type="number" name="roomTypes[11][totalRooms]" min="0" placeholder="0">
+                                </div>
+
+                                <div class="room-field">
+                                    <label>Price / Night</label>
+                                    <input type="number" name="roomTypes[11][pricePerNight]" min="0" placeholder="₹0">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

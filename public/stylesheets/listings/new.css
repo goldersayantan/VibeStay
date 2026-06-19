@@ -196,37 +196,60 @@ textarea {
     gap: 1rem;
 }
 
-.room-types-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 10px;
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
 }
 
-.room-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 12px;
-  align-items: center;
-  padding: 15px;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  background-color: #fafafa;
+.room-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 1.25rem;
+    transition: .3s ease;
 }
 
-.room-row:hover {
+.room-card:hover {
+    transform: translateY(-3px);
     border-color: #243B85;
+    box-shadow: 0 10px 25px rgba(36,59,133,.08);
 }
 
-.room-row label {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
+.room-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
-.room-row input[type="number"] {
-  width: 100%;
+.room-header i {
+    font-size: 1.8rem;
+    color: #243B85;
+}
+
+.room-header h3 {
+    margin: 0;
+    color: #243B85;
+}
+
+.room-header p {
+    margin: 0;
+    font-size: .85rem;
+    color: #6b7280;
+}
+
+.room-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.room-field label {
+    display: block;
+    margin-bottom: .35rem;
+    color: #6b7280;
+    font-size: .85rem;
 }
 
 .property-grid {
@@ -371,19 +394,98 @@ textarea {
     box-shadow: 0 12px 25px rgba(36,59,133,.25);
 }
 @media (max-width: 992px) {
+    .room-grid {
+        grid-template-columns: 1fr;
+    }
+
     .property-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 768px) {
+    .listing-header h1 {
+        font-size: 2rem;
+    }
+
+    .listing-header p {
+        font-size: .9rem;
+    }
+
     .property-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .room-row {
+        grid-template-columns: 1fr;
+        gap: .75rem;
+    }
+
+    .room-row label {
+        font-size: .9rem;
+    }
+
+    .location-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
+
+    .form-container {
+        padding: 1rem;
+    }
+
+    .form-card {
+        padding: 1.25rem;
+        border-radius: 20px;
+    }
+
+    .upload-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .upload-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .upload-content h3 {
+        font-size: 1rem;
+    }
+
     .property-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+    }
+
+    .property-card {
+        padding: .75rem;
+    }
+
+    .property-card i {
+        font-size: 1.2rem;
+    }
+
+    .property-card span {
+        font-size: .8rem;
+    }
+
+    .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: .75rem;
+    }
+
+    .amenity-card {
+        padding: .75rem;
+    }
+
+    .amenity-card i {
+        font-size: 1.2rem;
+    }
+
+    .amenity-card span {
+        font-size: .8rem;
+        text-align: center;
     }
 }
