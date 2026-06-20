@@ -5,12 +5,6 @@ const fileCount = document.getElementById("file-count");
 const uploadFlash = document.getElementById("upload-flash");
 const deleteContainer = document.getElementById("delete-images-container");
 
-console.log(existingContainer);
-
-existingContainer.addEventListener("click", (e) => {
-    console.log("clicked");
-});
-
 let selectedFiles = [];
 
 function showFlash(message) {

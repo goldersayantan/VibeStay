@@ -7,131 +7,303 @@
     <h1 class="show-title"><%= listing.title %></h1>
     <p class="host"><stromg>Hosted by:</stromg> <%= listing.owner.username %> </p>
     
-    <div class="image-gallery">
-        <% listing.images.forEach(img => { %>
-            <img src="<%= img.url %>" alt="image">
-        <% }) %>
+    <div class="property-gallery">
+        <div class="main-image">
+            <img src="<%= listing.images[0].url %>">
+        </div>
+        <div class="gallery-grid">
+            <% listing.images.slice(1, 5).forEach(img => { %>
+                <img src="<%= img.url %>">
+            <% }) %>
+        </div>
     </div>
     
     <div class="details">
-        <p><strong>Description:</strong> <%= listing.description %></p>
-        <p><strong>Property Type:</strong> <%= listing.propertyType %></p>
-        <h3>Available Room Types</h3>
-
-        <div class="room-types-list">
-            <% listing.roomTypes.forEach(room => { %>
-                <div class="room-type-card">
-                    <p>
-                        <strong>Room Type:</strong>
-                        <%= room.roomType
-                            .split("-")
-                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                            .join(" ")
-                        %>
-                    </p>
-                    <p><strong>Total Rooms:</strong> <%= room.totalRooms %></p>
-                    <p><strong>Price per Night:</strong> $ <%= room.pricePerNight %></p>
-                </div>
-            <% }) %>
+        <div class="info-card">
+            <h2>About this property</h2>
+            <p><%= listing.description %></p>
         </div>
-        <p>
-            <strong>Location:</strong>
-            <%= listing.location.address %>,
-            <%= listing.location.city %>,
-            <%= listing.location.country %>
-        </p>
-    </div>
-    <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
-        <div class="actions">
-            <a href="/listings/<%= listing._id %>/edit" class="edit-btn">Edit</a>
 
-            <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" style="display:inline;">
-                <button class="delete-btn">Delete</button>
-            </form>
-        </div>
-    <% } %>
-</div>
+        <div class="property-details-card">
+            <div class="amenities-section">
+                <h2>Amenities</h2>
+                <div class="amenities-grid">
+                    <% if(listing.amenities.wifi){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-wifi"></i>
+                            Wifi
+                        </div>
+                    <% } %>
 
-<div style="display: flex; justify-content: center; align-items: center;">
-    <div id="map"></div>
-</div>
-
-<div class="availability-section">
-    <h3>Check Availability</h3>
-    <form id="availabilityForm">
-        <label>Check In</label>
-        <input type="date" name="checkIn" id="checkIn" required>
-        <label>Check Out</label>
-        <input type="date" name="checkOut" id="checkOut" required>
-        <button type="submit">Check Availability</button>
-    </form>
-    <div id="availabilityResults"></div>
-</div>
-
-<% if(!userReview)  {%>
-    <div class="review-section">
-        <h3>Leave a Review</h3>
-        <p class="review-subtitle">
-            Share your experience with future guests.
-        </p>
-        <form action="/listings/<%= listing._id %>/reviews" method="post">
-            <label class="review-label">Your Rating</label>
-            <div class="star-rating">
-                <input type="hidden" name="rating" id="rating-value" required>
-                <span class="star" data-value="1">&#9733</span>
-                <span class="star" data-value="2">&#9733</span>
-                <span class="star" data-value="3">&#9733</span>
-                <span class="star" data-value="4">&#9733</span>
-                <span class="star" data-value="5">&#9733</span>
-            </div>
-            <label class="review-label">Your Review</label>
-            <textarea name="comment" rows="5" placeholder="Share your experience..." required></textarea>
-            <button type="submit" class="review-btn">Submit Review</button>
-        </form>
-    </div>
-<% }else    { %>
-    <div class="your-review-card">
-        <h3>Your Review</h3>
-        <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=PUT" method="post">
-            <div class="star-rating edit-stars">
-                <input type="hidden" name="rating" id="edit-rating-value" value="<%= userReview.rating %>">
-                <% for(let i = 1; i <= 5; i++)  { %>
-                    <span class="edit-star <%= i <= userReview.rating ? 'active' : '' %>" data-value="<%= i %>">
-                        &#9733
-                    </span>
-                <% } %>
-            </div>
-            <textarea name="comment" rows="5"><%= userReview.comment %></textarea>
-            <button type="submit" class="edit-btn">Save Changes</button>
-        </form>
-        <div class="review-action">
-            <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=DELETE" method="post">
-                <button type="submit" class="delete-btn">Delete Review</button>
-            </form>
-        </div>
-    </div>
-<% } %>
-
-<div class="reviews-container">
-    <% if(listing.reviews.length > 0)   { %>
-        <% listing.reviews.forEach(review => { %>
-            <div class="review-card">
-                <h5><%= review.user.username %></h5>
-                <div class="rating">
-                    <% for(let i = 0; i< review.rating; i++) {%>
-                        ⭐
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-car-front-fill"></i>
+                            Parking
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-flower1"></i>
+                            Spa
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-water"></i>
+                            Pool
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-activity"></i>
+                            Gym
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-snow"></i>
+                            Air Conditioning
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-cup-hot"></i>
+                            Breakfast
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-heart"></i>
+                            Pet Friendly
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-basket2"></i>
+                            Laundry Service
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-shop"></i>
+                            Restaurant
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-egg-fried"></i>
+                            Kitchen
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-cup-straw"></i>
+                            Bar
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-bell"></i>
+                            Room Service
+                        </div>
+                    <% } %>
+                    
+                    <% if(listing.amenities.parking){ %>
+                        <div class="amenity-item">
+                            <i class="bi bi-person-workspace"></i>
+                            Front Desk
+                        </div>
                     <% } %>
                 </div>
-                <p><%= review.comment %></p>
-                <small>
-                    <%= review.createdAt.toLocaleDateString() %>
-                </small>
             </div>
-        <% }) %>
-    <% }else    { %>
-        <p>No reviews yet. Be the first to review this property!</p>
+
+            <div class="rooms-section">
+                <div class="section-title">
+                    <i class="bi bi-door-open"></i>
+                    <h2>Available Room Types</h2>
+                </div>
+
+                <div class="room-grid">
+                    <% listing.roomTypes.forEach(room => { %>
+                        <div class="room-card">
+                            <div class="room-header">
+                                <i class="bi bi-door-open"></i>
+                                <div>
+                                    <h3>
+                                        <%= room.roomType
+                                            .split("-")
+                                            .map(word =>
+                                                word.charAt(0).toUpperCase() +
+                                                word.slice(1)
+                                            )
+                                            .join(" ")
+                                        %>
+                                    </h3>
+                                    <p>
+                                        <%= room.totalRooms %> rooms available
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="room-footer">
+                                <span class="room-price">
+                                    $<%= room.pricePerNight %>
+                                </span>
+                                <span class="per-night">
+                                    / night
+                                </span>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="location-card">
+            <div class="location-header">
+                <i class="bi bi-geo-alt"></i>
+                <h2>Location</h2>
+            </div>  
+            <div class="location-details">
+                <p class="address">
+                    <%= listing.location.address %>
+                </p>
+
+                <p class="city-country">
+                    <%= listing.location.city %>,
+                    <%= listing.location.country %>
+                </p>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+    <% if(currentUser && listing.owner._id.equals(currentUser._id)) { %>
+        <div class="owner-actions">
+            <a href="/listings/<%= listing._id %>/edit" class="owner-btn owner-edit-btn">
+                <i class="bi bi-pencil-square"></i>
+                Edit Listing
+            </a>
+
+            <form action="/listings/<%= listing._id %>?_method=DELETE" method="post">
+                <button type="submit" class="owner-btn owner-delete-btn">
+                    <i class="bi bi-trash"></i>
+                    Delete Listing
+                </button>
+            </form>
+        </div>
     <% } %>
+
+    <div class="availability-section">
+        <div class="section-title">
+            <i class="bi bi-calendar-check"></i>
+            <h2>Check Availability</h2>
+        </div>
+        <form id="availabilityForm">
+            <div class="date-field">
+                <label>Check In</label>
+                <input type="date" name="checkIn" id="checkIn" required>
+            </div>
+            <div class="date-field">
+                <label>Check Out</label>
+                <input type="date" name="checkOut" id="checkOut" required>
+            </div>
+            <button type="submit" class="check-btn">
+                Check Availability
+            </button>
+        </form>
+        <div id="availabilityResults"></div>
+    </div>
 </div>
+
+<div class="review-container">
+    <% if(!userReview)  {%>
+        <div class="review-section">
+            <h3>Leave a Review</h3>
+            <p class="review-subtitle">
+                Share your experience with future guests.
+            </p>
+            <form action="/listings/<%= listing._id %>/reviews" method="post">
+                <label class="review-label">Your Rating</label>
+                <div class="star-rating">
+                    <input type="hidden" name="rating" id="rating-value" required>
+                    <span class="star" data-value="1">&#9733</span>
+                    <span class="star" data-value="2">&#9733</span>
+                    <span class="star" data-value="3">&#9733</span>
+                    <span class="star" data-value="4">&#9733</span>
+                    <span class="star" data-value="5">&#9733</span>
+                </div>
+                <label class="review-label">Your Review</label>
+                <textarea name="comment" rows="5" placeholder="Share your experience..." required></textarea>
+                <button type="submit" class="review-btn">Submit Review</button>
+            </form>
+        </div>
+    <% }else    { %>
+        <div class="your-review-card">
+            <h3>Your Review</h3>
+            <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=PUT" method="post">
+                <div class="star-rating edit-stars">
+                    <input type="hidden" name="rating" id="edit-rating-value" value="<%= userReview.rating %>">
+                    <% for(let i = 1; i <= 5; i++)  { %>
+                        <span class="edit-star <%= i <= userReview.rating ? 'active' : '' %>" data-value="<%= i %>">
+                            &#9733
+                        </span>
+                    <% } %>
+                </div>
+                <textarea name="comment" rows="5"><%= userReview.comment %></textarea>
+                <button type="submit" class="edit-btn">Save Changes</button>
+            </form>
+            <div class="review-action">
+                <form action="/listings/<%= listing._id %>/reviews/<%= userReview._id %>?_method=DELETE" method="post">
+                    <button type="submit" class="delete-btn">Delete Review</button>
+                </form>
+            </div>
+        </div>
+    <% } %>
+
+    <div class="reviews-section">
+        <div class="section-title">
+            <i class="bi bi-chat-square-text"></i>
+            <h2>Guest Reviews</h2>
+        </div>
+        <div class="reviews-container">
+            <% if(listing.reviews.length > 0) { %>
+                <% listing.reviews.forEach(review => { %>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <h5><%= review.user.username %></h5>
+                            <div class="rating">
+                                <% for(let i = 0; i < review.rating; i++) { %>
+                                    ★
+                                <% } %>
+                            </div>
+                        </div>
+                        <p><%= review.comment %></p>
+                        <small>
+                            <i class="bi bi-calendar3"></i>
+                            <%= review.createdAt.toLocaleDateString() %>
+                        </small>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-reviews">
+                    No reviews yet. Be the first to review this property!
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script type="application/json" id="listing-data">
     <%- JSON.stringify({

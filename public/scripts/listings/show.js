@@ -20,7 +20,7 @@ form.addEventListener("submit", async(e) => {
     rooms.forEach(room => {
         const roomName = room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
         html += `
-            <div class="room-card">
+            <div class="availability-room-card">
                 <h4>${roomName}</h4>
                 <p>Available: ${room.availableRooms}</p>
                 <p>$${room.pricePerNight} / night</p>
