@@ -67,6 +67,21 @@
     font-size: 1rem;
 }
 
+.upload-flash {
+    display: none;
+
+    margin-bottom: 1rem;
+    padding: 1rem 1.25rem;
+
+    border-radius: 12px;
+
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+
+    font-weight: 500;
+}
+
 .upload-card {
     display: block;
     width: 100%;
@@ -137,6 +152,95 @@
     margin-top: 1rem;
     font-weight: 600;
     color: #243B85;
+}
+
+.image-preview-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+    transition: all .3s ease;
+}
+
+.preview-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.preview-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.preview-info {
+    padding: .75rem;
+}
+
+.preview-name {
+    font-size: .85rem;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: white;
+    animation: fadeIn .3s ease;
+    transition: all .3s ease;
+}
+
+.preview-card.removing {
+    opacity: 0;
+    transform: scale(.8);
+}
+
+.remove-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0,0,0,.75);
+    color: white;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.remove-image:hover {
+    background: #ef4444;
+    transform: scale(1.05);
 }
 
 .form-card {
