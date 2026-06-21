@@ -1,37 +1,66 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .edit-profile-container {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 2rem;
+  padding: 2rem;
+  min-height: 100vh;
+  background:
+        radial-gradient(
+            circle at top left,
+            rgba(36,59,133,.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(54,84,179,.12),
+            transparent 35%
+        ),
+        #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 24px;
+    margin-bottom: 2rem;
+    background: #fff;
+    transition: .3s ease;
 }
 
-.edit-profile-container h2 {
-  font-size: 28px;
-  margin-bottom: 25px;
-  color: #222;
+.heading-container  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading-container h2 {
+    color: #243B85;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
 }
 
 .edit-profile-container form {
-  background: #fff;
-  padding: 25px 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background: #fff;
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 24px rgba(0,0,0,.05);
 }
 
+/* Labels */
+
 .edit-profile-container label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 6px;
-  margin-top: 16px;
+    display: block;
+    margin-bottom: .5rem;
+    margin-top: 1.2rem;
+    font-weight: 600;
+    color: #374151;
 }
+
+/* Inputs */
 
 .edit-profile-container input[type="text"],
 .edit-profile-container input[type="email"],
@@ -39,89 +68,156 @@
 .edit-profile-container input[type="date"],
 .edit-profile-container textarea,
 .edit-profile-container select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
+    width: 100%;
+    padding: .9rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: .95rem;
+    background: #fff;
+    transition: .2s ease;
+}
+
+.edit-profile-container textarea {
+    min-height: 130px;
+    resize: vertical;
 }
 
 .edit-profile-container input:focus,
 .edit-profile-container textarea:focus,
 .edit-profile-container select:focus {
-  border-color: #ff5a5f;
-}
-
-.edit-profile-container textarea {
-  min-height: 120px;
-  resize: vertical;
+    outline: none;
+    border-color: #243B85;
+    box-shadow: 0 0 0 4px rgba(36,59,133,.1);
 }
 
 .edit-profile-container input[readonly] {
-  background: #f5f5f5;
-  cursor: not-allowed;
+    background: #f8fafc;
+    color: #6b7280;
+    cursor: not-allowed;
 }
 
-.edit-profile-container input[type="radio"] {
-  width: auto;
-  margin-right: 6px;
-  accent-color: #ff5a5f;
+.gender-section {
+    margin-top: 1rem;
 }
 
-.edit-profile-container label:has(input[type="radio"]) {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-right: 20px;
-  margin-top: 10px;
-  cursor: pointer;
+.field-label {
+    display: block;
+    font-size: .95rem;
+    font-weight: 600;
+    margin-bottom: .8rem;
+    color: #111827;
+}
+
+.gender-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.gender-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.gender-card input {
+    position: absolute;
+    opacity: 0;
+}
+
+.gender-card span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    border: 2px solid #e5e7eb;
+    border-radius: 14px;
+    background: #fff;
+    font-weight: 600;
+    transition: all .25s ease;
+}
+
+.gender-card:hover span {
+    border-color: #243B85;
+    transform: translateY(-2px);
+}
+
+.gender-card input:checked + span {
+    background: #243B85;
+    color: white;
+    border-color: #243B85;
+    box-shadow: 0 8px 20px rgba(36,59,133,.25);
 }
 
 .edit-profile-container button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  background: #ff5a5f;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s ease;
+    width: 100%;
+    margin-top: 2rem;
+    border: none;
+    border-radius: 14px;
+    background: #243B85;
+    color: white;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s ease;
 }
 
 .edit-profile-container button:hover {
-  background: #e04848;
+    background: #1d3274;
+    transform: translateY(-2px);
 }
+
+/* Remove arrows from number field */
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input[type="number"] {
-  appearance: textfield;
+    appearance: textfield;
 }
 
+/* Mobile */
+
 @media (max-width: 768px) {
-  .edit-profile-container {
-    padding: 10px;
-  }
 
-  .edit-profile-container form {
-    padding: 20px;
-  }
+    .edit-profile-container {
+        padding: .75rem;
+    }
 
-  .edit-profile-container h2 {
-    font-size: 24px;
-  }
+    .edit-profile-container h2 {
+        font-size: 1.6rem;
+    }
 
-  .edit-profile-container label:has(input[type="radio"]) {
-    display: flex;
-    margin-right: 0;
-    margin-bottom: 8px;
-  }
+    .edit-profile-container form {
+        padding: 1.25rem;
+        border-radius: 18px;
+    }
+
+    .gender-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .edit-profile-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .edit-profile-container input,
+    .edit-profile-container textarea,
+    .edit-profile-container select {
+        font-size: .9rem;
+    }
+
+    .edit-profile-container button {
+        padding: .9rem;
+    }
+
+    .gender-cards {
+        grid-template-columns: 1fr;
+    }
 }

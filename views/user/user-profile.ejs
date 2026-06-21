@@ -22,203 +22,239 @@
         </div>
     </div>
 
-    <div class="my-bookings">
-        <h3 class="section-heading">My Bookings</h3>
-        <% if(myBookings.length === 0)  { %>
-            <p>No bookings yet.</p>
-        <% }else    { %>
-            <table class="booking-table">
-                <thead>
-                    <tr>
-                        <th>Property</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Rooms</th>
-                        <th>Total Price</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% myBookings.forEach(booking => { %>
-                        <tr>
-                            <td>
-                                <%= booking.listing.title %>
-                            </td>
-                            <td>
-                                <%= new Date(booking.checkIn).toDateString() %>
-                            </td>
-                            <td>
-                                <%= new Date(booking.checkOut).toDateString() %>
-                            </td>
-                            <td>
-                                <% booking.rooms.forEach(room => { %>
-                                    <div>
-                                        <%= room.quantity %> x
-                                        <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
-                                    </div>
-                                <% }) %>
-                            </td>
-                            <td>
-                                $<%= booking.totalPrice %>
-                            </td>
-                            <td>
-                                <% if(booking.status === "pending") { %>
-                                    <span class="status-pending">Pending</span>
-                                <% }else if(booking.status == "approved")   { %>
-                                    <span class="status-approved">Approved</span>
-                                <% }else if(booking.status === "cancelled")   { %>
-                                    <span class="status-cancelled">Cancelled</span>
-                                <% }else    { %>
-                                    <span class="status-rejected">Rejected</span>
-                                <% } %>
-                            </td>
-                            <td>
-                                <% 
-                                    const oneDayBefore = new Date(booking.checkIn);
-                                    oneDayBefore.setDate(oneDayBefore.getDate() - 1);
-                                    const canCancel = (booking.status === "pending" || booking.status === "approved") && (new Date() < oneDayBefore);
-                                %>
-                                <% if(canCancel)    { %>
-                                    <form action="/bookings/<%= booking._id %>/cancel" method="post">
-                                        <button class="cancel-btn"> Cancel Booking</button>
-                                    </form>
-                                <% } %>
-                            </td>
-                        </tr>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3><%= listings.length %></h3>
+            <p>Listings</p>
+        </div>
+        <div class="stat-card">
+            <h3><%= myBookings.length %></h3>
+            <p>Bookings</p>
+        </div>
+        <div class="stat-card">
+            <h3><%= wishlistListings.length %></h3>
+            <p>Wishlist</p>
+        </div>
+    </div>
+
+    <div class="my-bookings dashboard-section">
+        <div class="dashboard-card">
+            <h3 class="section-heading">My Bookings</h3>
+            <% if(myBookings.length === 0)  { %>
+                <p>No bookings yet.</p>
+            <% }else    { %>
+                <div class="table-wrapper">
+                    <table class="my-bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Property</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Rooms</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% myBookings.forEach(booking => { %>
+                                <tr>
+                                    <td>
+                                        <%= booking.listing.title %>
+                                    </td>
+                                    <td>
+                                        <%= new Date(booking.checkIn).toDateString() %>
+                                    </td>
+                                    <td>
+                                        <%= new Date(booking.checkOut).toDateString() %>
+                                    </td>
+                                    <td>
+                                        <% booking.rooms.forEach(room => { %>
+                                            <div>
+                                                <%= room.quantity %> x
+                                                <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+                                            </div>
+                                        <% }) %>
+                                    </td>
+                                    <td>
+                                        $<%= booking.totalPrice %>
+                                    </td>
+                                    <td>
+                                        <% if(booking.status === "pending") { %>
+                                            <span class="status-pending">Pending</span>
+                                        <% }else if(booking.status == "approved")   { %>
+                                            <span class="status-approved">Approved</span>
+                                        <% }else if(booking.status === "cancelled")   { %>
+                                            <span class="status-cancelled">Cancelled</span>
+                                        <% }else    { %>
+                                            <span class="status-rejected">Rejected</span>
+                                        <% } %>
+                                    </td>
+                                    <td>
+                                        <% 
+                                            const oneDayBefore = new Date(booking.checkIn);
+                                            oneDayBefore.setDate(oneDayBefore.getDate() - 1);
+                                            const canCancel = (booking.status === "pending" || booking.status === "approved") && (new Date() < oneDayBefore);
+                                        %>
+                                        <% if(canCancel)    { %>
+                                            <form action="/bookings/<%= booking._id %>/cancel" method="post">
+                                                <button class="cancel-btn"> Cancel Booking</button>
+                                            </form>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>                    
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="booking-requests dashboard-section">
+        <div class="dashboard-card">
+            <h3 class="section-heading">Booking Requests</h3>
+            <% if(bookingRequests.length === 0) {%>
+                <p>No Pending Booking Requests.</p>
+            <% }else    { %>
+                <div class="table-wrapper">
+                    <table class="booking-requests-table">
+                        <thead>
+                            <tr>
+                                <th>Guests</th>
+                                <th>Property</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Total Price</th>
+                                <th>Rooms</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% bookingRequests.forEach(booking => { %>
+                                <tr>
+                                    <td><%= booking.user.username %></td>
+                                    <td><%= booking.listing.title %></td>
+                                    <td><%= new Date(booking.checkIn).toDateString() %></td>
+                                    <td><%= new Date(booking.checkOut).toDateString() %></td>
+                                    <td>$<%= booking.totalPrice %></td>
+                                    <td>
+                                        <% booking.rooms.forEach(room => { %>
+                                            <div>
+                                                <%= room.quantity %>
+                                                <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+                                            </div>
+                                        <% }) %>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <form action="/bookings/<%= booking._id %>/approve" method="POST">
+                                                <button type="submit" class="approve-btn">Approve</button>
+                                            </form>
+                                            <form action="/bookings/<%= booking._id %>/reject" method="POST">
+                                                <button type="submit" class="reject-btn">Reject</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="approved-bookings dashboard-section">
+        <div class="dashboard-card">
+            <h3 class="section-heading">Approved Bookings</h3>
+            <% if(approvedBookings.length === 0)    { %>
+                <p>No approved bookings.</p>
+            <% }else    { %>
+                <div class="table-wrapper">
+                    <table class="approved-bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Guest</th>
+                                <th>Property</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Rooms</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% approvedBookings.forEach(booking => { %>
+                                <tr>
+                                    <td><%= booking.user.username %></td>
+                                    <td><%= booking.listing.title %></td>
+                                    <td>
+                                        <%= new Date(booking.checkIn).toDateString() %>
+                                    </td>
+                                    <td>
+                                        <%= new Date(booking.checkOut).toDateString() %>
+                                    </td>
+                                    <td>
+                                        <% booking.rooms.forEach(room => { %>
+                                            <div>
+                                                <%= room.quantity %> x 
+                                                <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
+                                            </div>
+                                        <% }) %>
+                                    </td>
+                                    <td>$<%= booking.totalPrice %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="recent-listings dashboard-section">
+        <div class="dashboard-card">
+            <h3 class="section-heading">Your Recent Listings</h3>
+            <% if (listings.length === 0) { %>
+                <p>No listings created yet.</p>
+            <% } else { %>
+                <div class="listing-grid">
+                    <% listings.forEach(listing => { %>
+                        <div class="listing-card">
+                            <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
+                            <div class="listing-content">
+                                <h4><%= listing.title %></h4>
+                                <p>Starting from: $<%= listing.startingPrice %>/night</p>
+                                <a href="/listings/<%= listing._id %>">
+                                    View
+                                </a>
+                            </div>
+                        </div>
                     <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+                </div>
+            <% } %>
+        </div>
     </div>
 
-    <div class="booking-requests">
-        <h3 class="section-heading">Booking Requests</h3>
-        <% if(bookingRequests.length === 0) {%>
-            <p>No Pending Booking Requests.</p>
-        <% }else    { %>
-            <table class="booking-table">
-                <thead>
-                    <tr>
-                        <th>Guests</th>
-                        <th>Property</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Total Price</th>
-                        <th>Rooms</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% bookingRequests.forEach(booking => { %>
-                        <tr>
-                            <td><%= booking.user.username %></td>
-                            <td><%= booking.listing.title %></td>
-                            <td><%= new Date(booking.checkIn).toDateString() %></td>
-                            <td><%= new Date(booking.checkOut).toDateString() %></td>
-                            <td>$<%= booking.totalPrice %></td>
-                            <td>
-                                <% booking.rooms.forEach(room => { %>
-                                    <div>
-                                        <%= room.quantity %>
-                                        <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
-                                    </div>
-                                <% }) %>
-                            </td>
-                            <td>
-                                <form action="/bookings/<%= booking._id %>/approve" method="POST" style="display:inline;">
-                                    <button type="submit" class="approve-btn">Approve</button>
-                                </form>
-                                <form action="/bookings/<%= booking._id %>/reject" method="POST" style="display:inline;">
-                                    <button type="submit" class="reject-btn">Reject</button>
-                                </form>
-                            </td>
-                        </tr>
+    <div class="wishlist-section dashboard-section">
+        <div class="dashboard-card">
+            <h3 class="section-heading">My Wishlist</h3>
+            <% if(wishlistListings.length === 0)    { %>
+                <p>No listings in your wishlist yet.</p>
+            <% }else    { %>
+                <div class="listing-grid">
+                    <% wishlistListings.forEach(listing => { %>
+                        <div class="listing-card">
+                            <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
+                            <div class="listing-content">
+                                <h4><%= listing.title %></h4>
+                                <p>Starting From: $<%= listing.startingPrice %>/ night</p>
+                                <a href="/listings/<%= listing._id %>">View</a>
+                            </div>   
+                        </div>
                     <% }) %>
-                </tbody>
-            </table>
-        <% } %>
+                </div>
+            <% } %>
+        </div>
     </div>
-
-    <div class="approved-bookings">
-        <h3 class="section-heading">Approved Bookings</h3>
-        <% if(approvedBookings.length === 0)    { %>
-            <p>No approved bookings.</p>
-        <% }else    { %>
-            <table class="booking-table">
-                <thead>
-                    <tr>
-                        <th>Guest</th>
-                        <th>Property</th>
-                        <th>Check In</th>
-                        <th>Check Out</th>
-                        <th>Rooms</th>
-                        <th>Total Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% approvedBookings.forEach(booking => { %>
-                        <tr>
-                            <td><%= booking.user.username %></td>
-                            <td><%= booking.listing.title %></td>
-                            <td>
-                                <%= new Date(booking.checkIn).toDateString() %>
-                            </td>
-                            <td>
-                                <%= new Date(booking.checkOut).toDateString() %>
-                            </td>
-                            <td>
-                                <% booking.rooms.forEach(room => { %>
-                                    <div>
-                                        <%= room.quantity %> x 
-                                        <%= room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ") %>
-                                    </div>
-                                <% }) %>
-                            </td>
-                            <td>$<%= booking.totalPrice %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        <% } %>
-    </div>
-
-    <div class="recent-listings">
-        <h3 class="section-heading">Your Recent Listings</h3>
-        <% if (listings.length === 0) { %>
-            <p>No listings created yet.</p>
-        <% } else { %>
-            <div class="listing-grid">
-                <% listings.forEach(listing => { %>
-                    <div class="listing-card">
-                        <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
-                        <h4><%= listing.title %></h4>
-                        <p>Starting from: $<%= listing.startingPrice %>/night</p>
-                        <a href="/listings/<%= listing._id %>">
-                            View
-                        </a>
-                    </div>
-                <% }) %>
-            </div>
-        <% } %>
-    </div>
-
-    <div class="wishlist-section">
-        <h3 class="section-heading">My Wishlist</h3>
-        <% if(wishlistListings.length === 0)    { %>
-            <p>No listings in your wishlist yet.</p>
-        <% }else    { %>
-            <div class="listing-grid">
-                <% wishlistListings.forEach(listing => { %>
-                    <div class="listing-card">
-                        <img src="<%= listing.images[0]?.url %>" alt="Listing Image">
-                        <h4><%= listing.title %></h4>
-                        <p>Starting From: $<%= listing.startingPrice %>/ night
-                        </p>
-                        <a href="/listings/<%= listing._id %>">View</a>
-                    </div>
-                <% }) %>
-            </div>
-        <% } %>
-    </div>
-
 </div>

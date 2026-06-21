@@ -1,7 +1,9 @@
 <% layout("../layouts/boilerplate.ejs") %>
 <link rel="stylesheet" href="/stylesheets/user/edit-profile.css">
 <div class="edit-profile-container">
-    <h2>Edit Profile</h2>
+    <div class="heading-container">
+        <h2>Edit Profile</h2>
+    </div>
     <form action="/profile/edit?_method=PUT" method="post">
         <label>Username</label>
         <input type="text" name="username" value="<%= user.username || "" %>" required>
@@ -9,12 +11,30 @@
         <input type="email" name="email" value="<%= user.email || "" %>" readonly required>
         <label>About Me</label>
         <textarea name="aboutme"><%= user.aboutme %></textarea>
-        <div class="radio-group">
-            <label>Gender</label>
-            <label><input type="radio" name="gender" value="Male" id="male" <%= user.gender === "Male" ? "checked" : "" %>>Male</label>
-            <label><input type="radio" name="gender" value="Female" id="female" <%= user.gender === "Female" ? "checked" : "" %>>Female</label>
-            <label><input type="radio" name="gender" value="Non-Binary" id="non-binary" <%= user.gender === "Non-Binary" ? "checked" : "" %>>Non Binary</label>
-            <label><input type="radio" name="gender" value="Prefer-Not-To-Say" id="prefer-not-to-say" <%= user.gender === "Prefer-Not-To-Say" ? "checked" : "" %>>Prefer Not To Say</label>
+        <div class="gender-section">
+            <label class="field-label">Gender</label>
+            <div class="gender-cards">
+                <label class="gender-card">
+                    <input type="radio" name="gender" value="Male"
+                    <%= user.gender === "Male" ? "checked" : "" %>>
+                    <span>Male</span>
+                </label>
+                <label class="gender-card">
+                    <input type="radio" name="gender" value="Female"
+                    <%= user.gender === "Female" ? "checked" : "" %>>
+                    <span>Female</span>
+                </label>
+                <label class="gender-card">
+                    <input type="radio" name="gender" value="Non-Binary"
+                    <%= user.gender === "Non-Binary" ? "checked" : "" %>>
+                    <span>Non Binary</span>
+                </label>
+                <label class="gender-card">
+                    <input type="radio" name="gender" value="Prefer-Not-To-Say"
+                    <%= user.gender === "Prefer-Not-To-Say" ? "checked" : "" %>>
+                    <span>Prefer Not To Say</span>
+                </label>
+            </div>
         </div>
         <label>Date Of Birth</label>
         <input type="date" name="dob" value="<%= user.dob ? user.dob.toISOString().split('T')[0] : '' %>">
