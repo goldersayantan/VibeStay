@@ -1,0 +1,125 @@
+.info-page {
+    background: #f8fafc;
+    min-height: 100vh;
+    padding: 3rem 1rem;
+}
+
+.info-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.page-header {
+    background: #fff;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,.05);
+}
+
+.page-header i {
+    font-size: 3rem;
+    color: #243B85;
+    margin-bottom: 1rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.page-header p {
+    color: #6b7280;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.info-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 6px 20px rgba(0,0,0,.04);
+}
+
+.info-section h2 {
+    color: #243B85;
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.info-section p {
+    color: #4b5563;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.info-section ul {
+    padding-left: 1.5rem;
+}
+
+.info-section li {
+    color: #4b5563;
+    margin-bottom: .6rem;
+    line-height: 1.8;
+}
+
+.resource-card {
+    background: #eef4ff;
+    border-left: 4px solid #243B85;
+    padding: 1rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-top: 1rem;
+}
+
+.resource-card i {
+    color: #243B85;
+    font-size: 1.2rem;
+}
+
+.resource-card span {
+    color: #374151;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 2rem 1.25rem;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .info-section {
+        padding: 1.5rem;
+    }
+
+    .info-section h2 {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .page-header i {
+        font-size: 2.4rem;
+    }
+
+    .info-section {
+        padding: 1.25rem;
+    }
+}

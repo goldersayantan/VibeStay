@@ -1,0 +1,136 @@
+.help-center-page {
+    background: #f8fafc;
+    padding: 3rem 1rem;
+    min-height: 100vh;
+}
+
+.help-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.page-header {
+    background: #fff;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,.05);
+    border: 1px solid #e5e7eb;
+}
+
+.page-header i {
+    font-size: 3rem;
+    color: #243B85;
+    margin-bottom: 1rem;
+}
+
+.page-header h1 {
+    font-size: 2.3rem;
+    color: #243B85;
+    margin-bottom: .8rem;
+}
+
+.page-header p {
+    color: #64748b;
+    font-size: 1rem;
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.help-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 24px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 16px rgba(0,0,0,.04);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.section-title i {
+    font-size: 1.5rem;
+    color: #243B85;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #243B85;
+    font-weight: 700;
+}
+
+.help-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.help-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.help-item h4 {
+    font-size: 1.05rem;
+    color: #111827;
+    margin-bottom: .5rem;
+    font-weight: 600;
+}
+
+.help-item p {
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+
+    .page-header {
+        padding: 2rem 1.25rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .help-section {
+        padding: 1.5rem;
+    }
+
+    .section-title {
+        align-items: flex-start;
+    }
+
+    .section-title h2 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .page-header i {
+        font-size: 2.4rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .page-header p,
+    .help-item p {
+        font-size: .92rem;
+    }
+
+    .help-section {
+        padding: 1.2rem;
+    }
+}

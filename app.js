@@ -76,6 +76,9 @@ app.use(bookingRoutes);
 const reviewRoutes = require("./routes/reviewRoutes");
 app.use(reviewRoutes);
 
+const pageRoutes = require("./routes/pageRoutes");
+app.use(pageRoutes);
+
 
 app.use((err, req, res, next) => {
     if (err.code === "LIMIT_FILE_SIZE") {
