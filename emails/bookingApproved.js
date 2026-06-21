@@ -1,7 +1,108 @@
 module.exports = booking => {
     return `
-        <h2>Booking Approved</h2>
-        <p>You booking has been approved</p>
-        <p>We look forward to hosting you.</p>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Booking Approved</title>
+        </head>
+        <body style="margin:0;padding:0;background:#f4f7fb;font-family:Arial,sans-serif;">
+            <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+
+                <!-- Header -->
+                <div style="background:#16a34a;padding:30px;text-align:center;">
+                    <h1 style="margin:0;color:#ffffff;font-size:28px;">
+                        Booking Approved 🎉
+                    </h1>
+                </div>
+
+                <!-- Content -->
+                <div style="padding:35px;">
+                    <p style="font-size:16px;color:#333;">
+                        Hi <strong>${booking.user?.username || "Guest"}</strong>,
+                    </p>
+
+                    <p style="font-size:15px;color:#555;line-height:1.6;">
+                        Great news! Your booking request has been approved by the host.
+                        Your stay is now confirmed and we're excited to welcome you.
+                    </p>
+
+                    <!-- Booking Card -->
+                    <div style="background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:20px;margin:25px 0;">
+                        <h3 style="margin-top:0;color:#111827;">
+                            Booking Summary
+                        </h3>
+
+                        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                            <tr>
+                                <td style="padding:8px 0;color:#6b7280;">Property</td>
+                                <td style="padding:8px 0;text-align:right;font-weight:bold;">
+                                    ${booking.listing?.title || "Property"}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:8px 0;color:#6b7280;">Check-in</td>
+                                <td style="padding:8px 0;text-align:right;">
+                                    ${new Date(booking.checkIn).toLocaleDateString()}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:8px 0;color:#6b7280;">Check-out</td>
+                                <td style="padding:8px 0;text-align:right;">
+                                    ${new Date(booking.checkOut).toLocaleDateString()}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:8px 0;color:#6b7280;">Total Amount</td>
+                                <td style="padding:8px 0;text-align:right;font-weight:bold;color:#16a34a;">
+                                    ₹${booking.totalPrice}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding:8px 0;color:#6b7280;">Status</td>
+                                <td style="padding:8px 0;text-align:right;">
+                                    <span style="background:#dcfce7;color:#166534;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:bold;">
+                                        APPROVED
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <p style="font-size:15px;color:#555;line-height:1.6;">
+                        Please keep this confirmation for your records. If you have any
+                        questions before your stay, feel free to contact the host.
+                    </p>
+
+                    <div style="text-align:center;margin:35px 0;">
+                        <a href="${process.env.BASE_URL || '#'}"
+                        style="background:#16a34a;color:#ffffff;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:bold;display:inline-block;">
+                            View Booking
+                        </a>
+                    </div>
+
+                    <p style="font-size:15px;color:#555;">
+                        We look forward to hosting you and hope you have a wonderful stay!
+                    </p>
+
+                    <p style="margin-top:30px;color:#111827;">
+                        Warm regards,<br>
+                        <strong>VibeStay Team</strong>
+                    </p>
+                </div>
+
+                <!-- Footer -->
+                <div style="background:#f9fafb;padding:20px;text-align:center;border-top:1px solid #e5e7eb;">
+                    <p style="margin:0;color:#6b7280;font-size:13px;">
+                        © ${new Date().getFullYear()} VibeStay. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
     `;
 };
