@@ -1,4 +1,4 @@
-.booking-container {
+/* .booking-container {
     max-width: 1100px;
     margin: 30px auto;
     padding: 0 20px;
@@ -96,4 +96,238 @@
 
 .submit-btn:hover {
     background: #2980b9;
+} */
+
+/* =========================
+BOOKING PAGE
+========================= */
+
+.booking-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.booking-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #243B85;
+    margin-bottom: .5rem;
+}
+
+.hotel-name {
+    font-size: 1.4rem;
+    color: #374151;
+    margin-bottom: 1.5rem;
+}
+
+/* =========================
+DATES
+========================= */
+
+.booking-dates {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.booking-dates p {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    font-size: .95rem;
+}
+
+.booking-dates strong {
+    color: #243B85;
+}
+
+/* =========================
+ROOMS GRID
+========================= */
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.room-selection {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: .25s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,.04);
+}
+
+.room-selection:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(36,59,133,.08);
+}
+
+.room-selection h3 {
+    color: #243B85;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.room-selection p {
+    margin-bottom: .75rem;
+    color: #4b5563;
+    font-size: .95rem;
+}
+
+.room-selection p:nth-child(3) {
+    font-weight: 700;
+    color: #22c55e;
+    font-size: 1rem;
+}
+
+.room-selection label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.room-selection input {
+    width: 100%;
+    padding: .85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+    transition: .2s;
+}
+
+.room-selection input:focus {
+    border-color: #243B85;
+    box-shadow: 0 0 0 3px rgba(36,59,133,.1);
+}
+
+/* =========================
+TOTAL PRICE
+========================= */
+
+.price-box {
+    margin-top: 2rem;
+    background: linear-gradient(
+        135deg,
+        #243B85,
+        #3654B3
+    );
+    color: white;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(36,59,133,.15);
+}
+
+.price-box h3 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+#totalPrice {
+    color: #ffffff;
+}
+
+/* =========================
+SUBMIT BUTTON
+========================= */
+
+.submit-btn {
+    width: 100%;
+    margin-top: 1.5rem;
+    border: none;
+    border-radius: 16px;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: #243B85;
+    color: white;
+    transition: .25s ease;
+}
+
+.submit-btn:hover {
+    background: #1e3270;
+    transform: translateY(-2px);
+}
+
+/* =========================
+NUMBER INPUT
+========================= */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* =========================
+TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .booking-title {
+        font-size: 1.8rem;
+    }
+
+    .hotel-name {
+        font-size: 1.1rem;
+    }
+
+    .rooms-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .price-box h3 {
+        font-size: 1.6rem;
+    }
+}
+
+/* =========================
+MOBILE
+========================= */
+
+@media (max-width: 576px) {
+
+    .booking-container {
+        padding: 0 1rem;
+    }
+
+    .rooms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-dates {
+        flex-direction: column;
+    }
+
+    .booking-title {
+        font-size: 1.6rem;
+    }
+
+    .room-selection {
+        padding: 1.25rem;
+    }
+
+    .price-box {
+        padding: 1.5rem;
+    }
+
+    .price-box h3 {
+        font-size: 1.4rem;
+    }
+
+    .submit-btn {
+        font-size: .95rem;
+    }
 }
