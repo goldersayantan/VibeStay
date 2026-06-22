@@ -83,7 +83,6 @@ const postSignUp = async (req, res) => {
         );
         res.render("user/verify-otp", { email });
     } catch (err) {
-        console.log(err);
         req.flash("error", "Something went wrong");
         res.redirect("/signup");
     }
@@ -141,7 +140,6 @@ const getProfile = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err);
         req.flash("error", "Something went wrong");
         res.redirect("/listings");
     }

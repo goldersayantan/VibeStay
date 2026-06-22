@@ -8,9 +8,7 @@ const sendEmail = async(to, subject, html) => {
             subject,
             html
         });
-        console.log("Email sent successfully.", response);
     }catch(err) {
-        console.log("Error sending emails", err);
         throw err;
     }
 };

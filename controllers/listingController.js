@@ -208,7 +208,6 @@ const postNewListing = async (req, res) => {
         req.flash("success", "Listing created successfully.");
         res.redirect("/listings");
     } catch (err) {
-        console.log(err);
         req.flash("error", "Error in creating listing.");
         res.redirect("/listings/new");
     }
@@ -251,7 +250,6 @@ const showListing = async(req, res) => {
         res.render("listings/show", {listing, userReview});
     } catch(err)    {
         req.flash("error", "Something went wrong");
-        console.log(err);
         res.redirect("/listings");
     }
 };
@@ -274,7 +272,6 @@ const deleteListing = async (req, res) => {
         req.flash("success", "Listing deleted successfully");
         res.redirect("/listings");
     } catch (err) {
-        console.log(err);
         req.flash("error", "Error deleting listing");
         res.redirect("/listings");
     }

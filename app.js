@@ -10,13 +10,28 @@ const ejsMate = require("ejs-mate");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const connectDB = require("./config/db");
-let port = 8080;
+const MongoStore = require("connect-mongo").default; // For session
+const port = process.env.PORT || 8080;
 
 // Session Configuration
+const store = MongoStore.create({
+    mongoUrl: process.env.MONGODB_URL,
+    crypto: {
+        secret: process.env.SESSION_SECRET
+    },
+    touchAfter: 24 * 3600
+});
+
 const sessionOptions = {
-    secret: "mysupersecretcode", // Secret key used to sign and secure the session cookie
-    resave: false, // Prevents session from being saved again if nothing changed
-    saveUninitialized: false // Do not create a session until something is stored in it (good for login systems)
+    store,
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        httpOnly: true
+    }
 };
 
 app.use(session(sessionOptions)); // Enables session management in Express (stores session data between requests)

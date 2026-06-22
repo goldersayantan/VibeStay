@@ -111,7 +111,6 @@ const approveBooking = async(req, res) => {
         req.flash("success", "Booking Approved Successfully");
         res.redirect("/profile");
     } catch(err)    {
-        console.log(err);
         req.flash("error", "Something went wrong");
     }
 };
@@ -174,7 +173,6 @@ const rejectBooking = async(req, res) => {
         req.flash("success", "Booking rejected successfully");
         res.redirect("/profile");
     }catch(err) {   
-        console.log(err);
         req.flash("error", "Something went wrong");
         res.redirect("/profile");
     }
