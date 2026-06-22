@@ -63,7 +63,7 @@ const createBooking = async(req, res) => {
     
     const bookingPendingUser = require("../emails/bookingPendingUser");
     const bookingPendingHost = require("../emails/bookingPendingHost");
-    await listing.populate(["user", "owner", "listing"]);
+    await listing.populate(["owner"]);
     await sendEmail(
         req.user.email, 
         "Booking Request Submitted", 
