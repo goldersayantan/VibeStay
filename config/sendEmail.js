@@ -1,14 +1,22 @@
-const {Resend} = require("resend");
-const resend = new Resend(process.env.RESEND_API_KEY);
-const sendEmail = async(to, subject, html) => {
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD
+    }
+});
+
+const sendEmail = async (to, subject, html) => {
     try {
-        const response = await resend.emails.send({
-            from: "onboarding@resend.dev",
+        await transporter.sendMail({
+            from: `"VibeStay" <${process.env.GMAIL_USER}>`,
             to,
             subject,
             html
         });
-    }catch(err) {
+    } catch (err) {
         throw err;
     }
 };
