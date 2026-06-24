@@ -1,15 +1,33 @@
+const form = document.querySelector("form");
 const imageInput = document.getElementById("image-upload");
 const previewContainer = document.getElementById("image-preview-container");
 const fileCount = document.getElementById("file-count");
+const uploadFlash = document.getElementById("upload-flash");
 
+const MAX_FILES = 5;
+const MAX_SIZE = 2 * 1024 * 1024;
 let selectedFiles = [];
+
+form.addEventListener("submit", (e) => {
+    if (selectedFiles.length === 0) {
+        e.preventDefault();
+        flash.textContent = "Please upload at least one image.";
+        flash.style.display = "block";
+        document.querySelector(".upload-card").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+});
 
 imageInput.addEventListener("change", (e) => {
     const files = [...e.target.files];
-    const MAX_FILES = 5;
-    const MAX_SIZE = 2 * 1024 * 1024;
     let validFiles = [];
     for (const file of files) {
+        if (!["image/jpeg", "image/png"].includes(file.type)) {
+            showFlash(`${file.name} is not a valid image.`);
+            continue;
+        }
         if (file.size > MAX_SIZE) {
             showFlash(`${file.name} exceeds the 2MB limit.`);
             continue;
@@ -25,10 +43,9 @@ imageInput.addEventListener("change", (e) => {
     }
 
     const availableSlots = MAX_FILES - selectedFiles.length;
+    
     if (availableSlots <= 0) {
-        showFlash(
-            `Maximum ${MAX_FILES} images allowed`
-        );
+        showFlash(`Maximum ${MAX_FILES} images allowed`);
         imageInput.value = "";
         return;
     }
@@ -37,14 +54,19 @@ imageInput.addEventListener("change", (e) => {
         validFiles = validFiles.slice(0, availableSlots);
     }
     selectedFiles.push(...validFiles);
+    syncFileInput();
+    renderPreviews();
+});
+
+function syncFileInput() {
     const dataTransfer = new DataTransfer();
+
     selectedFiles.forEach(file => {
         dataTransfer.items.add(file);
     });
+
     imageInput.files = dataTransfer.files;
-    e.target.value = "";
-    renderPreviews();
-});
+}
 
 function renderPreviews() {
     previewContainer.innerHTML = "";
@@ -89,16 +111,10 @@ previewContainer.addEventListener("click", (e) => {
 
     setTimeout(() => {
         selectedFiles.splice(index, 1);
-        const dataTransfer = new DataTransfer();
-        selectedFiles.forEach(file => {
-            dataTransfer.items.add(file);
-        });
-        imageInput.files = dataTransfer.files;
+        syncFileInput();
         renderPreviews();
     }, 300);
 });
-
-const uploadFlash = document.getElementById("upload-flash");
 
 function showFlash(message) {
     uploadFlash.textContent = message;
@@ -107,3 +123,4 @@ function showFlash(message) {
         uploadFlash.style.display = "none";
     }, 4000);
 }
+

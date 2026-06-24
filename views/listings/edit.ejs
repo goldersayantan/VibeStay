@@ -5,6 +5,7 @@
         <h1>Edit Your Stay</h1>
         <p>Update your property information and availability</p>
     </div>
+
     <div class="form-card">
         <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data">           
             <div class="form-section">
@@ -20,47 +21,22 @@
                     <label>Description</label>
                     <textarea type="description" name="description" placeholder="Enter Description" required><%= listing.description %></textarea>
                 </div>
- 
-                
                 <div class="form-section">
-
                     <div class="section-header">
                         <i class="bi bi-images"></i>
                         <h2>Property Images</h2>
                     </div>
-
                     <div id="upload-flash" class="upload-flash"></div>
-
                     <!-- Existing Images -->
-                    <div
-                        id="existing-images"
-                        class="image-preview-container"
-                        data-existing-count="<%= listing.images.length %>"
-                    >
+                    <div id="existing-images" class="image-preview-container" data-existing-count="<%= listing.images.length %>">
                         <% listing.images.forEach((img) => { %>
-
-                            <div
-                                class="preview-card existing-image"
-                                data-filename="<%= img.filename %>"
-                            >
-
+                            <div class="preview-card existing-image" data-filename="<%= img.filename %>">
                                 <img src="<%= img.url %>">
-
-                                <button
-                                    type="button"
-                                    class="remove-existing-image"
-                                >
+                                <button type="button" class="remove-existing-image">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
-
-                                <input
-                                    type="hidden"
-                                    name="keepImages"
-                                    value="<%= img.filename %>"
-                                >
-
+                                <input type="hidden" name="keepImages" value="<%= img.filename %>">
                             </div>
-
                         <% }) %>
                     </div>
 
@@ -89,7 +65,7 @@
                             </p>
 
                             <small>
-                                Maximum 5 images total • 5MB each
+                                Maximum 5 images total • 2MB each
                             </small>
 
                             <div id="file-count"></div>

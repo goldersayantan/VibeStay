@@ -4,15 +4,44 @@ const existingContainer = document.getElementById("existing-images");
 const fileCount = document.getElementById("file-count");
 const uploadFlash = document.getElementById("upload-flash");
 const deleteContainer = document.getElementById("delete-images-container");
+const form = document.querySelector("form");
 
+
+form.addEventListener("submit", (e) => {
+    const totalImages = getExistingImageCount() + selectedFiles.length;
+
+    if (totalImages === 0) {
+        e.preventDefault();
+        showFlash("Please upload at least one image");
+
+        document.querySelector(".upload-card")
+            ?.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+    }
+});
+
+const MAX_FILES = 5;
+const MAX_SIZE = 2 * 1024 * 1024;
 let selectedFiles = [];
 
+let flashTimeout;
 function showFlash(message) {
+    clearTimeout(flashTimeout);
     uploadFlash.textContent = message;
     uploadFlash.style.display = "block";
-    setTimeout(() => {
+    flashTimeout = setTimeout(() => {
         uploadFlash.style.display = "none";
     }, 4000);
+}
+
+function syncFileInput() {
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach(file => {
+        dataTransfer.items.add(file);
+    });
+    imageInput.files = dataTransfer.files;
 }
 
 function getExistingImageCount() {
@@ -23,13 +52,22 @@ function getExistingImageCount() {
 
 imageInput.addEventListener("change", (e) => {
     const newFiles = [...e.target.files];
-    const MAX_FILES = 5;
-    const MAX_SIZE = 5 * 1024 * 1024;
     const existingCount = getExistingImageCount();
     let validFiles = [];
     newFiles.forEach(file => {
+        const allowedTypes = [
+            "image/jpg",
+            "image/jpeg",
+            "image/png"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            showFlash(`${file.name} is not a JPG or PNG image`);
+            return;
+        }
+
         if (file.size > MAX_SIZE) {
-            showFlash(`${file.name} exceeds 5MB`);
+            showFlash(`${file.name} exceeds 2MB`);
             return;
         }
         const alreadyAdded = selectedFiles.some(
@@ -59,11 +97,7 @@ imageInput.addEventListener("change", (e) => {
         validFiles = validFiles.slice(0, availableSlots);
     }
     selectedFiles.push(...validFiles);
-    const dataTransfer = new DataTransfer();
-    selectedFiles.forEach(file => {
-        dataTransfer.items.add(file);
-    });
-    imageInput.files = dataTransfer.files;
+    syncFileInput();
     e.target.value = "";
     renderPreviews();
 });
@@ -74,7 +108,8 @@ function renderPreviews() {
         fileCount.textContent = "";
         return;
     }
-    fileCount.textContent = `${selectedFiles.length} image(s) selected`;
+    const totalCount = getExistingImageCount() + selectedFiles.length;
+    fileCount.textContent = `${totalCount} image(s) selected`;
     selectedFiles.forEach((file,index) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -109,35 +144,35 @@ previewContainer.addEventListener("click", (e) => {
     card.classList.add("removing");
     setTimeout(() => {
         selectedFiles.splice(index, 1);
-        const dataTransfer = new DataTransfer();
-        selectedFiles.forEach(file => {
-            dataTransfer.items.add(file);
-        });
-        imageInput.files = dataTransfer.files;
+        syncFileInput();
         renderPreviews();
     }, 300);
 
 });
 
-existingContainer.addEventListener("click", (e) => {
-    const btn = e.target.closest(".remove-existing-image");
-    if (!btn) return;
-    const card = btn.closest(".preview-card");
-    const filename = card.dataset.filename;
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "deleteImages";
-    input.value = filename;
-    deleteContainer.appendChild(input);
-    card.classList.add("removing");
-    setTimeout(() => {
-        card.remove();
-        fileCount.textContent =
-            selectedFiles.length > 0
-                ? `${selectedFiles.length} image(s) selected`
-                : "";
-        showFlash(
-            `Image marked for deletion`
-        );
-    }, 300);
-});
+if(existingContainer)   {
+    existingContainer.addEventListener("click", (e) => {
+        const btn = e.target.closest(".remove-existing-image");
+        if (!btn) return;
+        const card = btn.closest(".preview-card");
+        const filename = card.dataset.filename;
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "deleteImages";
+        input.value = filename;
+        deleteContainer.appendChild(input);
+        card.classList.add("removing");
+        setTimeout(() => {
+            card.remove();
+            const totalCount = getExistingImageCount() + selectedFiles.length;
+            fileCount.textContent =
+                totalCount > 0
+                    ? `${totalCount} image(s) selected`
+                    : "";
+            showFlash(
+                `Image marked for deletion`
+            );
+        }, 300);
+    });
+}
+

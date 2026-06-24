@@ -7,7 +7,6 @@
     </div>
     <div class="form-card">
         <form method="POST" action="/listings" enctype="multipart/form-data">
-            
             <div class="form-section">
                 <div class="section-header">
                     <i class="bi bi-house-door"></i>
@@ -27,9 +26,8 @@
                         <input
                             type="file"
                             multiple
-                            accept=".jpg,.jpeg,.png,.webp"
+                            accept=".jpg,.jpeg,.png"
                             name="images"
-                            required
                             id="image-upload"
                         >
 
@@ -46,7 +44,7 @@
                             </p>
 
                             <small>
-                                JPG, PNG, WEBP • Multiple images allowed
+                                JPG, JPEG, PNG • Multiple images allowed
                             </small>
 
                             <div id="file-count"></div>
@@ -380,7 +378,7 @@
 
                         <!-- Dormitory / Hostel Room -->
                         <div class="room-card">
-                            <input type="hidden" name="roomTypes[10][roomType]" value="hostel-room">
+                            <input type="hidden" name="roomTypes[11][roomType]" value="hostel-room">
 
                             <div class="room-header">
                                 <i class="bi bi-door-open"></i>
@@ -443,7 +441,7 @@
                     </label>
                 
                     <label class="amenity-card">
-                        <input type="checkbox" name="amenities[airconditioning]" value="true">
+                        <input type="checkbox" name="amenities[airConditioning]" value="true">
                         <i class="bi bi-snow"></i>
                         <span>Air Conditioning</span>
                     </label>

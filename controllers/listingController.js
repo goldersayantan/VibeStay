@@ -100,10 +100,25 @@ const getNewListing = (req, res) => {
 
 const postNewListing = async (req, res) => {
     try {
+
         if (!req.files || req.files.length === 0) {
             req.flash("error", "At least 1 image is required");
             return res.redirect("/listings/new");
         }
+
+        const allowedTypes = [
+            "image/jpg",
+            "image/jpeg",
+            "image/png"
+        ];
+
+        for (const file of req.files) {
+            if (!allowedTypes.includes(file.mimetype)) {
+                req.flash("error", "Only JPG, JPEG and PNG images allowed");
+                return res.redirect("/listings/new");
+            }
+        }
+
         let roomTypes = req.body.roomTypes;
         if (!roomTypes || !Array.isArray(roomTypes)) {
             req.flash("error", "Please provide room details");
@@ -121,25 +136,6 @@ const postNewListing = async (req, res) => {
             req.flash("error", "Please add at least one room type");
             return res.redirect("/listings/new");
         }
-
-        const uploadToCloudinary = (fileBuffer) => {
-            return new Promise((resolve, reject) => {
-                cloudinary.uploader.upload_stream(
-                    { folder: "VibeStay" },
-                    (error, result) => {
-                        if (error) return reject(error);
-                        resolve(result);
-                    }
-                ).end(fileBuffer);
-            });
-        };
-        const uploadedImages = await Promise.all(
-            req.files.map((file) => uploadToCloudinary(file.buffer))
-        );
-        const imageData = uploadedImages.map((img) => ({
-            url: img.secure_url,
-            filename: img.public_id
-        }));
 
         const geoResponse = await axios.get(
             "https://nominatim.openstreetmap.org/search",
@@ -163,6 +159,25 @@ const postNewListing = async (req, res) => {
             Number(geoResponse.data[0].lat)
         ]
 
+        const uploadToCloudinary = (fileBuffer) => {
+            return new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream(
+                    { folder: "VibeStay" },
+                    (error, result) => {
+                        if (error) return reject(error);
+                        resolve(result);
+                    }
+                ).end(fileBuffer);
+            });
+        };
+        const uploadedImages = await Promise.all(
+            req.files.map((file) => uploadToCloudinary(file.buffer))
+        );
+        const imageData = uploadedImages.map((img) => ({
+            url: img.secure_url,
+            filename: img.public_id
+        }));
+
         const amenityFields = [
             "wifi",
             "parking",
@@ -175,6 +190,7 @@ const postNewListing = async (req, res) => {
             "laundryService",
             "restaurant",
             "kitchen",
+            "bar",
             "roomService",
             "frontDesk"
         ];
@@ -292,6 +308,29 @@ const updateListing = async (req, res) => {
             return res.redirect("/listings");
         }
 
+        const allowedTypes = [
+            "image/jpg",
+            "image/jpeg",
+            "image/png"
+        ];
+        const MAX_SIZE = 2 * 1024 * 1024;
+        for (const file of req.files || []) {
+            if (!allowedTypes.includes(file.mimetype)) {
+                req.flash(
+                    "error",
+                    "Only JPG and PNG images are allowed."
+                );
+                return res.redirect(`/listings/${id}/edit`);
+            }
+            if (file.size > MAX_SIZE) {
+                req.flash(
+                    "error",
+                    "Each image must be under 2MB."
+                );
+                return res.redirect(`/listings/${id}/edit`);
+            }
+        }
+
         let roomTypes = req.body.roomTypes;
 
         if (!roomTypes || !Array.isArray(roomTypes)) {
@@ -302,19 +341,20 @@ const updateListing = async (req, res) => {
         roomTypes = roomTypes
             .filter(room => Number(room.totalRooms) > 0)
             .map(room => {
+                const totalRooms = Number(room.totalRooms);
                 const existingRoom = listing.roomTypes.find(
                     r => r.roomType === room.roomType
                 );
+                let availableRooms = totalRooms;
+                if(existingRoom)    {
+                    const bookedRooms = existingRoom.totalRooms - existingRoom.availableRooms;
+                    availableRooms = Math.max(totalRooms - bookedRooms, 0);
+                }
 
                 return {
                     roomType: room.roomType,
-                    totalRooms: Number(room.totalRooms),
-
-                    // Preserve availability if room already exists
-                    availableRooms: existingRoom
-                        ? existingRoom.availableRooms
-                        : Number(room.totalRooms),
-
+                    totalRooms,
+                    availableRooms,
                     pricePerNight: Number(room.pricePerNight)
                 };
             });
@@ -322,6 +362,40 @@ const updateListing = async (req, res) => {
         if (roomTypes.length === 0) {
             req.flash("error", "Please add at least one room type");
             return res.redirect(`/listings/${id}/edit`);
+        }
+
+        let locationChanged = 
+            listing.location.country !== req.body.country ||
+            listing.location.city !== req.body.city ||
+            listing.location.address !== req.body.address;
+        if(locationChanged) {
+            const geoResponse = await axios.get(
+                "https://nominatim.openstreetmap.org/search",
+                {
+                    timeout: 10000,
+                    params: {
+                        q: `${req.body.address}, ${req.body.city}, ${req.body.country}`,
+                        format: "json",
+                        limit: 1
+                    },
+                    headers:    {
+                        "User-Agent": "VibeStay"
+                    }
+                }
+            );
+
+            if(!geoResponse.data || geoResponse.data.length === 0)  {
+                req.flash("error", "Unable to locate the property address.");
+                return res.redirect(`/listings/${id}/edit`);
+            }
+
+            listing.geometry = {
+                type: "Point",
+                coordinates:    [
+                    Number(geoResponse.data[0].lon),
+                    Number(geoResponse.data[0].lat)
+                ]
+            };
         }
 
         let deleteImages = req.body.deleteImages || [];
@@ -343,7 +417,6 @@ const updateListing = async (req, res) => {
 
         const existingCount = listing.images.length;
         const newUploadCount = req.files ? req.files.length : 0;
-
         const totalImages = existingCount + newUploadCount;
 
         if (totalImages === 0) {
@@ -379,37 +452,6 @@ const updateListing = async (req, res) => {
                 url: img.secure_url,
                 filename: img.public_id
             }));
-        }
-
-        let locationChanged = 
-            listing.location.country !== req.body.country ||
-            listing.location.city !== req.body.city ||
-            listing.location.address !== req.body.address;
-        if(locationChanged) {
-            const geoResponse = await axios.get(
-                "https://nominatim.openstreetmap.org/search",
-                {
-                    params: {
-                        q: `${req.body.address}, ${req.body.city}, ${req.body.country}`,
-                        format: "json",
-                        limit: 1
-                    },
-                    headers:    {
-                        "User-Agent": "VibeStay"
-                    }
-                }
-            );
-            if(!geoResponse.data || geoResponse.data.length === 0)  {
-                req.flash("error", "Unable to locate the property address.");
-                return res.redirect(`/listings/${id}/edit`);
-            }
-            listing.geometry = {
-                type: "Point",
-                coordinates:    [
-                    Number(geoResponse.data[0].lon),
-                    Number(geoResponse.data[0].lat)
-                ]
-            };
         }
 
         const amenityFields = [
@@ -454,9 +496,8 @@ const updateListing = async (req, res) => {
         res.redirect(`/listings/${id}`);
 
     } catch (err) {
-        console.error(err);
         req.flash("error", "Error updating listing");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
 };
 
