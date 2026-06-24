@@ -7,28 +7,31 @@ const getAvailableRooms = require("../utils/checkRoomAvailability");
 const sendEmail = require("../config/sendEmail.js");
 
 const getBookingForm = async(req, res) => {
-    const {listingId, checkIn, checkOut} = req.query;
+    const { listingId, checkIn, checkOut } = req.query;
     const listing = await Listing.findById(listingId);
     const availableRooms = [];
-    for(const room of listing.roomTypes) {
-        const bookings = await Booking.find({
-            listing: listingId,
-            status: "approved",
-            roomTypeId: room._id,
-            checkIn: {$lt: new Date(checkOut)},
-            checkOut: {$gt: new Date(checkIn)}
-        });
-        const occupiedRooms = bookings.reduce((sum, booking) => 
-            sum + booking.roomsBooked, 0
+    for (const room of listing.roomTypes) {
+        const available = await getAvailableRooms(
+            listingId,
+            room._id,
+            new Date(checkIn),
+            new Date(checkOut)
         );
+
         availableRooms.push({
             roomId: room._id,
             roomType: room.roomType,
-            availableRooms: room.totalRooms - occupiedRooms,
+            availableRooms: available,
             pricePerNight: room.pricePerNight
         });
     }
-    res.render("bookings/new", {listing, checkIn, checkOut, availableRooms});
+
+    res.render("bookings/new", {
+        listing,
+        checkIn,
+        checkOut,
+        availableRooms
+    });
 };
 
 const createBooking = async(req, res) => {
@@ -60,6 +63,11 @@ const createBooking = async(req, res) => {
         status: "pending"
     });
     await booking.save();
+
+    await booking.populate([
+        { path: "user", select: "username email" },
+        { path: "host", select: "username email" }
+    ]);
     
     const bookingPendingUser = require("../emails/bookingPendingUser");
     const bookingPendingHost = require("../emails/bookingPendingHost");
@@ -100,7 +108,7 @@ const approveBooking = async(req, res) => {
         }
         booking.status = "approved";
         await booking.save();
-        await booking.populate("listing").populate("user");
+        await booking.populate(["listing", "user"]);
         const bookingApproved = require("../emails/bookingApproved");
         await sendEmail(
             booking.user.email,
@@ -112,6 +120,8 @@ const approveBooking = async(req, res) => {
         res.redirect("/profile");
     } catch(err)    {
         req.flash("error", "Something went wrong");
+        console.log(err);
+        return res.redirect("/profile");
     }
 };
 
@@ -130,6 +140,8 @@ const rejectConflictingBookings = async(approveBooking) => {
             $gt: approveBooking.checkIn
         }
     });
+    
+    const bookingRejected = require("../emails/bookingRejected");
 
     for(const booking of pendingBookings) {
         let valid = true;
@@ -147,9 +159,15 @@ const rejectConflictingBookings = async(approveBooking) => {
             }
         }
         if(!valid) {
-            booking.status =
-                "rejected";
+            booking.status = "rejected";
             await booking.save();
+            await booking.populate(["listing", "user"]);
+
+            await sendEmail(
+                booking.user.email,
+                "Booking No Longer Available",
+                bookingRejected(booking)
+            );
         }
     }
 };
@@ -163,7 +181,7 @@ const rejectBooking = async(req, res) => {
         }
         booking.status = "rejected";
         await booking.save();
-        await booking.populate("user");
+        await booking.populate(["listing", "user"]);
         const bookingRejected = require("../emails/bookingRejected");
         await sendEmail(
             booking.user.email,

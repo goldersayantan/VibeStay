@@ -58,7 +58,7 @@ module.exports = booking => {
                             <tr>
                                 <td style="padding:8px 0;color:#6b7280;">Total Amount</td>
                                 <td style="padding:8px 0;text-align:right;font-weight:bold;">
-                                    ₹${booking.totalPrice}
+                                    $${booking.totalPrice}
                                 </td>
                             </tr>
 

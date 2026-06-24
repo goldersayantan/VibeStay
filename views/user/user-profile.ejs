@@ -60,7 +60,7 @@
                             <% myBookings.forEach(booking => { %>
                                 <tr>
                                     <td>
-                                        <%= booking.listing.title %>
+                                        <%= booking.listing?.title || "Listing Removed" %>
                                     </td>
                                     <td>
                                         <%= new Date(booking.checkIn).toDateString() %>
@@ -133,8 +133,8 @@
                         <tbody>
                             <% bookingRequests.forEach(booking => { %>
                                 <tr>
-                                    <td><%= booking.user.username %></td>
-                                    <td><%= booking.listing.title %></td>
+                                    <td><%= booking.user?.username || "User does not exist" %></td>
+                                    <td><%= booking.listing?.title || "Listing  Removed" %></td>
                                     <td><%= new Date(booking.checkIn).toDateString() %></td>
                                     <td><%= new Date(booking.checkOut).toDateString() %></td>
                                     <td>$<%= booking.totalPrice %></td>
@@ -186,8 +186,8 @@
                         <tbody>
                             <% approvedBookings.forEach(booking => { %>
                                 <tr>
-                                    <td><%= booking.user.username %></td>
-                                    <td><%= booking.listing.title %></td>
+                                    <td><%= booking.user?.username || "user removed" %></td>
+                                    <td><%= booking.listing?.title || "Listing Removed" %></td>
                                     <td>
                                         <%= new Date(booking.checkIn).toDateString() %>
                                     </td>

@@ -95,14 +95,16 @@ const getProfile = async (req, res) => {
             owner: user._id
         });
 
-        const myBookings = await Booking.find({
+        const myBookings = (await Booking.find({
             user: user._id
-        }).populate("listing").sort({createdAt: -1});
+        }).populate("listing").sort({createdAt: -1})
+        ).filter(booking => booking.listing);
 
-        const bookingRequests = await Booking.find({
+        const bookingRequests = (await Booking.find({
             host: user._id,
             status: "pending"
-        }).populate("user").populate("listing");
+        }).populate("user").populate("listing")
+        ).filter(booking => booking.listing);
         
         listings.forEach(listing => {
             listing.startingPrice =
@@ -122,13 +124,15 @@ const getProfile = async (req, res) => {
                     : 0;
         });
 
-        const approvedBookings = await Booking.find({
-            host: user._id,
-            status: "approved",
-            checkOut:   {
-                $gte: new Date()
-            }
-        }).populate("user").populate("listing");
+        const approvedBookings = (
+            await Booking.find({
+                host: user._id,
+                status: "approved",
+                checkOut:   {
+                    $gte: new Date()
+                }
+            }).populate("user").populate("listing")
+        ).filter(booking => booking.listing);
 
         res.render("user/user-profile", {
             user,
