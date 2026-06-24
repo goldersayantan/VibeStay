@@ -26,6 +26,7 @@ const postSignIn = (req, res, next)  => {
                 return next(err);
             }
             req.flash("success", "Successfully logged in");
+            console.log("Flasshhh");
             return res.redirect("/listings");
         });
     })(req, res, next);

@@ -52,6 +52,16 @@ const createBooking = async(req, res) => {
             totalPrice += quantity * room.pricePerNight * nights;
         }
     }
+    if(totalPrice <= 0) {
+        req.flash(
+            "error",
+            "Total amount must be greater than 0"
+        );
+
+        return res.redirect(
+            `/bookings/new?listingId=${listingId}&checkIn=${checkIn}&checkOut=${checkOut}`
+        );
+    }
     const booking = new Booking({
         listing: listing._id,
         user: req.user._id,
@@ -66,7 +76,8 @@ const createBooking = async(req, res) => {
 
     await booking.populate([
         { path: "user", select: "username email" },
-        { path: "host", select: "username email" }
+        { path: "host", select: "username email" },
+        { path: "listing", select: "title propertyType"}
     ]);
     
     const bookingPendingUser = require("../emails/bookingPendingUser");
@@ -82,6 +93,7 @@ const createBooking = async(req, res) => {
         "New booking Request",
         bookingPendingHost(booking)
     );
+    req.flash("success", "Booking request submitted successfully.");
     res.redirect("/profile");
 };
 

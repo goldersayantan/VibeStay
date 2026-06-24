@@ -4,16 +4,30 @@
 <link rel="stylesheet" href="/stylesheets/listings/show.css">
 
 <div class="show-container">
-    <h1 class="show-title"><%= listing.title %></h1>
-    <p class="host"><stromg>Hosted by:</stromg> <%= listing.owner.username %> </p>
+    <div class="listing-header">
+        <h1 class="show-title">
+            <%= listing.title %>
+        </h1>
+
+        <div class="host-info">
+            <i class="bi bi-person-circle"></i>
+            <span>
+                Hosted by
+                <strong><%= listing.owner.username %></strong>
+            </span>
+        </div>
+    </div>
     
     <div class="property-gallery">
         <div class="main-image">
-            <img src="<%= listing.images[0].url %>">
+            <img src="<%= listing.images[0].url %>" alt="">
         </div>
+
         <div class="gallery-grid">
             <% listing.images.slice(1, 5).forEach(img => { %>
-                <img src="<%= img.url %>">
+                <div class="gallery-item">
+                    <img src="<%= img.url %>" alt="">
+                </div>
             <% }) %>
         </div>
     </div>
@@ -42,84 +56,84 @@
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.spa){ %>
                         <div class="amenity-item">
                             <i class="bi bi-flower1"></i>
                             Spa
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.pool){ %>
                         <div class="amenity-item">
                             <i class="bi bi-water"></i>
                             Pool
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.gym){ %>
                         <div class="amenity-item">
                             <i class="bi bi-activity"></i>
                             Gym
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.airConditioning){ %>
                         <div class="amenity-item">
                             <i class="bi bi-snow"></i>
                             Air Conditioning
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.breakfast){ %>
                         <div class="amenity-item">
                             <i class="bi bi-cup-hot"></i>
                             Breakfast
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.petFriendly){ %>
                         <div class="amenity-item">
                             <i class="bi bi-heart"></i>
                             Pet Friendly
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.laundryService){ %>
                         <div class="amenity-item">
                             <i class="bi bi-basket2"></i>
                             Laundry Service
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.restaurant){ %>
                         <div class="amenity-item">
                             <i class="bi bi-shop"></i>
                             Restaurant
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.kitchen){ %>
                         <div class="amenity-item">
                             <i class="bi bi-egg-fried"></i>
                             Kitchen
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.bar){ %>
                         <div class="amenity-item">
                             <i class="bi bi-cup-straw"></i>
                             Bar
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.roomService){ %>
                         <div class="amenity-item">
                             <i class="bi bi-bell"></i>
                             Room Service
                         </div>
                     <% } %>
                     
-                    <% if(listing.amenities.parking){ %>
+                    <% if(listing.amenities.frontDesk){ %>
                         <div class="amenity-item">
                             <i class="bi bi-person-workspace"></i>
                             Front Desk

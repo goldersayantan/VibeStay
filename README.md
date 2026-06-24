@@ -222,18 +222,6 @@ Never commit real credentials. The repository already ignores `.env` files.
 - Brevo powers transactional emails for OTPs and booking status updates.
 - Authentication is handled through Passport local strategy and Google OAuth 2.0.
 
-## Testing
-
-The current `npm test` script is a placeholder and no automated test suite is configured yet.
-
-Suggested future test coverage:
-
-- Authentication and password reset flows.
-- Listing creation, editing, and image validation.
-- Room availability calculations.
-- Booking approval, rejection, cancellation, and conflict handling.
-- Review authorization and CRUD behavior.
-
 ## Contributing
 
 Contributions are welcome. To work on the project:

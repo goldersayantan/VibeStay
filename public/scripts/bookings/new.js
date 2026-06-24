@@ -4,6 +4,29 @@ const checkIn = new Date(document.querySelector('input[name="checkIn"]').value);
 const checkOut = new Date(document.querySelector('input[name="checkOut"]').value);
 const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
 
+document.querySelectorAll(".plus").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector(".roomQty");
+        const max = Number(input.max);
+
+        if(Number(input.value) < max) {
+            input.value = Number(input.value) + 1;
+            calculateTotal();
+        }
+    });
+});
+
+document.querySelectorAll(".minus").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const input = btn.parentElement.querySelector(".roomQty");
+
+        if(Number(input.value) > 0) {
+            input.value = Number(input.value) - 1;
+            calculateTotal();
+        }
+    });
+});
+
 function calculateTotal()   {
     let total = 0;
     roomInputs.forEach(input => {

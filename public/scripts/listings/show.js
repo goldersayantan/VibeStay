@@ -21,19 +21,31 @@ form.addEventListener("submit", async(e) => {
         const roomName = room.roomType.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
         html += `
             <div class="availability-room-card">
-                <h4>${roomName}</h4>
-                <p>Available: ${room.availableRooms}</p>
-                <p>$${room.pricePerNight} / night</p>
+                <div class="availability-header">
+                    <h4>${roomName}</h4>
+
+                    ${
+                        room.availableRooms > 0
+                        ? `<span class="available-badge">Available</span>`
+                        : `<span class="sold-out">Sold Out</span>`
+                    }
+                </div>
+
+                <div class="availability-info">
+                    <div class="availability-stat">
+                        <span class="stat-label">Rooms</span>
+                        <span class="stat-value">${room.availableRooms} Rooms</span>
+                    </div>
+
+                    <div class="availability-stat">
+                        <span class="stat-label">Price</span>
+                        <span class="stat-value">$${room.pricePerNight}</span>
+                    </div>
+                </div>
+            </div>
         `;
         if(room.availableRooms > 0) {
             hasAvailableRoom = true;
-            html += `
-                <span class="available-badge">Available</span>
-            `;
-        }else   {
-            html += `
-                <span class="sold-out">Sold Out</span>
-            `;
         }
         html += `</div>`;
     });

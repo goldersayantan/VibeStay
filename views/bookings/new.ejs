@@ -14,7 +14,7 @@
         </p>
     </div>
     
-    <form action="/bookings" method="post">
+    <form action="/bookings" method="post" id="bookingForm">
         <input type="hidden" name="listingId" value="<%= listing._id %>">
         <input type="hidden" name="checkIn" value="<%= checkIn %>">
         <input type="hidden" name="checkOut" value="<%= checkOut %>">
@@ -30,7 +30,25 @@
                         $<%= room.pricePerNight %> / Night
                     </p>
                     <label>Quantity</label>
-                    <input type="number" name="rooms[<%= room.roomId %>]" min="0" max="<%= room.availableRooms %>" value="0" class="roomQty" data-price="<%= room.pricePerNight %>">
+                    <div class="quantity-selector">
+                        <button type="button" class="qty-btn minus">
+                            <i class="bi bi-dash"></i>
+                        </button>
+
+                        <input
+                            type="number"
+                            name="rooms[<%= room.roomId %>]"
+                            min="0"
+                            max="<%= room.availableRooms %>"
+                            value="0"
+                            class="roomQty"
+                            data-price="<%= room.pricePerNight %>"
+                        >
+
+                        <button type="button" class="qty-btn plus">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>                    
                 </div>
             <% }) %>
         </div>
