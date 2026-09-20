@@ -60,15 +60,16 @@ const getForgetPassword = (req, res) => {
 
 const postForgetPassword = async (req, res) => {
     try {
-        const {email} = req.body;
-        const user = await User.findOne({email});
-        if(!user)   {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
             req.flash("error", "User not found");
             return res.redirect("/forgot-password");
         }
+        const username = user.username;
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const hashedOtp = await bcrypt.hash(otp, 10);
-        await OTP.deleteMany({email});
+        await OTP.deleteMany({ email });
         await OTP.create({
             email,
             otp: hashedOtp
@@ -80,8 +81,9 @@ const postForgetPassword = async (req, res) => {
             otpTemplate(username, otp)
         );
         req.flash("success", "OTP sent successfully.");
-        res.render("user/reset-password", {email});
-    }catch(err) {
+        return res.render("user/reset-password", { email });
+    } catch (err) {
+        console.error("Forgot Password Error:", err);
         req.flash("error", "Failed to send OTP. Try again.");
         return res.redirect("/forgot-password");
     }
