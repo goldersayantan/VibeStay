@@ -4,6 +4,12 @@ VibeStay is a full-stack accommodation booking platform built with Node.js, Expr
 
 The project is structured as a server-rendered MVC application and is designed to demonstrate production-style backend workflows: authentication, file upload pipelines, session persistence, geocoding, booking state management, and role-aware user journeys.
 
+### Live Demo
+
+**[Vibestay - Stays That Match Your Vibe](https://vibestay-wiwz.onrender.com/)**
+
+---
+
 ## Table of Contents
 
 - [Features](#features)
