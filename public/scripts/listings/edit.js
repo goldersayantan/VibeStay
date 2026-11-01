@@ -98,7 +98,6 @@ imageInput.addEventListener("change", (e) => {
     }
     selectedFiles.push(...validFiles);
     syncFileInput();
-    e.target.value = "";
     renderPreviews();
 });
 
